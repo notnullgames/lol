@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Global.gd" type="Script" id=1]
+[ext_resource path="res://window.9.png" type="Texture" id=2]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 16.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Container" type="Container" parent="."]
+margin_top = 128.0
+margin_right = 320.0
+margin_bottom = 240.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="Container"]
+anchor_right = 1.225
+margin_left = 8.0
+margin_top = -128.0
+margin_right = -8.0
+margin_bottom = -112.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="RichTextLabel" parent="Container/MarginContainer"]
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Container"]
+margin_top = 40.0
+margin_right = 320.0
+margin_bottom = 112.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 1.05211, 1.42795, 191.737, 63.2099 )
+patch_margin_left = 35
+patch_margin_top = 14
+patch_margin_right = 34
+patch_margin_bottom = 13
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Container"]
+margin_top = -128.0
+margin_right = 12.0
+margin_bottom = -116.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="RichTextLabel" parent="Container/ScrollContainer"]
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
