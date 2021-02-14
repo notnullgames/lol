@@ -39,4 +39,4 @@ window/size/resizable=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "dialogue_tree" )
+enabled=PoolStringArray(  )

@@ -4,7 +4,7 @@ var current_scene = null
 var scroll = 0
 
 func _ready():
-	$Container.visible = false
+	$DialogControl.visible = false
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 
@@ -20,9 +20,8 @@ func _deferred_goto_scene(path):
 	get_tree().set_current_scene(current_scene)
 
 # show a dialog box
-func show_dialog(text, name):
-	$Container/ScrollContainer.scroll_horizontal=0
-	$Container.visible = true
-	$Container/ScrollContainer/Text.bbcode_text = text
-	$Container/MarginContainer/Name.text = name
+func show_dialog(name, text):
+	$DialogControl.visible = true
+	$DialogControl/NinePatchRect/Text.bbcode_text = text
+	$DialogControl/Name.text = name
 	
