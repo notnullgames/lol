@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 
 var current_scene = null
 

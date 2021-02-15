@@ -20,8 +20,6 @@ func _input(event):
 
 func _ready():
 	self.visible = false
-	# hide the scrollbar, but keep scroll behavior
-	$NinePatchRect/Text.get_child(0).rect_scale.x = 0
 
 # this is exposed for Global.show_dialog
 func show_dialog(name, text, name_align):
