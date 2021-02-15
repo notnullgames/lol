@@ -17,12 +17,14 @@ func _input(event):
 			$NinePatchRect/Text.scroll_to_line(scroll)
 		if event.is_action_pressed("ui_cancel"):
 			self.visible = false
+			Global.player_can_move = true
 
 func _ready():
 	self.visible = false
 
 # this is exposed for Global.show_dialog
 func show_dialog(name, text, name_align):
+	Global.player_can_move = false
 	if name_align == "left":
 		$Name.bbcode_text = name
 	if name_align == "right":

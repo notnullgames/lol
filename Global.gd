@@ -2,6 +2,9 @@ extends Node2D
 
 var current_scene = null
 
+# global used to check if player can move
+var player_can_move = true
+
 # show a dialog box
 func show_dialog(name, text, name_align="left"):
 	return $DialogControl.show_dialog(name, text, name_align)
