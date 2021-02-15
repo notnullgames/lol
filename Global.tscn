@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Global.gd" type="Script" id=1]
-[ext_resource path="res://window.9.png" type="Texture" id=2]
+[ext_resource path="res://images/window.9.png" type="Texture" id=2]
+[ext_resource path="res://DialogControl.gd" type="Script" id=3]
 
-[node name="Control" type="Control"]
+[node name="Global" type="Control"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -22,19 +23,25 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -159.5
-margin_top = -116.0
-margin_right = 159.5
-margin_bottom = 116.0
+margin_left = -160.03
+margin_top = 31.1624
+margin_right = 158.97
+margin_bottom = 117.162
+script = ExtResource( 3 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="NinePatchRect" type="NinePatchRect" parent="DialogControl"]
-margin_left = 8.0
-margin_top = 149.0
-margin_right = 312.0
-margin_bottom = 232.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -152.0
+margin_top = -41.5
+margin_right = 152.0
+margin_bottom = 41.5
 texture = ExtResource( 2 )
 region_rect = Rect2( 1.05211, 1.42795, 191.737, 63.2099 )
 patch_margin_left = 35
@@ -46,28 +53,33 @@ __meta__ = {
 }
 
 [node name="Text" type="RichTextLabel" parent="DialogControl/NinePatchRect"]
-margin_left = 8.0
-margin_top = 11.0
-margin_right = 296.0
-margin_bottom = 75.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -144.0
+margin_top = -30.0
+margin_right = 144.0
+margin_bottom = 30.0
+bbcode_enabled = true
 tab_size = 2
-scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Name" type="RichTextLabel" parent="DialogControl"]
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -152.0
-margin_top = 18.0
-margin_right = 152.0
-margin_bottom = 33.0
+margin_left = -147.5
+margin_top = -12.0
+margin_right = 145.5
+margin_bottom = 3.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-fit_content_height = true
+bbcode_enabled = true
+bbcode_text = "Name"
+text = "Name"
+scroll_active = false
 __meta__ = {
-"_edit_use_anchors_": true
+"_edit_use_anchors_": false
 }

@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://maps/Demo.gd" type="Script" id=1]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+text = "Lorem ipsum dolor sit amet, consectetur
+adipiscing elit. Nullam ipsum dui, porta
+eu malesuada eget, eleifend sed dui.
+
+Duis ultrices rhoncus dolor, sit amet
+elementum nulla molestie id. Proin mollis
+at tortor eget faucibus. Cras malesuada
+eleifend erat, a sollicitudin mauris elementum
+ut. Donec egestas rhoncus nibh, vel hendrerit
+lorem dapibus et. Nam efficitur bibendum luctus. Donec interdum magna id sem pulvinar, nec
+blandit augue posuere. Vestibulum iaculis, est
+convallis pharetra rutrum, lacus magna posuere
+libero, non facilisis erat metus ultricies tortor.
+Fusce ipsum erat, placerat non fermentum id."
+dialog_name = "Konsumer"

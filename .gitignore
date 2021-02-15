@@ -1,9 +1,6 @@
 .tmp
 .DS_Store
-test-scenes
 /.import
 /default_env.tres
 *.import
-/previous
-export_presets.cfg
 /builds

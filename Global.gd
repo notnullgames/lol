@@ -1,12 +1,10 @@
 extends Control
 
 var current_scene = null
-var scroll = 0
 
-func _ready():
-	$DialogControl.visible = false
-	var root = get_tree().get_root()
-	current_scene = root.get_child(root.get_child_count() - 1)
+# show a dialog box
+func show_dialog(name, text, name_align="left"):
+	return $DialogControl.show_dialog(name, text, name_align)
 
 # switch scenes
 func goto_scene(path):
@@ -19,9 +17,6 @@ func _deferred_goto_scene(path):
 	get_tree().get_root().add_child(current_scene)
 	get_tree().set_current_scene(current_scene)
 
-# show a dialog box
-func show_dialog(name, text):
-	$DialogControl.visible = true
-	$DialogControl/NinePatchRect/Text.bbcode_text = text
-	$DialogControl/Name.text = name
-	
+func _ready():
+	var root = get_tree().get_root()
+	current_scene = root.get_child(root.get_child_count() - 1)
