@@ -27,6 +27,7 @@ func _ready():
 
 # this is exposed for Global.show_dialog
 func show_dialog(name, text, name_align):
+	# The next-page is triggered, so I set scroll to negative 1-page
 	scroll = -1 * lines_per_page
 	self.visible = true
 	Global.player_can_move = false
@@ -38,6 +39,7 @@ func show_dialog(name, text, name_align):
 		$Name.bbcode_text = "[center]%s[/center]" % name
 	$NinePatchRect/Text.bbcode_text = text
 	$NinePatchRect/Text.scroll_to_line(scroll)
+	# add newlines to the end to make scroll work right
 	var newlinecount = (lines_per_page % int($NinePatchRect/Text.get_line_count())) - 1
 	$NinePatchRect/Text.bbcode_text += "\n".repeat(newlinecount)
 	return self

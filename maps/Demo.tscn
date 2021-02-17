@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://lpc/terrain_brush.tres" type="TileSet" id=1]
 [ext_resource path="res://lpc/aks_assets.tres" type="TileSet" id=2]
 [ext_resource path="res://objects/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://objects/Computer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/Torch.tscn" type="PackedScene" id=5]
 
 [node name="Demo" type="Node2D"]
 
@@ -46,14 +47,26 @@ cell_size = Vector2( 32, 32 )
 cell_custom_transform = Transform2D( 32, 0, 0, 32, 0, 0 )
 cell_y_sort = true
 format = 1
-tile_data = PoolIntArray( -262145, 40, 0, -327680, 40, 0, -327679, 40, 0, -327678, 40, 0, -327677, 40, 0, -327676, 40, 0, -196609, 40, 0, -262144, 40, 0, -262143, 40, 0, -262142, 40, 0, -262140, 40, 0, -131073, 40, 0, -196608, 40, 0, -196607, 40, 0, -196606, 40, 0, -196604, 40, 0, -1, 2, 0, -65534, 5, 0, 65533, 1, 0, 0, 1, 0, 5, 44, 0, 131067, 2, 0, 131077, 1, 0, 262139, 0, 0, 196608, 44, 0, 262148, 0, 0, 327687, 2, 0, 458751, 2, 0, 589821, 5, 0, 524292, 1, 0 )
+tile_data = PoolIntArray( -262145, 40, 0, -327680, 40, 0, -327679, 40, 0, -327678, 40, 0, -327677, 40, 0, -327676, 40, 0, -196609, 40, 0, -262144, 40, 0, -262143, 40, 0, -262142, 40, 0, -262140, 40, 0, -131073, 40, 0, -196608, 40, 0, -196607, 40, 0, -196606, 40, 0, -196604, 40, 0, -1, 2, 0, -65534, 5, 0, 65533, 1, 0, 0, 1, 0, 5, 44, 0, 131067, 2, 0, 131077, 1, 0, 262139, 0, 0, 196608, 44, 0, 196614, 46, 0, 262148, 0, 0, 327687, 2, 0, 458751, 2, 0, 524283, 49, 0, 589821, 5, 0, 524292, 1, 0 )
 
 [node name="Player" parent="gravestones and stuff" instance=ExtResource( 3 )]
 position = Vector2( 112, 0 )
+
+[node name="trunk" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 32, 32 )
+cell_custom_transform = Transform2D( 32, 0, 0, 32, 0, 0 )
+format = 1
+tile_data = PoolIntArray( 131079, 47, 0, 458748, 50, 0 )
 
 [node name="on top" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 32, 32 )
 cell_custom_transform = Transform2D( 32, 0, 0, 32, 0, 0 )
 format = 1
-tile_data = PoolIntArray( -327681, 6, 0, -393216, 7, 0, -393215, 8, 0, -393214, 6, 0, -393213, 7, 0, -393212, 8, 0, -327679, 14, 0, -65531, 4, 0, 196603, 45, 0, 131072, 4, 0, 262139, 6, 0, 262140, 7, 0, 196612, 45, 0 )
+tile_data = PoolIntArray( -327681, 6, 0, -393216, 7, 0, -393215, 8, 0, -393214, 6, 0, -393213, 7, 0, -393212, 8, 0, -327679, 14, 0, -65531, 4, 0, 6, 48, 0, 196603, 45, 0, 131072, 4, 0, 262139, 6, 0, 262140, 7, 0, 196612, 45, 0, 327675, 48, 0 )
+
+[node name="Torch" parent="." instance=ExtResource( 5 )]
+animation = "on"
+frame = 3
+playing = true
