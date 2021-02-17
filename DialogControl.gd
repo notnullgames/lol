@@ -36,7 +36,8 @@ func show_dialog(name, text, name_align):
 		$Name.bbcode_text = "[right]%s[/right]" % name
 	if name_align == "center":
 		$Name.bbcode_text = "[center]%s[/center]" % name
-	var newlinecount = int($NinePatchRect/Text.get_line_count()) % lines_per_page + 1
-	$NinePatchRect/Text.bbcode_text = text + "\n".repeat(newlinecount)
+	$NinePatchRect/Text.bbcode_text = text
 	$NinePatchRect/Text.scroll_to_line(scroll)
+	var newlinecount = (lines_per_page % int($NinePatchRect/Text.get_line_count())) - 1
+	$NinePatchRect/Text.bbcode_text += "\n".repeat(newlinecount)
 	return self
