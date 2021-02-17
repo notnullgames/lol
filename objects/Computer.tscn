@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://lpc/cyber.tres" type="TileSet" id=1]
+[ext_resource path="res://objects/Computer.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 12.9709, 10.7473 )
+
+[node name="Computer" type="Area2D"]
+collision_layer = 2
+script = ExtResource( 2 )
+
+[node name="CollisionShapeInteract" type="CollisionShape2D" parent="."]
+position = Vector2( 15.2028, 60.4576 )
+shape = SubResource( 1 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0 )
+[connection signal="body_entered" from="." to="." method="_on_Computer_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_Computer_body_exited"]

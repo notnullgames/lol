@@ -24,6 +24,8 @@ func _ready():
 
 # this is exposed for Global.show_dialog
 func show_dialog(name, text, name_align):
+	scroll = 0
+	self.visible = true
 	Global.player_can_move = false
 	if name_align == "left":
 		$Name.bbcode_text = name
@@ -32,7 +34,5 @@ func show_dialog(name, text, name_align):
 	if name_align == "center":
 		$Name.bbcode_text = "[center]%s[/center]" % name
 	$NinePatchRect/Text.bbcode_text = text + "\n\n"
-	scroll = 0
-	self.visible = true
 	$NinePatchRect/Text.scroll_to_line(scroll)
 	return self
