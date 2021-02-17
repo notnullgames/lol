@@ -13,8 +13,11 @@ func _input(event):
 	if self.visible:
 		if event.is_action_pressed("ui_accept"):
 			scroll = scroll + max_lines
-			print(scroll)
-			$NinePatchRect/Text.scroll_to_line(scroll)
+			if scroll >= $NinePatchRect/Text.get_line_count():
+				self.visible = false
+				Global.player_can_move = true
+			else:
+				$NinePatchRect/Text.scroll_to_line(scroll)
 		if event.is_action_pressed("ui_cancel"):
 			self.visible = false
 			Global.player_can_move = true
@@ -24,7 +27,7 @@ func _ready():
 
 # this is exposed for Global.show_dialog
 func show_dialog(name, text, name_align):
-	scroll = 0
+	scroll = -4
 	self.visible = true
 	Global.player_can_move = false
 	if name_align == "left":
@@ -33,6 +36,6 @@ func show_dialog(name, text, name_align):
 		$Name.bbcode_text = "[right]%s[/right]" % name
 	if name_align == "center":
 		$Name.bbcode_text = "[center]%s[/center]" % name
-	$NinePatchRect/Text.bbcode_text = text + "\n\n"
+	$NinePatchRect/Text.bbcode_text = text + "\n\n\n"
 	$NinePatchRect/Text.scroll_to_line(scroll)
 	return self

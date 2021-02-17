@@ -14,7 +14,6 @@ margin_right = 310.49
 margin_bottom = 238.125
 script = ExtResource( 3 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
