@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://lpc/terrain_brush.tres" type="TileSet" id=1]
 [ext_resource path="res://lpc/aks_assets.tres" type="TileSet" id=2]
 [ext_resource path="res://objects/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://objects/Computer.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Global.tscn" type="PackedScene" id=5]
 
 [node name="Demo" type="Node2D"]
 
@@ -49,5 +48,3 @@ cell_size = Vector2( 32, 32 )
 cell_custom_transform = Transform2D( 32, 0, 0, 32, 0, 0 )
 format = 1
 tile_data = PoolIntArray( -327681, 6, 0, -393216, 7, 0, -393215, 8, 0, -393214, 6, 0, -393213, 7, 0, -393212, 8, 0, -327679, 14, 0, -65531, 4, 0, 196603, 45, 0, 131072, 4, 0, 262139, 6, 0, 262140, 7, 0, 196612, 45, 0 )
-
-[node name="Global" parent="." instance=ExtResource( 5 )]
