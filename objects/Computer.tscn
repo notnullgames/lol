@@ -1,67 +1,48 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://lpc/images/cyber-Interior-Furniture.png" type="Texture" id=1]
 [ext_resource path="res://objects/Computer.gd" type="Script" id=2]
+[ext_resource path="res://lpc/cyber.tres" type="TileSet" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 12.9709, 10.7473 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "Off"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationPlayer/Screen:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 108 ]
-}
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 352, 192, 32, 32 )
 
-[sub_resource type="Animation" id=3]
-resource_name = "On"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("AnimationPlayer/Screen:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 107 ]
-}
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 384, 192, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "on",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "off",
+"speed": 5.0
+} ]
 
 [node name="Computer" type="Area2D"]
-collision_layer = 2
 script = ExtResource( 2 )
 
-[node name="CollisionShapeInteract" type="CollisionShape2D" parent="."]
-position = Vector2( 15.2028, 60.4576 )
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 3 )
+format = 1
+tile_data = PoolIntArray( -65536, 1, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 16, 0 )
 shape = SubResource( 1 )
 
-[node name="Base" type="Sprite" parent="."]
-position = Vector2( 16, 48 )
-texture = ExtResource( 1 )
-vframes = 16
-hframes = 16
-frame = 123
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Off = SubResource( 2 )
-anims/On = SubResource( 3 )
-
-[node name="Screen" type="Sprite" parent="AnimationPlayer"]
-position = Vector2( 16.1568, 16.9514 )
-texture = ExtResource( 1 )
-vframes = 16
-hframes = 16
-frame = 108
-[connection signal="body_entered" from="." to="." method="_on_Computer_body_entered"]
-[connection signal="body_exited" from="." to="." method="_on_Computer_body_exited"]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 16, -48 )
+frames = SubResource( 4 )
+animation = "off"
+playing = true
+[connection signal="body_entered" from="." to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_Area2D_body_exited"]
