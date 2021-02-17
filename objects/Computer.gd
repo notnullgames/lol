@@ -5,7 +5,7 @@ extends Area2D
 
 var touching = false
 
-var text = "Hello and welcome to the computer.\n\nThis is testing multiline text\nHopefully it works ok.\nThis should be after the first page."
+export(String, MULTILINE) var text
 
 func _input(event):
 	if touching and event.is_action_pressed("ui_accept") and Global.player_can_move:

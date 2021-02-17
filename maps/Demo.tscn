@@ -30,6 +30,15 @@ tile_data = PoolIntArray( -196608, 3, 524288, -196607, 3, 524289, -196606, 3, 52
 
 [node name="Computer" parent="." instance=ExtResource( 4 )]
 position = Vector2( 96, -64 )
+text = "Hello and welcome to the computer.
+
+This is testing multiline text
+Hopefully it works ok.
+This should be after the first page.
+All the new-lines need to be added
+manually, which is a bit annoying
+(no wordwrap.)
+If it scrolls correctly, all is working ok."
 
 [node name="gravestones and stuff" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
