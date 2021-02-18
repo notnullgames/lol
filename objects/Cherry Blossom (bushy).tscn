@@ -11,7 +11,7 @@ atlas = ExtResource( 1 )
 region = Rect2( 240, 304, 96, 48 )
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 19.445
+radius = 26.7799
 height = 20.729
 
 [node name="Cherry Blossom (bushy)" type="Node2D"]
@@ -29,6 +29,6 @@ texture = SubResource( 2 )
 position = Vector2( 8.4757, 5.95948 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Trunk/StaticBody2D"]
-position = Vector2( -0.397301, -0.927032 )
+position = Vector2( -4.18134, -6.39286 )
 rotation = -1.5708
 shape = SubResource( 3 )
