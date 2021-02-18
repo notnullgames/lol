@@ -1,6 +1,8 @@
 [gd_scene load_steps=76 format=2]
 
-[ext_resource path="res://tilesets/images/terrain.png" type="Texture" id=1]
+[ext_resource path="res://images/tilesets/terrain.png" type="Texture" id=1]
+
+
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 5.32008, 11.8516, 16.9745, 4.21592, 29.4327, 12.6553, 23.4046, 21.0948, 18.1802, 26.3192, 7.32945, 22.3004 )

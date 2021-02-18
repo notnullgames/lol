@@ -1,13 +1,13 @@
 [gd_scene load_steps=20 format=2]
 
-[ext_resource path="res://fonts/DejaVuSans-Oblique.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://fonts/DejaVuSans-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://images/window.9.png" type="Texture" id=2]
-[ext_resource path="res://fonts/DejaVuSans-BoldOblique.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://fonts/DejaVuSans-Oblique.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://fonts/DejaVuSans.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://fonts/DejaVuSans-Bold.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://fonts/DejaVuSans-BoldOblique.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://fonts/whitrabt.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://Global.theme" type="Theme" id=7]
-[ext_resource path="res://music/halo.ogg" type="AudioStream" id=8]
+[ext_resource path="res://sounds/music/halo.ogg" type="AudioStream" id=8]
 [ext_resource path="res://sounds/cancel.wav" type="AudioStream" id=9]
 [ext_resource path="res://sounds/ok.wav" type="AudioStream" id=10]
 
@@ -97,19 +97,19 @@ size = 12
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=4]
-size = 10
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=5]
-size = 10
-font_data = ExtResource( 1 )
-
-[sub_resource type="DynamicFont" id=6]
-size = 10
+size = 12
 font_data = ExtResource( 5 )
 
+[sub_resource type="DynamicFont" id=5]
+size = 12
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 21
+font_data = ExtResource( 1 )
+
 [sub_resource type="DynamicFont" id=7]
-size = 10
+size = 12
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=8]
@@ -165,7 +165,6 @@ margin_left = -144.0
 margin_top = -30.0
 margin_right = 144.0
 margin_bottom = 30.0
-theme = ExtResource( 7 )
 custom_fonts/mono_font = SubResource( 3 )
 custom_fonts/bold_italics_font = SubResource( 4 )
 custom_fonts/italics_font = SubResource( 5 )
