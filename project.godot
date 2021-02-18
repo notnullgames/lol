@@ -46,6 +46,10 @@ window/stretch/aspect="keep"
 
 enabled=PoolStringArray(  )
 
+[gui]
+
+theme/custom="res://Global.theme"
+
 [importer_defaults]
 
 texture={
