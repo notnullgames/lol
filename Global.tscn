@@ -1,18 +1,92 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Global.gd" type="Script" id=1]
 [ext_resource path="res://images/window.9.png" type="Texture" id=2]
-[ext_resource path="res://DialogControl.gd" type="Script" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends CanvasLayer
+
+var current_scene = null
+
+# global used to check if player can move
+var player_can_move = true
+
+# show a dialog box
+func show_dialog(name, text, name_align=\"left\"):
+	return $DialogControl.show_dialog(name, text, name_align)
+
+# switch scenes
+func goto_scene(path):
+	call_deferred(\"_deferred_goto_scene\", path)
+
+func _deferred_goto_scene(path):
+	current_scene.free()
+	var s = ResourceLoader.load(path)
+	current_scene = s.instance()
+	get_tree().get_root().add_child(current_scene)
+	get_tree().set_current_scene(current_scene)
+
+func _ready():
+	var root = get_tree().get_root()
+	current_scene = root.get_child(root.get_child_count() - 1)
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "# DialogControl
+
+extends Control
+
+var scroll = 0
+onready var font = $NinePatchRect/Text.get_font(\"normal_font\")
+onready var window_size = $NinePatchRect/Text.get_size()
+onready var font_height = font.get_height()
+onready var lines_per_page = int(floor(window_size[1] / font_height))
+
+# handle Dialog input
+func _input(event):
+	if self.visible:
+		if event.is_action_pressed(\"ui_accept\"):
+			scroll = scroll + lines_per_page
+			if scroll >= $NinePatchRect/Text.get_line_count():
+				self.visible = false
+				Global.player_can_move = true
+			else:
+				$NinePatchRect/Text.scroll_to_line(scroll)
+		if event.is_action_pressed(\"ui_cancel\"):
+			self.visible = false
+			Global.player_can_move = true
+
+func _ready():
+	self.visible = false
+
+# this is exposed for Global.show_dialog
+func show_dialog(name, text, name_align):
+	# The next-page is triggered, so I set scroll to negative 1-page
+	scroll = -1 * lines_per_page
+	self.visible = true
+	Global.player_can_move = false
+	if name_align == \"left\":
+		$Name.bbcode_text = name
+	if name_align == \"right\":
+		$Name.bbcode_text = \"[right]%s[/right]\" % name
+	if name_align == \"center\":
+		$Name.bbcode_text = \"[center]%s[/center]\" % name
+	$NinePatchRect/Text.bbcode_text = text
+	$NinePatchRect/Text.scroll_to_line(scroll)
+	# add newlines to the end to make scroll work right
+	var newlinecount = (lines_per_page % int($NinePatchRect/Text.get_line_count())) - 1
+	$NinePatchRect/Text.bbcode_text += \"\\n\".repeat(newlinecount)
+	return self
+"
 
 [node name="Global" type="CanvasLayer"]
-script = ExtResource( 1 )
+script = SubResource( 1 )
 
 [node name="DialogControl" type="Control" parent="."]
 margin_left = 4.49011
 margin_top = 152.125
 margin_right = 310.49
 margin_bottom = 238.125
-script = ExtResource( 3 )
+script = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

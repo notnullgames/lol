@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://tilesets/images/aks_assets.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+# this is me trying to make a self-activated object
+# it needs some work
+
+var touching = false
+
+export(String, MULTILINE) var text = \"The writing appears to have worn off.\"
+export var device_name = \"Gravestone\"
+
+func _input(event):
+	if touching and event.is_action_pressed(\"ui_accept\") and Global.player_can_move:
+		var dialog = Global.show_dialog(device_name, text, \"left\")
+
+func _on_Area2D_body_entered(body):
+	if body.name == \"Player\":
+		touching = true
+
+
+func _on_Area2D_body_exited(body):
+	if body.name == \"Player\":
+		touching = false
+"
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 416, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 384, 64, 36 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 24, 12.889 )
+
+[node name="Grave (bed)" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, 48 )
+texture = SubResource( 2 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+texture = SubResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( -0.280617, 29.1938 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0.794586, 16.9514 )
+shape = SubResource( 4 )
+
+[node name="Physical" type="StaticBody2D" parent="."]
+position = Vector2( 0, 48 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Physical"]
+position = Vector2( -0.545486, -20.6602 )
+shape = SubResource( 4 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
