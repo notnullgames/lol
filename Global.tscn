@@ -1,6 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=14 format=2]
 
+[ext_resource path="res://fonts/DejaVuSans-Oblique.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://images/window.9.png" type="Texture" id=2]
+[ext_resource path="res://fonts/DejaVuSans-BoldOblique.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://fonts/DejaVuSans.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://fonts/DejaVuSans-Bold.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://fonts/DejaVuSansMono.ttf" type="DynamicFontData" id=6]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends CanvasLayer
@@ -78,6 +83,21 @@ func show_dialog(name, text, name_align):
 	return self
 "
 
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 4 )
+
 [node name="Global" type="CanvasLayer"]
 script = SubResource( 1 )
 
@@ -119,6 +139,11 @@ margin_left = -144.0
 margin_top = -30.0
 margin_right = 144.0
 margin_bottom = 30.0
+custom_fonts/mono_font = SubResource( 3 )
+custom_fonts/bold_italics_font = SubResource( 4 )
+custom_fonts/italics_font = SubResource( 5 )
+custom_fonts/bold_font = SubResource( 6 )
+custom_fonts/normal_font = SubResource( 7 )
 bbcode_enabled = true
 tab_size = 2
 scroll_active = false

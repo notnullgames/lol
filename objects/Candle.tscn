@@ -22,7 +22,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Candle (single)" type="AnimatedSprite"]
+[node name="Candle" type="AnimatedSprite"]
 frames = SubResource( 4 )
 animation = "on"
 frame = 2
