@@ -20,8 +20,6 @@ config/description="This is an advcenture RPG, in the style of Zelda."
 run/main_scene="res://maps/Demo.tscn"
 config/custom_user_dir_name="lol"
 boot_splash/image="res://images/icon.png"
-boot_splash/fullsize=false
-boot_splash/use_filter=false
 config/icon="res://images/icon.png"
 
 [autoload]

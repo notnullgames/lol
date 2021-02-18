@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://tilesets/images/cyber-Interior-Furniture.png" type="Texture" id=2]
+[ext_resource path="res://tilesets/images/cyber-Interior-Furniture.png" type="Texture" id=1]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Area2D
@@ -11,12 +11,11 @@ script/source = "extends Area2D
 var touching = false
 
 export(String, MULTILINE) var text
-export var device_name = \"PX9000\"
+export var device_name = \"Panel\"
 
 func _input(event):
 	if touching and event.is_action_pressed(\"ui_accept\") and Global.player_can_move:
-		Global.playSound(1)
-		var dialog = Global.show_dialog(device_name, \"[color=lime][code]\" + text + \"[/code][/color]\", \"left\")
+		var dialog = Global.show_dialog(device_name, \"[color=aqua][code]\" + text + \"[/code][/color]\", \"left\")
 
 func _on_Area2D_body_entered(body):
 	if body.name == \"Player\":
@@ -34,12 +33,12 @@ func _on_Area2D_body_exited(body):
 extents = Vector2( 16, 8 )
 
 [sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 2 )
-region = Rect2( 352, 192, 32, 32 )
+atlas = ExtResource( 1 )
+region = Rect2( 256, 320, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 2 )
-region = Rect2( 384, 192, 32, 32 )
+atlas = ExtResource( 1 )
+region = Rect2( 256, 288, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=5]
 animations = [ {
@@ -54,11 +53,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 2 )
-region = Rect2( 352, 224, 32, 32 )
-
-[node name="Computer" type="Area2D"]
+[node name="Panel (big)" type="Area2D"]
 collision_layer = 3
 script = SubResource( 1 )
 
@@ -67,13 +62,9 @@ position = Vector2( 16, 0 )
 shape = SubResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 16, -48 )
+position = Vector2( 16, -32 )
 frames = SubResource( 5 )
 animation = "off"
 playing = true
-
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 16, -16 )
-texture = SubResource( 6 )
 [connection signal="body_entered" from="." to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_Area2D_body_exited"]

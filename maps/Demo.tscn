@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://objects/Computer.tscn" type="PackedScene" id=2]
@@ -14,7 +14,6 @@
 [ext_resource path="res://objects/Cherry Blossom.tscn" type="PackedScene" id=12]
 [ext_resource path="res://objects/Dead Tree.tscn" type="PackedScene" id=13]
 [ext_resource path="res://objects/Grave (bed).tscn" type="PackedScene" id=14]
-[ext_resource path="res://objects/Candelabra.tscn" type="PackedScene" id=15]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 128, 32 )
@@ -30,7 +29,7 @@ tile_data = PoolIntArray( -196615, 8, 131072, -196614, 8, 131076, -196613, 8, 13
 
 [node name="wall" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, 16 )
-tile_data = PoolIntArray( -65533, 17, 0, -65532, 21, 0, -65531, 17, 0, -65530, 17, 0, -65529, 17, 0, -65528, 17, 0, -65527, 17, 0, -65526, 22, 0, 3, 22, 0, 4, 20, 0, 5, 17, 0, 6, 17, 0, 7, 17, 0, 8, 18, 0, 9, 17, 0, 10, 17, 0 )
+tile_data = PoolIntArray( -262141, 25, 0, -262140, 23, 0, -262139, 19, 0, -262138, 23, 0, -262137, 21, 0, -262136, 23, 0, -262135, 20, 0, -262134, 23, 0, -196605, 22, 0, -196604, 22, 0, -196603, 23, 0, -196602, 22, 0, -196601, 20, 0, -196600, 22, 0, -196599, 20, 0, -196598, 16, 0, -131069, 21, 0, -131068, 22, 0, -131067, 22, 0, -131066, 22, 0, -131065, 21, 0, -131064, 22, 0, -131063, 20, 0, -131062, 22, 0, -65533, 17, 0, -65532, 21, 0, -65531, 17, 0, -65530, 17, 0, -65529, 17, 0, -65528, 17, 0, -65527, 17, 0, -65526, 22, 0, 3, 22, 0, 4, 20, 0, 5, 17, 0, 6, 17, 0, 7, 17, 0, 8, 18, 0, 9, 17, 0, 10, 17, 0 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="wall"]
 position = Vector2( 0, -16 )
@@ -44,57 +43,52 @@ position = Vector2( 0, 16 )
 
 [node name="Computer" parent="objects (below player)" instance=ExtResource( 2 )]
 position = Vector2( 208, 32 )
-text = "[color=lime]Welcome to \"Demo Island\". You may be here for a while, so be sure to secure food and water and shelter.[/color]"
+text = "Welcome to \"Demo Island\". You may be here for a while, so be sure to secure food and water and shelter."
 
 [node name="Oven" parent="objects (below player)" instance=ExtResource( 7 )]
 position = Vector2( 336, 32 )
-frame = 0
 
 [node name="Panel" parent="objects (below player)" instance=ExtResource( 5 )]
-position = Vector2( 96, 32 )
-text = "This is a panel.
-
-Later, it will have a puzzle."
+position = Vector2( 120, 40 )
+text = "Eventually, these will have a puzzle to solve."
 
 [node name="torches" type="Node2D" parent="."]
 position = Vector2( 224, 16 )
 
 [node name="Torch" parent="torches" instance=ExtResource( 6 )]
 position = Vector2( -48, -32 )
+frame = 1
 playing = true
 
 [node name="Torch2" parent="torches" instance=ExtResource( 6 )]
 position = Vector2( -80, -32 )
-frame = 2
+frame = 3
 playing = true
 
 [node name="Torch3" parent="torches" instance=ExtResource( 6 )]
 position = Vector2( -112, -32 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Torch4" parent="torches" instance=ExtResource( 6 )]
 position = Vector2( 112, -32 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Torch5" parent="torches" instance=ExtResource( 6 )]
 position = Vector2( 80, -32 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Torch6" parent="torches" instance=ExtResource( 6 )]
 position = Vector2( 48, -32 )
-playing = true
-
-[node name="Candelabra" parent="torches" instance=ExtResource( 15 )]
-position = Vector2( -72, 0 )
 frame = 1
+playing = true
 
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 151.547, 103.825 )
+position = Vector2( 200, 96 )
 
 [node name="Chair (right)" parent="YSort" instance=ExtResource( 10 )]
 position = Vector2( 216, 176 )
@@ -125,4 +119,4 @@ text = "Here lies [b]Hans Von Vermine Urine[/b]
 
 [node name="Candle" parent="YSort" instance=ExtResource( 8 )]
 position = Vector2( 224, 112 )
-frame = 1
+frame = 0
