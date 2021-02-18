@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://objects/Computer.tscn" type="PackedScene" id=2]
@@ -6,13 +6,7 @@
 [ext_resource path="res://tilesets/Cyber Interior.tscn" type="PackedScene" id=4]
 [ext_resource path="res://objects/Panel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://objects/Torch.tscn" type="PackedScene" id=6]
-[ext_resource path="res://objects/Oven.tscn" type="PackedScene" id=7]
-[ext_resource path="res://objects/Candle.tscn" type="PackedScene" id=8]
-[ext_resource path="res://objects/Chair (left).tscn" type="PackedScene" id=9]
-[ext_resource path="res://objects/Chair (right).tscn" type="PackedScene" id=10]
-[ext_resource path="res://objects/Cherry Blossom (bushy).tscn" type="PackedScene" id=11]
 [ext_resource path="res://objects/Cherry Blossom.tscn" type="PackedScene" id=12]
-[ext_resource path="res://objects/Dead Tree.tscn" type="PackedScene" id=13]
 [ext_resource path="res://objects/Grave (bed).tscn" type="PackedScene" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -45,44 +39,40 @@ position = Vector2( 0, 16 )
 position = Vector2( 208, 32 )
 text = "Welcome to \"Demo Island\". You may be here for a while, so be sure to secure food and water and shelter."
 
-[node name="Oven" parent="objects (below player)" instance=ExtResource( 7 )]
-position = Vector2( 336, 32 )
-
 [node name="Panel" parent="objects (below player)" instance=ExtResource( 5 )]
 position = Vector2( 120, 40 )
-text = "Eventually, these will have a puzzle to solve."
+text = "Please enter the 3 digit passcode."
 
 [node name="torches" type="Node2D" parent="."]
 position = Vector2( 224, 16 )
 
 [node name="Torch" parent="torches" instance=ExtResource( 6 )]
 position = Vector2( -48, -32 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Torch2" parent="torches" instance=ExtResource( 6 )]
 position = Vector2( -80, -32 )
-frame = 3
 playing = true
 
 [node name="Torch3" parent="torches" instance=ExtResource( 6 )]
 position = Vector2( -112, -32 )
-frame = 2
+frame = 3
 playing = true
 
 [node name="Torch4" parent="torches" instance=ExtResource( 6 )]
 position = Vector2( 112, -32 )
-frame = 2
+frame = 3
 playing = true
 
 [node name="Torch5" parent="torches" instance=ExtResource( 6 )]
 position = Vector2( 80, -32 )
-frame = 2
+frame = 3
 playing = true
 
 [node name="Torch6" parent="torches" instance=ExtResource( 6 )]
 position = Vector2( 48, -32 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="YSort" type="YSort" parent="."]
@@ -90,33 +80,17 @@ playing = true
 [node name="Player" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 200, 96 )
 
-[node name="Chair (right)" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 216, 176 )
-
-[node name="Chair (left)" parent="YSort" instance=ExtResource( 9 )]
-position = Vector2( 120, 192 )
-
-[node name="Cherry Blossom (bushy)" parent="YSort" instance=ExtResource( 11 )]
-position = Vector2( 176, 232 )
-
-[node name="Cherry Blossom" parent="YSort" instance=ExtResource( 12 )]
-position = Vector2( 304, 248 )
-
 [node name="Cherry Blossom2" parent="YSort" instance=ExtResource( 12 )]
 position = Vector2( 360, 136 )
 
-[node name="Dead Tree" parent="YSort" instance=ExtResource( 13 )]
-position = Vector2( 416, 192 )
-
 [node name="Grave (bed)" parent="YSort" instance=ExtResource( 14 )]
 position = Vector2( 272, 384 )
-text = "Here lies [b]Hans Von Vermine Urine[/b]
-[i]He was a good father and a great drinker.[/i]
+text = "Here lies Stanton Von Hinkle Winkle.
+[i]Mathematics is the music of reason.[/i]
 
 
 
-[wave amp=50 freq=2]whooooooooooo![/wave]"
+Before he died, he tried very hard to solve a riddle:
 
-[node name="Candle" parent="YSort" instance=ExtResource( 8 )]
-position = Vector2( 224, 112 )
-frame = 0
+What three whole, positive numbers, in order of numerical value, have the same answer when multiplied together as when added together?
+"
