@@ -21,7 +21,8 @@ func  on_untouch():
 
 # called when the player presses A while touching
 func on_activate():
-	print(\"Panel activate!\")
+	if dialog_id and dialog_id != \"\":
+		GameState.show_dialog(dialog_id)
 "
 
 [sub_resource type="RectangleShape2D" id=2]

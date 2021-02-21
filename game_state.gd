@@ -9,6 +9,11 @@ var player:KinematicBody2D
 
 var player_move = true
 
+func set_player_move(p):
+	player_move = p
+	if not p:
+		player.set_movement_vector(Vector2.ZERO)
+
 # switch scenes
 var current_scene = null
 func goto_scene(path):
@@ -22,7 +27,8 @@ func _deferred_goto_scene(path):
 
 # show a SayWhat dialog
 func show_dialog(id: String) -> void:
-	player_move = false
+	DialogueManager.game_state = current_scene
+	set_player_move(false)
 	var dialog = yield(DialogueManager.get_next_dialogue_line(id), "completed")
 	if dialog != null:
 		var balloon = ResourceLoader.load("res://Dialog.tscn").instance()
@@ -30,13 +36,12 @@ func show_dialog(id: String) -> void:
 		add_child(balloon)
 		show_dialog(yield(balloon, "dialog_actioned"))
 	else:
-		player_move = true
+		set_player_move(true)
 
 func _ready():
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 	DialogueManager.resource = preload("res://dialog.tres")
-	DialogueManager.game_state = self
 	
 
 func _input(event):

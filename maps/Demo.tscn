@@ -23,6 +23,10 @@ var has_read_gravestone = false
 var looking_for_code = false
 
 ## DIALOG METHODS
+
+# 
+func enter_code(args):
+	print(\"enter code here\")
 "
 
 [sub_resource type="TileSet" id=2]
