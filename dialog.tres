@@ -1,0 +1,136 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/saywhat_godot/dialogue_resource.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+lines = {
+"01dbb68c-1952-4292-a33b-c422b6fd1226": {
+"character": "Tom",
+"condition": "!has_read_gravestone",
+"dialogue": "I don't know the code. There was a guy looking for it a while ago. He died of old age, so I buried him on the south-end of the island.",
+"go_to_node_id": "",
+"id": "01dbb68c-1952-4292-a33b-c422b6fd1226",
+"next_node_id": "63adf3e0-d754-4150-b223-81a7ea420f43",
+"type": "dialogue"
+},
+"0b1010cc-055f-40e3-aee3-e8e111047280": {
+"id": "0b1010cc-055f-40e3-aee3-e8e111047280",
+"responses": [ {
+"next_node_id": "",
+"prompt": "OK"
+} ],
+"type": "responses"
+},
+"1ceafb65-8613-4e96-95b9-c58ae4aa11e5": {
+"id": "1ceafb65-8613-4e96-95b9-c58ae4aa11e5",
+"responses": [ {
+"next_node_id": "",
+"prompt": "OK"
+} ],
+"type": "responses"
+},
+"38a5d807-fc59-4354-8607-aeea2070a36f": {
+"character": "Tom",
+"condition": "met_tom",
+"dialogue": "Hi Emily. Nice to see you, again.",
+"go_to_node_id": "",
+"id": "38a5d807-fc59-4354-8607-aeea2070a36f",
+"next_node_id": "b833c815-3bd1-4614-93da-aae6d91d0863",
+"type": "dialogue"
+},
+"63adf3e0-d754-4150-b223-81a7ea420f43": {
+"character": "Tom",
+"condition": "has_read_gravestone",
+"dialogue": "I don't know the code, but I did find this possibly-related riddle in Herman's pocket, before I buried him: Three, whole & positive, in their order of intrinsic value, are the same when accumulated as when totaled.",
+"go_to_node_id": "",
+"id": "63adf3e0-d754-4150-b223-81a7ea420f43",
+"next_node_id": "1ceafb65-8613-4e96-95b9-c58ae4aa11e5",
+"type": "dialogue"
+},
+"9ad31faa-a20f-4aac-9241-fb4fcfa0ff45": {
+"character": "Emily",
+"condition": "!met_tom",
+"dialogue": "Hi, I'm Emily. Nice to meet you.",
+"go_to_node_id": "",
+"id": "9ad31faa-a20f-4aac-9241-fb4fcfa0ff45",
+"next_node_id": "d41006d7-d0a8-4ea0-8270-09d2792277d6",
+"type": "dialogue"
+},
+"a3df319e-8d7f-4322-8fb8-5c2b834dff2a": {
+"character": "Panel",
+"dialogue": "Please enter the 3-digit passcode.",
+"go_to_node_id": "",
+"id": "a3df319e-8d7f-4322-8fb8-5c2b834dff2a",
+"next_node_id": "a41125e4-fc32-412b-bd3c-c783d4248ed0",
+"type": "dialogue"
+},
+"a41125e4-fc32-412b-bd3c-c783d4248ed0": {
+"id": "a41125e4-fc32-412b-bd3c-c783d4248ed0",
+"responses": [ {
+"next_node_id": "",
+"prompt": "OK"
+} ],
+"type": "responses"
+},
+"af1d0bac-2fb2-4b1e-875d-dc5701f9ea29": {
+"id": "af1d0bac-2fb2-4b1e-875d-dc5701f9ea29",
+"responses": [ {
+"next_node_id": "",
+"prompt": "Nothing for now, thanks"
+}, {
+"condition": "looking_for_code",
+"next_node_id": "01dbb68c-1952-4292-a33b-c422b6fd1226",
+"prompt": "Can you tell me the code for that panel on the wall?"
+} ],
+"type": "responses"
+},
+"b833c815-3bd1-4614-93da-aae6d91d0863": {
+"character": "Tom",
+"dialogue": "What can I do for you?",
+"go_to_node_id": "",
+"id": "b833c815-3bd1-4614-93da-aae6d91d0863",
+"next_node_id": "af1d0bac-2fb2-4b1e-875d-dc5701f9ea29",
+"type": "dialogue"
+},
+"b8a64f8e-afbe-4884-90ab-aa8a30643c92": {
+"character": "Gravestone",
+"dialogue": "Here lies Herman. I hardly knew him, but he seemed like a nice enough chap.",
+"go_to_node_id": "",
+"id": "b8a64f8e-afbe-4884-90ab-aa8a30643c92",
+"next_node_id": "0b1010cc-055f-40e3-aee3-e8e111047280",
+"type": "dialogue"
+},
+"c7203fa0-7cf5-4c11-bc47-23abd830807d": {
+"go_to_node_id": "",
+"id": "c7203fa0-7cf5-4c11-bc47-23abd830807d",
+"mutation": "looking_for_code=true",
+"next_node_id": "a3df319e-8d7f-4322-8fb8-5c2b834dff2a",
+"type": "mutation"
+},
+"d41006d7-d0a8-4ea0-8270-09d2792277d6": {
+"character": "Tom",
+"condition": "!met_tom",
+"dialogue": "The pleasure is mine.",
+"go_to_node_id": "",
+"id": "d41006d7-d0a8-4ea0-8270-09d2792277d6",
+"next_node_id": "38a5d807-fc59-4354-8607-aeea2070a36f",
+"type": "dialogue"
+},
+"f320337f-b850-4aa4-8fa2-6a1ef2643580": {
+"character": "Tom",
+"condition": "!met_tom",
+"dialogue": "Hi, my name is Tom.",
+"go_to_node_id": "",
+"id": "f320337f-b850-4aa4-8fa2-6a1ef2643580",
+"next_node_id": "9ad31faa-a20f-4aac-9241-fb4fcfa0ff45",
+"type": "dialogue"
+},
+"f680b9d4-9f5a-49d8-8ce0-2fd2e47e53ef": {
+"go_to_node_id": "",
+"id": "f680b9d4-9f5a-49d8-8ce0-2fd2e47e53ef",
+"mutation": "has_read_gravestone=true",
+"next_node_id": "b8a64f8e-afbe-4884-90ab-aa8a30643c92",
+"type": "mutation"
+}
+}

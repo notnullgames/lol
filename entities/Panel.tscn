@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://tiles/images/cyber-Interior-Furniture.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends StaticBody2D
+
+# this is the dialog ID from SayWhat
+export (String) var dialog_id
+
+# the code to unlock this panel
+export (String) var code
+
+# called when the player is touching
+func on_touch():
+	$AnimatedSprite.play(\"on\")
+
+# called when the player stops touching
+func  on_untouch():
+	$AnimatedSprite.play(\"off\")
+
+# called when the player presses A while touching
+func on_activate():
+	print(\"Panel activate!\")
+"
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 16, 8 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 288, 320, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 288, 288, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "on",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "off",
+"speed": 5.0
+} ]
+
+[node name="Panel" type="StaticBody2D"]
+z_index = 1
+collision_layer = 3
+script = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 16, 0 )
+shape = SubResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 16, -32 )
+frames = SubResource( 5 )
+animation = "off"
+playing = true

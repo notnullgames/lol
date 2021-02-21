@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://entities/BasePerson.tscn" type="PackedScene" id=1]
+
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends KinematicBody2D
+
+# this is the entry-point dialog ID for this person
+# You can set it in the options for this instance, in your scene
+# player doesn't have one
+export (String) var dialog_id
+
+# tune these to change the feel of the movement
+const ACCELERATION = 500
+const MAX_SPEED = 80
+const FRICTION = 500
+
+onready var character = name.to_lower()
+onready var animationState = $AnimationTree.get('parameters/playback')
+var velocity =  Vector2.ZERO
+
+# thing currently touching player
+var touching
+
+# this allows external things to tell this Person where to move to
+var movement_vector = Vector2.ZERO
+
+func set_movement_vector(value):
+	movement_vector = value
+
+func get_movement_vector():
+	return movement_vector
+
+func _physics_process(delta):
+	if movement_vector != Vector2.ZERO:
+		$AnimationTree.set('parameters/Idle/blend_position', movement_vector)
+		$AnimationTree.set('parameters/Walk/blend_position', movement_vector)
+		animationState.travel('Walk')
+		velocity = velocity.move_toward(movement_vector * MAX_SPEED, ACCELERATION * delta)
+	else:
+		animationState.travel('Idle')
+		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+	velocity = move_and_slide(velocity)
+
+func _ready():
+	GameState.player = self
+
+func _on_Area2D_body_entered(body):
+	if body == self:
+		return
+	touching = body
+	if funcref(body, 'on_touch').is_valid():
+		body.on_touch()
+
+
+func _on_Area2D_body_exited(body):
+	if body == self:
+		return
+	touching = null
+	if funcref(body, 'on_untouch').is_valid():
+		body.on_untouch()
+"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=2]
+
+[sub_resource type="CapsuleShape2D" id=3]
+height = 10.5057
+
+[node name="Emily" instance=ExtResource( 1 )]
+script = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="." index="2"]
+current = true
+
+[node name="AnimationTree" parent="." index="4"]
+parameters/playback = SubResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="." index="5"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+rotation = -1.5708
+shape = SubResource( 3 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
