@@ -54,6 +54,22 @@ lines = {
 "next_node_id": "",
 "type": "mutation"
 },
+"454c8139-05ae-4a6b-bcfd-30aa18deacd1": {
+"id": "454c8139-05ae-4a6b-bcfd-30aa18deacd1",
+"responses": [ {
+"next_node_id": "",
+"prompt": "Ok, Cool."
+} ],
+"type": "responses"
+},
+"4d92529e-b614-43d7-b9fb-1beba0656ee3": {
+"character": "TheDude",
+"dialogue": "Oh hey, I was just sun-bathing. Don;t mind me.",
+"go_to_node_id": "",
+"id": "4d92529e-b614-43d7-b9fb-1beba0656ee3",
+"next_node_id": "454c8139-05ae-4a6b-bcfd-30aa18deacd1",
+"type": "dialogue"
+},
 "5286039f-7180-4a57-8104-3543d2da22da": {
 "id": "5286039f-7180-4a57-8104-3543d2da22da",
 "responses": [ {
