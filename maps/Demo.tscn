@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://tiles/Terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/Panel.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://tiles/images/obj_misk_atlas.png" type="Texture" id=5]
 [ext_resource path="res://entities/Gravestone.tscn" type="PackedScene" id=6]
 [ext_resource path="res://entities/Glass Wall.tscn" type="PackedScene" id=7]
+[ext_resource path="res://entities/TheDude.tscn" type="PackedScene" id=8]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -263,9 +264,13 @@ z_index = 1
 dialog_id = "f680b9d4-9f5a-49d8-8ce0-2fd2e47e53ef"
 
 [node name="Tom" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 119.803, 114.544 )
+position = Vector2( 101.772, 115.605 )
 dialog_id = "f320337f-b850-4aa4-8fa2-6a1ef2643580"
 MAX_SPEED = 100
 
 [node name="Emily" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 36.5132, 117.694 )
+position = Vector2( -468.869, 598.622 )
+
+[node name="The Dude" parent="YSort" instance=ExtResource( 8 )]
+position = Vector2( 1104.08, 662.036 )
+dialog_id = "4d92529e-b614-43d7-b9fb-1beba0656ee3"
