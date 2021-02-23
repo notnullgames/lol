@@ -63,6 +63,14 @@ lines = {
 "next_node_id": "1ceafb65-8613-4e96-95b9-c58ae4aa11e5",
 "type": "dialogue"
 },
+"73a27757-1da9-4041-b274-2237fb0ec41b": {
+"character": "The Dude",
+"dialogue": "Don't mind me, I'm just sun-bathing.",
+"go_to_node_id": "",
+"id": "73a27757-1da9-4041-b274-2237fb0ec41b",
+"next_node_id": "a7229e1a-b695-4a83-8e58-880eaec4d3cf",
+"type": "dialogue"
+},
 "8338e0e0-9d6d-44b6-a339-be70d52998bf": {
 "id": "8338e0e0-9d6d-44b6-a339-be70d52998bf",
 "responses": [ {
@@ -90,6 +98,14 @@ lines = {
 "id": "939d0fd5-456d-4831-ac41-aa76c7440b70",
 "next_node_id": "15b69118-b05e-4c15-9647-60843e4b0207",
 "type": "dialogue"
+},
+"a7229e1a-b695-4a83-8e58-880eaec4d3cf": {
+"id": "a7229e1a-b695-4a83-8e58-880eaec4d3cf",
+"responses": [ {
+"next_node_id": "",
+"prompt": "Cool."
+} ],
+"type": "responses"
 },
 "ae5c0945-d4dd-4306-ba9b-2f859b708f20": {
 "character": "Panel",

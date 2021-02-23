@@ -264,13 +264,13 @@ z_index = 1
 dialog_id = "f680b9d4-9f5a-49d8-8ce0-2fd2e47e53ef"
 
 [node name="Tom" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 101.772, 115.605 )
+position = Vector2( 119.803, 114.544 )
 dialog_id = "f320337f-b850-4aa4-8fa2-6a1ef2643580"
 MAX_SPEED = 100
 
 [node name="Emily" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( -468.869, 598.622 )
+position = Vector2( 36.5132, 117.694 )
 
 [node name="The Dude" parent="YSort" instance=ExtResource( 8 )]
-position = Vector2( 1104.08, 662.036 )
-dialog_id = "4d92529e-b614-43d7-b9fb-1beba0656ee3"
+position = Vector2( 1095.67, 594.09 )
+dialog_id = "73a27757-1da9-4041-b274-2237fb0ec41b"
