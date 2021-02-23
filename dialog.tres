@@ -47,23 +47,12 @@ lines = {
 } ],
 "type": "responses"
 },
-"3475279d-07a9-460b-a61c-e05c813c0bf5": {
+"40187658-425a-426e-a32f-c20f6d6ff5e5": {
 "go_to_node_id": "",
-"id": "3475279d-07a9-460b-a61c-e05c813c0bf5",
-"mutation": "enter_code \"123\"",
-"next_node_id": "",
+"id": "40187658-425a-426e-a32f-c20f6d6ff5e5",
+"mutation": "enter_code",
+"next_node_id": "c407983f-8fce-40b3-9047-9ea84accf512",
 "type": "mutation"
-},
-"5286039f-7180-4a57-8104-3543d2da22da": {
-"id": "5286039f-7180-4a57-8104-3543d2da22da",
-"responses": [ {
-"next_node_id": "",
-"prompt": "Nevermind"
-}, {
-"next_node_id": "3475279d-07a9-460b-a61c-e05c813c0bf5",
-"prompt": "OK"
-} ],
-"type": "responses"
 },
 "63adf3e0-d754-4150-b223-81a7ea420f43": {
 "character": "Tom",
@@ -102,6 +91,14 @@ lines = {
 "next_node_id": "15b69118-b05e-4c15-9647-60843e4b0207",
 "type": "dialogue"
 },
+"ae5c0945-d4dd-4306-ba9b-2f859b708f20": {
+"character": "Panel",
+"dialogue": "Please enter the 3-digit passcode.",
+"go_to_node_id": "",
+"id": "ae5c0945-d4dd-4306-ba9b-2f859b708f20",
+"next_node_id": "40187658-425a-426e-a32f-c20f6d6ff5e5",
+"type": "dialogue"
+},
 "b6377b1e-cdcf-4b22-ad91-3c0e1efe9495": {
 "character": "Tom",
 "condition": "met_tom",
@@ -119,20 +116,20 @@ lines = {
 "next_node_id": "0b1010cc-055f-40e3-aee3-e8e111047280",
 "type": "dialogue"
 },
+"c407983f-8fce-40b3-9047-9ea84accf512": {
+"id": "c407983f-8fce-40b3-9047-9ea84accf512",
+"responses": [ {
+"next_node_id": "",
+"prompt": "Nevermind"
+} ],
+"type": "responses"
+},
 "c7203fa0-7cf5-4c11-bc47-23abd830807d": {
 "go_to_node_id": "",
 "id": "c7203fa0-7cf5-4c11-bc47-23abd830807d",
 "mutation": "looking_for_code=true",
-"next_node_id": "d44f66d2-9d39-46e4-b79a-636432255e6b",
+"next_node_id": "ae5c0945-d4dd-4306-ba9b-2f859b708f20",
 "type": "mutation"
-},
-"d44f66d2-9d39-46e4-b79a-636432255e6b": {
-"character": "Panel",
-"dialogue": "Please enter the 3-digit passcode.",
-"go_to_node_id": "",
-"id": "d44f66d2-9d39-46e4-b79a-636432255e6b",
-"next_node_id": "5286039f-7180-4a57-8104-3543d2da22da",
-"type": "dialogue"
 },
 "f320337f-b850-4aa4-8fa2-6a1ef2643580": {
 "character": "Tom",

@@ -258,7 +258,7 @@ z_index = 0
 position = Vector2( 31, -35 )
 
 [node name="Gravestone" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( -43.678, 196.64 )
+position = Vector2( -156.208, 1356.56 )
 z_index = 1
 dialog_id = "f680b9d4-9f5a-49d8-8ce0-2fd2e47e53ef"
 
