@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://tiles/Terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/Panel.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://entities/Gravestone.tscn" type="PackedScene" id=6]
 [ext_resource path="res://entities/Glass Wall.tscn" type="PackedScene" id=7]
 [ext_resource path="res://entities/TheDude.tscn" type="PackedScene" id=8]
+[ext_resource path="res://entities/Portal.tscn" type="PackedScene" id=9]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -25,7 +26,6 @@ var looking_for_code = false
 
 ## DIALOG METHODS
 
-# 
 func enter_code(args):
 	print(\"enter code here\")
 "
@@ -254,6 +254,11 @@ code = "123"
 [node name="Glass Wall" parent="." instance=ExtResource( 7 )]
 position = Vector2( 688.347, -272.281 )
 z_index = 0
+
+[node name="Portal" parent="." instance=ExtResource( 9 )]
+position = Vector2( -517.88, 586.363 )
+z_index = 1
+world = "Demo2"
 
 [node name="YSort" type="YSort" parent="."]
 position = Vector2( 31, -35 )
