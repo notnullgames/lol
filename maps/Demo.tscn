@@ -252,11 +252,11 @@ dialog_id = "c7203fa0-7cf5-4c11-bc47-23abd830807d"
 code = "123"
 
 [node name="Glass Wall" parent="." instance=ExtResource( 7 )]
-position = Vector2( 688.347, -272.281 )
+position = Vector2( 692.127, -272.281 )
 z_index = 0
 
 [node name="Portal" parent="." instance=ExtResource( 9 )]
-position = Vector2( -517.88, 586.363 )
+position = Vector2( 688.391, -68.5669 )
 z_index = 1
 world = "Demo2"
 
@@ -264,18 +264,18 @@ world = "Demo2"
 position = Vector2( 31, -35 )
 
 [node name="Gravestone" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( -156.208, 1356.56 )
+position = Vector2( 773.19, -122.845 )
 z_index = 1
 dialog_id = "f680b9d4-9f5a-49d8-8ce0-2fd2e47e53ef"
 
 [node name="Tom" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 119.803, 114.544 )
+position = Vector2( 488.313, -9.06355 )
 dialog_id = "f320337f-b850-4aa4-8fa2-6a1ef2643580"
 MAX_SPEED = 100
 
 [node name="Emily" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 36.5132, 117.694 )
+position = Vector2( 653.867, -124.758 )
 
 [node name="The Dude" parent="YSort" instance=ExtResource( 8 )]
-position = Vector2( 1095.67, 594.09 )
+position = Vector2( 761.176, -21.0191 )
 dialog_id = "73a27757-1da9-4041-b274-2237fb0ec41b"
