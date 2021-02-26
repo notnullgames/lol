@@ -29,6 +29,11 @@ var looking_for_code = false
 
 func enter_code(args):
 	print(\"enter code here\")
+
+
+func _ready():
+	# set background color for ocean
+	VisualServer.set_default_clear_color(Color(\"#156C99\"))
 "
 
 [sub_resource type="TileSet" id=2]

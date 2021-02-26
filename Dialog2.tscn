@@ -13,54 +13,24 @@ var text = \"\"\"Gang long-chain hydrocarbons j-pop convenience store footage pi
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Text.bbcode_text = text
-	$NinePatchRect/Name.bbcode_text = character
-	$NinePatchRect/portrait.texture = load('res://people/%s/portrait.png' % character.to_lower())
+	$Text/NinePatchRect/Name.bbcode_text = character
+	$Text/NinePatchRect/portrait.texture = load('res://people/%s/portrait.png' % character.to_lower())
 	# TODO: get the actual height of textbox, then resize/position 9patch & text
-	var height = $Text.get_size().y
-	print(height)
-	$NinePatchRect.margin_top = -1 * height
-	$Text.margin_top = (-1 * height) + 10
+#	var height = $Text.get_size().y
+#	print(height)
+#	$NinePatchRect.margin_top = -1 * height
+#	$Text.margin_top = (-1 * height) + 10
 "
 
 [node name="Dialog2" type="Node2D"]
+position = Vector2( 12, 220.052 )
 script = SubResource( 1 )
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-margin_top = -171.0
-margin_right = 615.0
-texture = ExtResource( 1 )
-patch_margin_left = 6
-patch_margin_top = 7
-patch_margin_right = 7
-patch_margin_bottom = 7
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="portrait" type="Sprite" parent="NinePatchRect"]
-position = Vector2( 566, -45 )
-texture = ExtResource( 2 )
-
-[node name="Name" type="RichTextLabel" parent="NinePatchRect"]
-margin_left = 13.1238
-margin_top = -19.504
-margin_right = 501.124
-margin_bottom = -0.504028
-rect_clip_content = false
-custom_fonts/normal_font = ExtResource( 3 )
-bbcode_enabled = true
-bbcode_text = "NAME"
-text = "NAME"
-scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Text" type="RichTextLabel" parent="."]
-margin_left = 11.713
-margin_top = -151.426
-margin_right = 604.713
-margin_bottom = -15.4259
+margin_left = 8.0
+margin_top = -87.0
+margin_right = 294.0
+margin_bottom = -6.0
 rect_clip_content = false
 custom_fonts/normal_font = ExtResource( 3 )
 text = "TEXT
@@ -68,6 +38,7 @@ TEXT
 TEXT
 TEXT
 TEXT
+
 TEXT
 TEXT
 TEXT"
@@ -77,7 +48,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 303.658, -220.696 )
-current = true
-zoom = Vector2( 2, 2 )
+[node name="NinePatchRect" type="NinePatchRect" parent="Text"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+patch_margin_left = 6
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="portrait" type="Sprite" parent="Text/NinePatchRect"]
+position = Vector2( 269.183, -21.9481 )
+texture = ExtResource( 2 )
+
+[node name="Name" type="RichTextLabel" parent="Text/NinePatchRect"]
+margin_left = 13.0
+margin_top = -13.0
+margin_right = 214.0
+margin_bottom = -3.0
+rect_clip_content = false
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "NAME"
+text = "NAME"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
