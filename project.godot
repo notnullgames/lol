@@ -100,4 +100,4 @@ ui_cancel={
 
 [rendering]
 
-environment/default_clear_color=Color( 0, 0, 0, 1 )
+environment/default_clear_color=Color( 0.921569, 0.00784314, 1, 1 )
