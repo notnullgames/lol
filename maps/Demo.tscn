@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://tiles/Terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entities/Panel.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://entities/TheDude.tscn" type="PackedScene" id=8]
 [ext_resource path="res://entities/Portal.tscn" type="PackedScene" id=9]
 [ext_resource path="res://entities/David.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Dialog2.tscn" type="PackedScene" id=11]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -284,3 +285,7 @@ dialog_id = "73a27757-1da9-4041-b274-2237fb0ec41b"
 [node name="David" parent="YSort" instance=ExtResource( 10 )]
 position = Vector2( 577, -13 )
 dialog_id = "2a10654c-e098-4ada-95d0-80a155c08f62"
+
+[node name="Dialog" parent="." instance=ExtResource( 11 )]
+position = Vector2( 384, 72 )
+z_index = 1
