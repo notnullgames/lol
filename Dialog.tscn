@@ -21,6 +21,9 @@ func drawText():
 				$VBoxContainer/Text.bbcode_text += \"\\n   \" + dialog.responses[i].prompt
 
 func handle(d):
+	# force zoom 1
+	GameState.camera.zoom = Vector2(1, 1)
+	
 	dialog = d
 	current_choice = 0
 	$VBoxContainer/Name.bbcode_text = dialog.character

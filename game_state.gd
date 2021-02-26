@@ -6,6 +6,7 @@ extends Node
 
 # track what object is the  player
 var player:KinematicBody2D
+var camera:Camera2D
 
 var player_move = true
 
@@ -53,3 +54,9 @@ func _input(event):
 		player.set_movement_vector(movement_vector.normalized())
 		if event.is_action_pressed('ui_accept') and player.touching and funcref(player.touching, 'on_activate').is_valid():
 			player.touching.on_activate()
+		# B toggles zoom
+		if event.is_action_pressed('ui_cancel'):
+			if camera.zoom == Vector2(2, 2):
+				camera.zoom = Vector2(1, 1)
+			else:
+				camera.zoom = Vector2(2, 2)

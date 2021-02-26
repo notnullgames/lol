@@ -16,7 +16,8 @@ func _ready():
 	$NinePatchRect/Name.bbcode_text = character
 	$NinePatchRect/portrait.texture = load('res://people/%s/portrait.png' % character.to_lower())
 	# TODO: get the actual height of textbox, then resize/position 9patch & text
-	var height = 325
+	var height = $Text.get_size().y
+	print(height)
 	$NinePatchRect.margin_top = -1 * height
 	$Text.margin_top = (-1 * height) + 10
 "
@@ -75,3 +76,8 @@ scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 303.658, -220.696 )
+current = true
+zoom = Vector2( 2, 2 )
