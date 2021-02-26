@@ -47,6 +47,14 @@ lines = {
 } ],
 "type": "responses"
 },
+"2a10654c-e098-4ada-95d0-80a155c08f62": {
+"character": "David",
+"dialogue": "Hi, my name is David. I made this game.",
+"go_to_node_id": "",
+"id": "2a10654c-e098-4ada-95d0-80a155c08f62",
+"next_node_id": "be7917f4-7877-4ba6-86ee-8dcaffa91653",
+"type": "dialogue"
+},
 "40187658-425a-426e-a32f-c20f6d6ff5e5": {
 "go_to_node_id": "",
 "id": "40187658-425a-426e-a32f-c20f6d6ff5e5",
@@ -131,6 +139,14 @@ lines = {
 "id": "b8a64f8e-afbe-4884-90ab-aa8a30643c92",
 "next_node_id": "0b1010cc-055f-40e3-aee3-e8e111047280",
 "type": "dialogue"
+},
+"be7917f4-7877-4ba6-86ee-8dcaffa91653": {
+"id": "be7917f4-7877-4ba6-86ee-8dcaffa91653",
+"responses": [ {
+"next_node_id": "",
+"prompt": "Cool"
+} ],
+"type": "responses"
 },
 "c407983f-8fce-40b3-9047-9ea84accf512": {
 "id": "c407983f-8fce-40b3-9047-9ea84accf512",
