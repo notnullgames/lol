@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://people/emily/portrait.png" type="Texture" id=1]
+[ext_resource path="res://tiles/images/dialog.9.png" type="Texture" id=1]
+[ext_resource path="res://people/emily/portrait.png" type="Texture" id=2]
+[ext_resource path="res://basicfont.tres" type="DynamicFont" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends CanvasLayer
@@ -10,33 +12,25 @@ signal dialog_actioned(id)
 var dialog
 var current_choice = 0
 
+# this draws the current text of the dialog
 func drawText():
-	$VBoxContainer/Text.bbcode_text = dialog.dialogue
+	$Text.bbcode_text = dialog.dialogue
 	if dialog.responses.size():
-		$VBoxContainer/Text.bbcode_text += \"\\n\"
+		$Text.bbcode_text += '\\n'
+		# TODO: make a better indicator, with the assumption that each choice is 1 line 
 		for i in range(dialog.responses.size()):
 			if i == current_choice:
-				$VBoxContainer/Text.bbcode_text += \"\\n > \" + dialog.responses[i].prompt
+				$Text.bbcode_text += '\\n- ' + dialog.responses[i].prompt
 			else:
-				$VBoxContainer/Text.bbcode_text += \"\\n   \" + dialog.responses[i].prompt
+				$Text.bbcode_text += '\\n  ' + dialog.responses[i].prompt
 
+# this is called by GameState.show_dialog()
 func handle(d):
-	# force zoom 1
-	GameState.camera.zoom = Vector2(1, 1)
-	
 	dialog = d
-	current_choice = 0
-	$VBoxContainer/Name.bbcode_text = dialog.character
-	var character = dialog.character.to_lower()
-	var path = 'res://people/%s/portrait.png' % character
-	var file2Check = File.new()
-	if file2Check.file_exists(path):
-		$VBoxContainer.anchor_right = 0.8
-		$Portrait.texture = load(path)
-		$Portrait.visible = true
-	else:
-		$VBoxContainer.anchor_right = 1
-		$Portrait.visible = false
+	print(dialog.character, \": \", dialog.dialogue)
+	GameState.camera.zoom = Vector2(1, 1)
+	$NinePatchRect/Name.bbcode_text = dialog.character
+	$NinePatchRect/portrait.texture = load('res://people/%s/portrait.png' % dialog.character.to_lower())
 	drawText()
 
 func _input(event):
@@ -45,7 +39,7 @@ func _input(event):
 		queue_free()
 	if dialog.responses.size() == 0:
 		if event.is_action_pressed('ui_accept'):
-			emit_signal(\"dialog_actioned\", dialog.next_node_id)
+			emit_signal('dialog_actioned', dialog.next_node_id)
 			queue_free()
 	else:
 		if event.is_action_pressed('ui_up'):
@@ -55,55 +49,75 @@ func _input(event):
 			current_choice = (current_choice + 1) % dialog.responses.size()
 			drawText()
 		if event.is_action_pressed('ui_accept'):
-			emit_signal(\"dialog_actioned\", dialog.responses[current_choice].next_node_id)
+			emit_signal('dialog_actioned', dialog.responses[current_choice].next_node_id)
 			queue_free()
 "
 
 [node name="Dialog" type="CanvasLayer"]
 script = SubResource( 1 )
 
-[node name="Portrait" type="Sprite" parent="."]
-position = Vector2( 272, 192 )
-texture = ExtResource( 1 )
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
 margin_left = 8.0
-margin_top = 8.0
-margin_right = -8.0
-grow_horizontal = 2
-grow_vertical = 2
-custom_constants/separation = 5
-alignment = 2
+margin_top = 168.0
+margin_right = 310.0
+margin_bottom = 232.0
+texture = ExtResource( 1 )
+patch_margin_left = 6
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Name" type="RichTextLabel" parent="VBoxContainer"]
-margin_top = 152.0
-margin_right = 304.0
-margin_bottom = 167.0
+[node name="portrait" type="Sprite" parent="NinePatchRect"]
+position = Vector2( 246.165, -44.9654 )
+texture = ExtResource( 2 )
+
+[node name="Name" type="RichTextLabel" parent="NinePatchRect"]
+margin_left = 8.0
+margin_top = -13.0
+margin_right = 209.0
+margin_bottom = -3.0
+rect_clip_content = false
+custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
-bbcode_text = "NAME"
-text = "NAME"
-fit_content_height = true
+bbcode_text = "Emily"
+text = "Emily"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Text" type="RichTextLabel" parent="VBoxContainer"]
-margin_top = 172.0
-margin_right = 304.0
-margin_bottom = 232.0
+[node name="Text" type="RichTextLabel" parent="."]
+margin_left = 15.0
+margin_top = 178.0
+margin_right = 298.0
+margin_bottom = 226.0
 rect_clip_content = false
+custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
 bbcode_text = "TEXT
 TEXT
 TEXT
+TEXT
+TEXT
+TEXT
+TEXT
+TEXT
+TEXT
+TEXT
+TEXT
 TEXT"
 text = "TEXT
+TEXT
+TEXT
+TEXT
+TEXT
+TEXT
+TEXT
+TEXT
+TEXT
 TEXT
 TEXT
 TEXT"

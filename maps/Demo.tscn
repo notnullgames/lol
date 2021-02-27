@@ -252,14 +252,14 @@ shape = SubResource( 3 )
 position = Vector2( 816.437, -279.199 )
 shape = SubResource( 3 )
 
+[node name="Glass Wall" parent="." instance=ExtResource( 7 )]
+position = Vector2( 692.127, -272.281 )
+z_index = 0
+
 [node name="Panel" parent="." instance=ExtResource( 2 )]
 position = Vector2( 656.16, -206.174 )
 dialog_id = "c7203fa0-7cf5-4c11-bc47-23abd830807d"
 code = "123"
-
-[node name="Glass Wall" parent="." instance=ExtResource( 7 )]
-position = Vector2( 692.127, -272.281 )
-z_index = 0
 
 [node name="Portal" parent="." instance=ExtResource( 9 )]
 position = Vector2( 688.391, -68.5669 )
@@ -280,7 +280,7 @@ dialog_id = "f320337f-b850-4aa4-8fa2-6a1ef2643580"
 MAX_SPEED = 100
 
 [node name="Emily" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 653.867, -124.758 )
+position = Vector2( 577, 19 )
 
 [node name="The Dude" parent="YSort" instance=ExtResource( 8 )]
 position = Vector2( 761.176, -21.0191 )
