@@ -6,39 +6,116 @@
 script/source = "extends CanvasLayer
 
 var line = 0
-var position = 0
+var pos = 0
 var opmode = false
 
-# show values + position of cursor
+onready var iLine = $\"indicator-line\"
+onready var iPos = $\"indicator-pos\"
+
+# locations of positions
+var pos_locs = [36, 72, 96, 120, 196, 232, 256, 280]
+
+# known ops
+enum ops { NOP, JMP, CMP, SET, MOV }
+
+var code = [
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0x00],
+]
+
+# show position of cursor
 func drawIndicators():
-	# TODO
-	pass
+	if opmode:
+		iLine.color = Color('#46e50000')
+		iPos.color = Color('#46e50000')
+	else:
+		iLine.color = Color('#4652e500')
+		iPos.color = Color('#4652e500')
+	var y = 5 + (line * 9)
+	var x = 5
+	if pos > 3:
+		x = 165
+	iLine.set_position(Vector2(x, y))
+	iPos.set_position(Vector2(pos_locs[pos] , y))
+	
+	print(\"line: %d pos: %d\" % [line, pos])
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	drawIndicators()
 
 func _input(event):
-	if event.is_action_pressed('ui_accept'):
-		opmode = not opmode
-	if event.is_action_pressed('ui_up'):
-		if opmode:
-			# TODO
-			pass
-		else:
-			line = (line + 1) % 32
-	if event.is_action_pressed('ui_up'):
-		if opmode:
-			# TODO
-			pass
-		else:
-			line = (line - 1) % 32
-	if event.is_action_pressed('ui_left'):
-		if not opmode:
-			position = (position - 1) % 5
-	if event.is_action_pressed('ui_right'):
-		if not opmode:
-			position = (position + 1) % 5
+	var oldLine = line
+	
+	if opmode:
+		var p = line
+		if pos > 3:
+			p = line + 15
+		print(code[p])
+	else:
+		if event.is_action_pressed(\"ui_up\"):
+			line = line - 1
+		if event.is_action_pressed(\"ui_down\"):
+			line = line + 1
+		
+		if event.is_action_pressed(\"ui_left\"):
+			pos = pos - 1
+		if event.is_action_pressed(\"ui_right\"):
+			pos = pos + 1
+		
+		if line < 0:
+			if pos > 3:
+				pos = 0
+			else:
+				pos = 4
+			line = 15
+		if line > 15:
+			if pos > 3:
+				pos = 0
+			else:
+				pos = 4
+			line = 0
+		
+		if pos < 0:
+			pos = 7
+		if pos > 7:
+			pos = 0
+		
+	if event.is_action_pressed(\"ui_accept\"):
+		opmode = true
+	if event.is_action_released(\"ui_accept\"):
+		opmode = false
+	
 	drawIndicators()
 "
 
@@ -173,11 +250,11 @@ __meta__ = {
 [node name="indicator-line" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 8.7027
+margin_left = 165.0
 margin_top = 5.0
-margin_right = -177.297
-margin_bottom = -226.0
-color = Color( 0.898039, 0, 0, 0.27451 )
+margin_right = -5.0
+margin_bottom = -225.0
+color = Color( 0.321569, 0.898039, 0, 0.27451 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -185,9 +262,9 @@ __meta__ = {
 [node name="indicator-pos" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 36.0
+margin_left = 280.0
 margin_top = 5.0
-margin_right = -259.0
+margin_right = -15.0
 margin_bottom = -226.0
 color = Color( 0.898039, 0, 0, 0.27451 )
 __meta__ = {
