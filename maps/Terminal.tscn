@@ -5,19 +5,7 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends CanvasLayer
 
-var line = 0
-var pos = 0
-var opmode = false
-
-onready var iLine = $\"indicator-line\"
-onready var iPos = $\"indicator-pos\"
-
-# locations of positions
-var pos_locs = [36, 72, 96, 120, 196, 232, 256, 280]
-
-# known ops
-enum ops { NOP, JMP, CMP, SET, MOV, ADD, INC, INT, AND }
-var op_keys = ops.keys()
+var running = false
 
 var connected = false
 
@@ -55,6 +43,21 @@ var code = [
 	[ops.NOP, 0x00, 0x00, 0x00],
 	[ops.NOP, 0x00, 0x00, 0x00],
 ]
+
+
+var line = 0
+var pos = 0
+var opmode = false
+
+onready var iLine = $\"indicator-line\"
+onready var iPos = $\"indicator-pos\"
+
+# locations of positions
+var pos_locs = [36, 72, 96, 120, 196, 232, 256, 280]
+
+# known ops
+enum ops { NOP, JMP, CMP, SET, MOV, ADD, INC, INT, AND }
+var op_keys = ops.keys()
 
 # show position of cursor
 func drawIndicators():
@@ -98,6 +101,23 @@ func _ready():
 func do_connect():
 	connected = true
 	drawIndicators()
+	
+func do_running():
+	line = line + 1
+	var l = line
+	if line > 15:
+		if pos > 3:
+			pos = 0
+		else:
+			pos = 4
+		line = 0
+	if pos > 3:
+		l = line + 16
+	print(code[l])
+	if running:
+		$Timer.connect(\"timeout\", self, \"do_running\")
+		$Timer.set_wait_time(0.1)
+		$Timer.start()
 
 func _input(event):
 	var oldLine = line
@@ -154,11 +174,19 @@ func _input(event):
 			pos = 7
 		if pos > 7:
 			pos = 0
-		
-	if event.is_action_pressed(\"ui_accept\"):
-		opmode = true
-	if event.is_action_released(\"ui_accept\"):
-		opmode = false
+	
+	if not running:
+		if event.is_action_pressed(\"ui_accept\"):
+			opmode = true
+		if event.is_action_released(\"ui_accept\"):
+			opmode = false
+	
+	if event.is_action_released(\"ui_select\"):
+		running = not running
+		do_running()
+	
+	if event.is_action_released(\"ui_cancel\"):
+		GameState.goto_scene(\"res://maps/Demo.tscn\")
 	
 	drawIndicators()
 "
@@ -293,13 +321,13 @@ custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
 bbcode_text = "Use directionals to select position.
 Hold A to with directionsals to change.
-Press SELECT to run/stop.
-Press START to exit.
+Press START to run/stop.
+Press B to exit.
 "
 text = "Use directionals to select position.
 Hold A to with directionsals to change.
-Press SELECT to run/stop.
-Press START to exit.
+Press START to run/stop.
+Press B to exit.
 "
 scroll_active = false
 __meta__ = {
