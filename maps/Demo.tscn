@@ -288,4 +288,4 @@ dialog_id = "73a27757-1da9-4041-b274-2237fb0ec41b"
 
 [node name="David" parent="YSort" instance=ExtResource( 10 )]
 position = Vector2( 577, -13 )
-dialog_id = "2a10654c-e098-4ada-95d0-80a155c08f62"
+dialog_id = "29c72df0-bccb-4e06-a1e9-9664af8c06c0"

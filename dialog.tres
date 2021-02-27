@@ -22,6 +22,30 @@ lines = {
 } ],
 "type": "responses"
 },
+"2696a974-ad8e-4cae-be67-55f3f844c01f": {
+"character": "David",
+"dialogue": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sagittis vitae et leo duis ut diam. Cras pulvinar mattis nunc sed blandit. Commodo viverra maecenas accumsan lacus vel facilisis volutpat. Velit dignissim sodales ut eu. Consectetur a erat nam at lectus urna duis convallis convallis. Sit amet est placerat in egestas erat. Accumsan tortor posuere ac ut consequat semper viverra. Enim eu turpis egestas pretium aenean pharetra. Egestas integer eget aliquet nibh praesent tristique magna. Lacus vestibulum sed arcu non odio euismod lacinia. Egestas diam in arcu cursus euismod quis viverra nibh. Lacus luctus accumsan tortor posuere ac ut. Purus viverra accumsan in nisl nisi scelerisque eu ultrices.",
+"go_to_node_id": "",
+"id": "2696a974-ad8e-4cae-be67-55f3f844c01f",
+"next_node_id": "38638c2f-3ef2-43b0-9a9b-38c4a30256ab",
+"type": "dialogue"
+},
+"29c72df0-bccb-4e06-a1e9-9664af8c06c0": {
+"character": "David",
+"dialogue": "Hi, I'm a developer who worked on this game. I hope you have fun.",
+"go_to_node_id": "",
+"id": "29c72df0-bccb-4e06-a1e9-9664af8c06c0",
+"next_node_id": "67a57f67-1e4e-478a-a459-6976191ef95f",
+"type": "dialogue"
+},
+"38638c2f-3ef2-43b0-9a9b-38c4a30256ab": {
+"id": "38638c2f-3ef2-43b0-9a9b-38c4a30256ab",
+"responses": [ {
+"next_node_id": "",
+"prompt": "OK"
+} ],
+"type": "responses"
+},
 "40187658-425a-426e-a32f-c20f6d6ff5e5": {
 "go_to_node_id": "",
 "id": "40187658-425a-426e-a32f-c20f6d6ff5e5",
@@ -66,6 +90,14 @@ lines = {
 "prompt": "OK"
 } ],
 "type": "responses"
+},
+"67a57f67-1e4e-478a-a459-6976191ef95f": {
+"character": "David",
+"dialogue": "Also, here is some tester-text, that will break things:",
+"go_to_node_id": "",
+"id": "67a57f67-1e4e-478a-a459-6976191ef95f",
+"next_node_id": "2696a974-ad8e-4cae-be67-55f3f844c01f",
+"type": "dialogue"
 },
 "73a27757-1da9-4041-b274-2237fb0ec41b": {
 "character": "The Dude",

@@ -27,7 +27,7 @@ func drawText():
 # this is called by GameState.show_dialog()
 func handle(d):
 	dialog = d
-	print(dialog.character, \": \", dialog.dialogue)
+#	print(dialog.character, \": \", dialog.dialogue)
 	GameState.camera.zoom = Vector2(1, 1)
 	$NinePatchRect/Name.bbcode_text = dialog.character
 	$NinePatchRect/portrait.texture = load('res://people/%s/portrait.png' % dialog.character.to_lower())
