@@ -1,0 +1,250 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://basicfont.tres" type="DynamicFont" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends CanvasLayer
+
+var line = 0
+var position = 0
+var opmode = false
+
+# show values + position of cursor
+func drawIndicators():
+	# TODO
+	pass
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	drawIndicators()
+
+func _input(event):
+	if event.is_action_pressed('ui_accept'):
+		opmode = not opmode
+	if event.is_action_pressed('ui_up'):
+		if opmode:
+			# TODO
+			pass
+		else:
+			line = (line + 1) % 32
+	if event.is_action_pressed('ui_up'):
+		if opmode:
+			# TODO
+			pass
+		else:
+			line = (line - 1) % 32
+	if event.is_action_pressed('ui_left'):
+		if not opmode:
+			position = (position - 1) % 5
+	if event.is_action_pressed('ui_right'):
+		if not opmode:
+			position = (position + 1) % 5
+	drawIndicators()
+"
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = SubResource( 1 )
+
+[node name="BG" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.396851
+margin_top = 0.396851
+margin_right = -0.396851
+margin_bottom = 0.396851
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InterfaceText1" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 13.0
+margin_top = 6.0
+margin_right = -164.0
+margin_bottom = -86.0
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[color=blue]00[/color] [color=green]JMP[/color]  [color=yellow]00 00 0F[/color]
+[color=blue]01[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]02[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]03[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]04[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
+[color=blue]05[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]06[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]07[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]08[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
+[color=blue]09[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]0A[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]0B[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]0C[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
+[color=blue]0D[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]0E[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]0F[/color] [color=green]JMP[/color]  [color=yellow]00 00 00[/color] "
+text = "00 JMP  00 00 0F
+01 NOP  00 00 00 
+02 NOP  00 00 00 
+03 NOP  00 00 00 
+04 NOP  00 00 00
+05 NOP  00 00 00 
+06 NOP  00 00 00 
+07 NOP  00 00 00 
+08 NOP  00 00 00
+09 NOP  00 00 00 
+0A NOP  00 00 00 
+0B NOP  00 00 00 
+0C NOP  00 00 00
+0D NOP  00 00 00 
+0E NOP  00 00 00 
+0F JMP  00 00 00 "
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InterfaceText2" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 173.168
+margin_top = 5.7937
+margin_right = -3.83157
+margin_bottom = -86.2063
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[color=blue]10[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
+[color=blue]11[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]12[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]13[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]14[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
+[color=blue]15[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]16[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]17[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]18[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
+[color=blue]19[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]1A[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]1B[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]1C[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
+[color=blue]1D[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]1E[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
+[color=blue]1F[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] "
+text = "10 NOP  00 00 00
+11 NOP  00 00 00 
+12 NOP  00 00 00 
+13 NOP  00 00 00 
+14 NOP  00 00 00
+15 NOP  00 00 00 
+16 NOP  00 00 00 
+17 NOP  00 00 00 
+18 NOP  00 00 00
+19 NOP  00 00 00 
+1A NOP  00 00 00 
+1B NOP  00 00 00 
+1C NOP  00 00 00
+1D NOP  00 00 00 
+1E NOP  00 00 00 
+1F NOP  00 00 00 "
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="div-center" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -3.0
+margin_right = 3.0
+margin_bottom = 162.0
+color = Color( 0.968627, 0.968627, 0.968627, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="div-bottom" type="ColorRect" parent="."]
+margin_left = -0.412598
+margin_top = 160.365
+margin_right = 319.587
+margin_bottom = 172.365
+color = Color( 0.968627, 0.968627, 0.968627, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="indicator-line" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.7027
+margin_top = 5.0
+margin_right = -177.297
+margin_bottom = -226.0
+color = Color( 0.898039, 0, 0, 0.27451 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="indicator-pos" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 36.0
+margin_top = 5.0
+margin_right = -259.0
+margin_bottom = -226.0
+color = Color( 0.898039, 0, 0, 0.27451 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Status" type="RichTextLabel" parent="."]
+margin_left = 246.0
+margin_top = 162.0
+margin_right = 319.0
+margin_bottom = 171.0
+rect_clip_content = false
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[color=green]CONNECTED[/color]"
+text = "CONNECTED"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="brand" type="RichTextLabel" parent="."]
+margin_left = 2.15047
+margin_top = 162.498
+margin_right = 75.1505
+margin_bottom = 171.498
+rect_clip_content = false
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[color=red]Pakémon[/color]
+"
+text = "Pakémon
+"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="instructions" type="RichTextLabel" parent="."]
+margin_left = 5.0
+margin_top = 188.0
+margin_right = 317.0
+margin_bottom = 228.0
+rect_clip_content = false
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Use directionals to select position.
+Hold A to with directionsals to change.
+Press SELECT to run/stop.
+Press START to exit.
+"
+text = "Use directionals to select position.
+Hold A to with directionsals to change.
+Press SELECT to run/stop.
+Press START to exit.
+"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
