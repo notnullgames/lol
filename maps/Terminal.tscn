@@ -16,10 +16,13 @@ onready var iPos = $\"indicator-pos\"
 var pos_locs = [36, 72, 96, 120, 196, 232, 256, 280]
 
 # known ops
-enum ops { NOP, JMP, CMP, SET, MOV }
+enum ops { NOP, JMP, CMP, SET, MOV, ADD, INC, INT, AND }
+var op_keys = ops.keys()
+
+var connected = false
 
 var code = [
-	[ops.NOP, 0x00, 0x00, 0x00],
+	[ops.NOP, 0x00, 0x00, 0xFF],
 	[ops.NOP, 0x00, 0x00, 0x00],
 	[ops.NOP, 0x00, 0x00, 0x00],
 	[ops.NOP, 0x00, 0x00, 0x00],
@@ -55,6 +58,10 @@ var code = [
 
 # show position of cursor
 func drawIndicators():
+	if connected:
+		$Status.bbcode_text = \"[right][color=green]CONNECTED[/color][/right]\"
+	else:
+		$Status.bbcode_text = \"[right][color=red]DISCONNECTED[/color][/right]\"
 	if opmode:
 		iLine.color = Color('#46e50000')
 		iPos.color = Color('#46e50000')
@@ -67,21 +74,58 @@ func drawIndicators():
 		x = 165
 	iLine.set_position(Vector2(x, y))
 	iPos.set_position(Vector2(pos_locs[pos] , y))
+
+func drawUI():
+	var out = \"\"
+	for i in range(16):
+		out += \"[color=blue]%02X[/color] [color=green]%s[/color]  [color=yellow]%02X %02X %02X[/color]\\n\" % [i, op_keys[code[i][0]], code[i][1], code[i][2], code[i][3]]
+	$InterfaceText1.bbcode_text = out
 	
-	print(\"line: %d pos: %d\" % [line, pos])
+	out = \"\"
+	for j in range(16):
+		var i = j+16
+		out += \"[color=blue]%02X[/color] [color=green]%s[/color]  [color=yellow]%02X %02X %02X[/color]\\n\" % [i, op_keys[code[i][0]], code[i][1], code[i][2], code[i][3]]
+	$InterfaceText2.bbcode_text = out
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	drawIndicators()
+	drawUI()
+	$Timer.connect(\"timeout\", self, \"do_connect\")
+	$Timer.set_wait_time(1)
+	$Timer.start()
+
+func do_connect():
+	connected = true
 	drawIndicators()
 
 func _input(event):
 	var oldLine = line
 	
 	if opmode:
-		var p = line
+		var l = line
 		if pos > 3:
-			p = line + 15
-		print(code[p])
+			l = line + 16
+		var p = pos % 4
+		if event.is_action_pressed(\"ui_up\"):
+			code[l][p] = code[l][p] - 1
+			if p == 0:
+				code[l][p] = code[l][p] % len(op_keys)
+			else:
+				code[l][p] = code[l][p] % 0xFF
+				if code[l][p] < 0:
+					code[l][p] = 0xFF
+			drawUI()
+		if event.is_action_pressed(\"ui_down\"):
+			code[l][p] = code[l][p] + 1
+			if p == 0:
+				code[l][p] = code[l][p] % len(op_keys)
+			else:
+				code[l][p] = code[l][p] % 0xFF
+				if code[l][p] < 0:
+					code[l][p] = 0xFF
+			drawUI()
+			
 	else:
 		if event.is_action_pressed(\"ui_up\"):
 			line = line - 1
@@ -143,38 +187,6 @@ margin_right = -164.0
 margin_bottom = -86.0
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
-bbcode_text = "[color=blue]00[/color] [color=green]JMP[/color]  [color=yellow]00 00 0F[/color]
-[color=blue]01[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]02[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]03[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]04[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
-[color=blue]05[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]06[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]07[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]08[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
-[color=blue]09[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]0A[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]0B[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]0C[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
-[color=blue]0D[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]0E[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]0F[/color] [color=green]JMP[/color]  [color=yellow]00 00 00[/color] "
-text = "00 JMP  00 00 0F
-01 NOP  00 00 00 
-02 NOP  00 00 00 
-03 NOP  00 00 00 
-04 NOP  00 00 00
-05 NOP  00 00 00 
-06 NOP  00 00 00 
-07 NOP  00 00 00 
-08 NOP  00 00 00
-09 NOP  00 00 00 
-0A NOP  00 00 00 
-0B NOP  00 00 00 
-0C NOP  00 00 00
-0D NOP  00 00 00 
-0E NOP  00 00 00 
-0F JMP  00 00 00 "
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -189,38 +201,6 @@ margin_right = -3.83157
 margin_bottom = -86.2063
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
-bbcode_text = "[color=blue]10[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
-[color=blue]11[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]12[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]13[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]14[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
-[color=blue]15[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]16[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]17[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]18[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
-[color=blue]19[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]1A[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]1B[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]1C[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color]
-[color=blue]1D[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]1E[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] 
-[color=blue]1F[/color] [color=green]NOP[/color]  [color=yellow]00 00 00[/color] "
-text = "10 NOP  00 00 00
-11 NOP  00 00 00 
-12 NOP  00 00 00 
-13 NOP  00 00 00 
-14 NOP  00 00 00
-15 NOP  00 00 00 
-16 NOP  00 00 00 
-17 NOP  00 00 00 
-18 NOP  00 00 00
-19 NOP  00 00 00 
-1A NOP  00 00 00 
-1B NOP  00 00 00 
-1C NOP  00 00 00
-1D NOP  00 00 00 
-1E NOP  00 00 00 
-1F NOP  00 00 00 "
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -272,14 +252,14 @@ __meta__ = {
 }
 
 [node name="Status" type="RichTextLabel" parent="."]
-margin_left = 246.0
+margin_left = 144.0
 margin_top = 162.0
 margin_right = 319.0
 margin_bottom = 171.0
 rect_clip_content = false
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
-bbcode_text = "[color=green]CONNECTED[/color]"
+bbcode_text = "[right][color=green]CONNECTED[/color][/right]"
 text = "CONNECTED"
 scroll_active = false
 __meta__ = {
@@ -325,3 +305,5 @@ scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Timer" type="Timer" parent="."]
