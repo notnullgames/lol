@@ -22,7 +22,7 @@ var op_keys = ops.keys()
 var connected = false
 
 var code = [
-	[ops.NOP, 0x00, 0x00, 0xFF],
+	[ops.NOP, 0x00, 0x00, 0x00],
 	[ops.NOP, 0x00, 0x00, 0x00],
 	[ops.NOP, 0x00, 0x00, 0x00],
 	[ops.NOP, 0x00, 0x00, 0x00],
@@ -112,7 +112,7 @@ func _input(event):
 			if p == 0:
 				code[l][p] = code[l][p] % len(op_keys)
 			else:
-				code[l][p] = code[l][p] % 0xFF
+				code[l][p] = code[l][p] % 256
 				if code[l][p] < 0:
 					code[l][p] = 0xFF
 			drawUI()
@@ -121,7 +121,7 @@ func _input(event):
 			if p == 0:
 				code[l][p] = code[l][p] % len(op_keys)
 			else:
-				code[l][p] = code[l][p] % 0xFF
+				code[l][p] = code[l][p] % 256
 				if code[l][p] < 0:
 					code[l][p] = 0xFF
 			drawUI()
