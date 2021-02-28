@@ -262,7 +262,7 @@ dialog_id = "c7203fa0-7cf5-4c11-bc47-23abd830807d"
 code = "123"
 
 [node name="Portal" parent="." instance=ExtResource( 9 )]
-position = Vector2( 688.391, -68.5669 )
+position = Vector2( 688, -64 )
 z_index = 1
 world = "Demo2"
 

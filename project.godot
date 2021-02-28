@@ -117,4 +117,4 @@ ui_save={
 
 [rendering]
 
-environment/default_clear_color=Color( 0.921569, 0.00784314, 1, 1 )
+environment/default_clear_color=Color( 1, 0.0117647, 0.984314, 1 )

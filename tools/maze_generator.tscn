@@ -30,6 +30,10 @@ func _input(event):
 		generate_maze()
 	if event.is_action_pressed(\"ui_save\"):
 		save_maze()
+	if event.is_action_pressed(\"ui_up\"):
+		MAZE_SIZE = MAZE_SIZE + Vector2(0, 1)
+		current_cell = Vector2.ONE
+		generate_maze()
 
 func save_maze():
 	var d = OS.get_datetime()
@@ -92,9 +96,13 @@ func neighbours_have_not_been_visited(cell):
 
 [node name="Node2D" type="Node2D"]
 script = SubResource( 1 )
+WALL_ID = 3
+PATH_ID = 4
+LIMIT_ID = 5
 
 [node name="maze" type="TileMap" parent="."]
 position = Vector2( -4, -4 )
 tile_set = ExtResource( 1 )
-cell_size = Vector2( 8, 8 )
+cell_size = Vector2( 32, 32 )
+cell_custom_transform = Transform2D( 32, 0, 0, 32, 0, 0 )
 format = 1
