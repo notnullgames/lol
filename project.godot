@@ -54,7 +54,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "saywhat_godot" )
+enabled=PoolStringArray( "mazegen", "saywhat_godot" )
 
 [importer_defaults]
 

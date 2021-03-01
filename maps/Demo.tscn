@@ -28,7 +28,7 @@ var looking_for_code = false
 ## DIALOG METHODS
 
 func enter_code(args):
-	print(\"enter code here\")
+	 GameState.goto_scene('res://maps/Terminal.tscn')
 
 
 func _ready():
@@ -262,30 +262,53 @@ dialog_id = "c7203fa0-7cf5-4c11-bc47-23abd830807d"
 code = "123"
 
 [node name="Portal" parent="." instance=ExtResource( 9 )]
-position = Vector2( 688, -64 )
+position = Vector2( -384, 464 )
 z_index = 1
 world = "Demo2"
+
+[node name="Label" type="Label" parent="Portal"]
+margin_left = 16.0
+margin_top = -8.0
+margin_right = 72.0
+margin_bottom = 6.0
+text = "BRIDGES"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Portal2" parent="." instance=ExtResource( 9 )]
+position = Vector2( -360, 704 )
+z_index = 1
+world = "DemoMaze"
+
+[node name="Label" type="Label" parent="Portal2"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "MAZE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="YSort" type="YSort" parent="."]
 position = Vector2( 31, -35 )
 
 [node name="Gravestone" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 773.19, -122.845 )
+position = Vector2( -199, 1395 )
 z_index = 1
 dialog_id = "f680b9d4-9f5a-49d8-8ce0-2fd2e47e53ef"
 
 [node name="Tom" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 488.313, -9.06355 )
+position = Vector2( 273, -37 )
 dialog_id = "f320337f-b850-4aa4-8fa2-6a1ef2643580"
 MAX_SPEED = 100
 
 [node name="Emily" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 577, 19 )
+position = Vector2( 185, 267 )
 
 [node name="The Dude" parent="YSort" instance=ExtResource( 8 )]
-position = Vector2( 761.176, -21.0191 )
+position = Vector2( 1065, 635 )
 dialog_id = "73a27757-1da9-4041-b274-2237fb0ec41b"
 
 [node name="David" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 577, -13 )
+position = Vector2( -575, 603 )
 dialog_id = "29c72df0-bccb-4e06-a1e9-9664af8c06c0"
