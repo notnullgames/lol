@@ -1,8 +1,8 @@
-# generate a maze tilemap
-# reworked ideas from https://kidscancode.org/blog/2018/08/godot3_procgen1/
-
 tool
 extends TileMap
+
+# generate a maze tilemap
+# reworked ideas from https://kidscancode.org/blog/2018/08/godot3_procgen1/
 
 # These come from http://www.astrolog.org/labyrnth/algrithm.htm
 # adapted from https://github.com/shironecko/LuaMaze
