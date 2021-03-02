@@ -6,6 +6,8 @@ This is a game made in godot. It's an action adventure game, sort of like Zelda,
 
 You can see the current-published version [here](https://luser.surge.sh).
 
+The fonts are a bit glitchy on the web, but look good on local build, so it's just a sort of idea of how it's progressing.
+
 
 ## code language
 
