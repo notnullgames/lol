@@ -5,10 +5,6 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends CanvasLayer
 
-var running = false
-
-var connected = false
-
 var code = [
 	[ops.NOP, 0x00, 0x00, 0x00],
 	[ops.NOP, 0x00, 0x00, 0x00],
@@ -44,151 +40,161 @@ var code = [
 	[ops.NOP, 0x00, 0x00, 0x00],
 ]
 
-
-var line = 0
-var pos = 0
+var running = false
+var line:int = 0
+var pos:int = 0
 var opmode = false
-
-onready var iLine = $\"indicator-line\"
-onready var iPos = $\"indicator-pos\"
 
 # locations of positions
 var pos_locs = [36, 72, 96, 120, 196, 232, 256, 280]
 
 # known ops
-enum ops { NOP, JMP, CMP, SET, MOV, ADD, INC, INT, AND }
+enum ops { NOP, JMP, SET, MOV, ADD, SUB, MUL, DIV, CMP }
 var op_keys = ops.keys()
+
+# virtual machine registers
+var registers = []
+
+var oldtext = \"\"
 
 # show position of cursor
 func drawIndicators():
-	if connected:
-		$Status.bbcode_text = \"[right][color=green]CONNECTED[/color][/right]\"
-	else:
-		$Status.bbcode_text = \"[right][color=red]DISCONNECTED[/color][/right]\"
 	if opmode:
-		iLine.color = Color('#46e50000')
-		iPos.color = Color('#46e50000')
+		$iLine.color = Color('#46e50000')
+		$iPos.color = Color('#46e50000')
 	else:
-		iLine.color = Color('#4652e500')
-		iPos.color = Color('#4652e500')
-	var y = 5 + (line * 9)
+		$iLine.color = Color('#4652e500')
+		$iPos.color = Color('#4652e500')
+	var l = line % 16
+	var p = pos 
+	if line > 15:
+		p = pos + 4
+	var y = 5 + (l * 9)
 	var x = 5
-	if pos > 3:
+	if p > 3:
 		x = 165
-	iLine.set_position(Vector2(x, y))
-	iPos.set_position(Vector2(pos_locs[pos] , y))
+	$iLine.set_position(Vector2(x, y))
+	$iPos.set_position(Vector2(pos_locs[p] , y))
+	$PlayIndicator.visible = running
 
 func drawUI():
 	var out = \"\"
 	for i in range(16):
 		out += \"[color=blue]%02X[/color] [color=green]%s[/color]  [color=yellow]%02X %02X %02X[/color]\\n\" % [i, op_keys[code[i][0]], code[i][1], code[i][2], code[i][3]]
 	$InterfaceText1.bbcode_text = out
-	
 	out = \"\"
 	for j in range(16):
 		var i = j+16
 		out += \"[color=blue]%02X[/color] [color=green]%s[/color]  [color=yellow]%02X %02X %02X[/color]\\n\" % [i, op_keys[code[i][0]], code[i][1], code[i][2], code[i][3]]
 	$InterfaceText2.bbcode_text = out
+	$instructions.text = \"\"
+	if running:
+		for n in registers:
+			$instructions.text += \"%02X \" % n
+	else:
+		$instructions.text = oldtext
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	drawIndicators()
+	oldtext = $instructions.text
+	registers = []
+	for i in range(256):
+		registers.append(0)
 	drawUI()
-	$Timer.connect(\"timeout\", self, \"do_connect\")
-	$Timer.set_wait_time(1)
-	$Timer.start()
-
-func do_connect():
-	connected = true
 	drawIndicators()
-	
-func do_running():
-	line = line + 1
-	var l = line
-	if line > 15:
-		if pos > 3:
-			pos = 0
-		else:
-			pos = 4
-		line = 0
-	if pos > 3:
-		l = line + 16
-	print(code[l])
-	if running:
-		$Timer.connect(\"timeout\", self, \"do_running\")
-		$Timer.set_wait_time(0.1)
-		$Timer.start()
 
 func _input(event):
-	var oldLine = line
-	
-	if opmode:
-		var l = line
-		if pos > 3:
-			l = line + 16
-		var p = pos % 4
-		if event.is_action_pressed(\"ui_up\"):
-			code[l][p] = code[l][p] - 1
-			if p == 0:
-				code[l][p] = code[l][p] % len(op_keys)
-			else:
-				code[l][p] = code[l][p] % 256
-				if code[l][p] < 0:
-					code[l][p] = 0xFF
-			drawUI()
-		if event.is_action_pressed(\"ui_down\"):
-			code[l][p] = code[l][p] + 1
-			if p == 0:
-				code[l][p] = code[l][p] % len(op_keys)
-			else:
-				code[l][p] = code[l][p] % 256
-				if code[l][p] < 0:
-					code[l][p] = 0xFF
-			drawUI()
-			
-	else:
-		if event.is_action_pressed(\"ui_up\"):
-			line = line - 1
-		if event.is_action_pressed(\"ui_down\"):
-			line = line + 1
-		
-		if event.is_action_pressed(\"ui_left\"):
-			pos = pos - 1
-		if event.is_action_pressed(\"ui_right\"):
-			pos = pos + 1
-		
-		if line < 0:
-			if pos > 3:
-				pos = 0
-			else:
-				pos = 4
-			line = 15
-		if line > 15:
-			if pos > 3:
-				pos = 0
-			else:
-				pos = 4
-			line = 0
-		
-		if pos < 0:
-			pos = 7
-		if pos > 7:
-			pos = 0
-	
+	var do_update = false
 	if not running:
+		if opmode:
+			var limit = 256
+			if pos == 0:
+				limit = len(op_keys)
+			if event.is_action_pressed(\"ui_up\"):
+				code[line][pos] = int(fposmod(code[line][pos]-1, limit))
+				drawUI()
+			if event.is_action_pressed(\"ui_down\"):
+				code[line][pos] = int(fposmod(code[line][pos]+1, limit))
+				drawUI()
+		else:
+			if event.is_action_pressed(\"ui_left\"):
+				pos -= 1
+				if pos < 0:
+					pos = 3
+					line = int(fposmod(line + 16, 32))
+				do_update = true
+			if event.is_action_pressed(\"ui_right\"):
+				pos += 1
+				if pos > 3:
+					pos = 0
+					line = int(fposmod(line + 16, 32))
+				do_update = true
+			if event.is_action_pressed(\"ui_up\"):
+				line = int(fposmod(line-1, 32))
+				do_update = true
+			if event.is_action_pressed(\"ui_down\"):
+				line = int(fposmod(line+1, 32))
+				do_update = true
+			if event.is_action_pressed(\"ui_select\"):
+				running = true
+				do_update = true
+		
 		if event.is_action_pressed(\"ui_accept\"):
 			opmode = true
+			do_update = true
 		if event.is_action_released(\"ui_accept\"):
 			opmode = false
-	
-	if event.is_action_released(\"ui_select\"):
-		running = not running
-		do_running()
-	
-	if event.is_action_released(\"ui_cancel\"):
-		GameState.goto_scene(\"res://maps/Demo.tscn\")
-	
-	drawIndicators()
+			do_update = true
+	else:
+		if event.is_action_pressed(\"ui_select\"):
+			running = false
+			do_update = true
+	if do_update:
+		drawUI()
+		drawIndicators()
+
+var tick:int = 0
+
+func _process(delta:float):
+	tick += 1
+	if tick % 10 == 0:
+		if running:
+			var a = code[line][3]
+			var b = code[line][2]
+			var c = code[line][1]
+			match code[line][0]:
+				ops.NOP:
+					pass
+				ops.JMP:
+					line = a % 32
+				ops.CMP:
+					if registers[a] == registers[b]:
+						line = int(fposmod(line+1, 32))
+					else:
+						line = int(fposmod(line+2, 32))
+				ops.SET:
+					registers[a] = b
+					drawUI()
+				ops.MOV:
+					registers[a] = registers[b]
+					drawUI()
+				ops.ADD:
+					registers[a] = int(fposmod(registers[a] + b, 256))
+					drawUI()
+				ops.SUB:
+					registers[a] = int(fposmod(registers[a] - b, 256))
+					drawUI()
+				ops.MUL:
+					registers[a] = int(fposmod(registers[a] * b, 256))
+					drawUI()
+				ops.DIV:
+					registers[a] = int(fposmod(registers[a] / b, 256))
+					drawUI()
+				_:
+					print(\"unimplemented op: %s\" % op_keys[code[line][0]])
+			if code[line][0] != ops.JMP and code[line][0] != ops.CMP:
+				line = int(fposmod(line+1, 32))
+			drawIndicators()
 "
 
 [node name="CanvasLayer" type="CanvasLayer"]
@@ -255,7 +261,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="indicator-line" type="ColorRect" parent="."]
+[node name="iLine" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 165.0
@@ -267,7 +273,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="indicator-pos" type="ColorRect" parent="."]
+[node name="iPos" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 280.0
@@ -275,21 +281,6 @@ margin_top = 5.0
 margin_right = -15.0
 margin_bottom = -226.0
 color = Color( 0.898039, 0, 0, 0.27451 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Status" type="RichTextLabel" parent="."]
-margin_left = 144.0
-margin_top = 162.0
-margin_right = 319.0
-margin_bottom = 171.0
-rect_clip_content = false
-custom_fonts/normal_font = ExtResource( 1 )
-bbcode_enabled = true
-bbcode_text = "[right][color=green]CONNECTED[/color][/right]"
-text = "CONNECTED"
-scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -312,26 +303,30 @@ __meta__ = {
 }
 
 [node name="instructions" type="RichTextLabel" parent="."]
-margin_left = 5.0
-margin_top = 188.0
-margin_right = 317.0
-margin_bottom = 228.0
+margin_left = 4.0
+margin_top = 179.0
+margin_right = 316.0
+margin_bottom = 235.0
 rect_clip_content = false
 custom_fonts/normal_font = ExtResource( 1 )
-bbcode_enabled = true
-bbcode_text = "Use directionals to select position.
-Hold A to with directionsals to change.
-Press START to run/stop.
-Press B to exit.
-"
 text = "Use directionals to select position.
 Hold A to with directionsals to change.
-Press START to run/stop.
+Press SELECT to run/stop.
 Press B to exit.
 "
+fit_content_height = true
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Timer" type="Timer" parent="."]
+[node name="PlayIndicator" type="Label" parent="."]
+margin_left = 310.0
+margin_top = 162.0
+margin_right = 318.0
+margin_bottom = 170.0
+custom_fonts/font = ExtResource( 1 )
+text = ">"
+__meta__ = {
+"_edit_use_anchors_": false
+}
