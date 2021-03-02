@@ -33,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Legend Of Luser"
-run/main_scene="res://maps/Demo.tscn"
+run/main_scene="res://maps/Terminal.tscn"
 boot_splash/image="res://icon.png"
 boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
 config/icon="res://icon.png"

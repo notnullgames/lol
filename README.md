@@ -4,6 +4,8 @@ This is a game made in godot. It's an action adventure game, sort of like Zelda,
 
 > Internet slang prior to the popularization of the Internet in the late 1990s, defined a luser (sometimes expanded to local user; also luzer or luzzer) as a painfully annoying, stupid, or irritating computer user. The word is a blend of "loser" and "user". Among hackers, the word luser takes on a broad meaning, referring to any normal user (in other words, not a "guru"), with the implication the person is also a loser. The term is partially interchangeable with the hacker term lamer.
 
+You can see the current-published version [here](https://luser.surge.sh).
+
 
 ## code language
 
@@ -62,11 +64,11 @@ JMP 0 0 0A ; jump to 0A on success
 ## example
 
 ```asm
-SET 0 1 0  ; set register 0 to 1
-MOV 0 0 1  ; copy register 0 into 1
-CMP 0 0 1  ; do register 0 & 1 match?
-JMP 0 0 0A ; jump to 0A on success
-JMP 0 0 0  ; jump to 0 on fail
+00 SET 00 01 00  ; set register 0 to 1
+01 MOV 00 00 01  ; copy register 0 into 1
+02 CMP 00 00 01  ; do register 0 & 1 match?
+03 JMP 00 00 0A  ; jump to 0A on success
+04 JMP 00 00 00  ; jump to 0 on fail
 ```
 
 
