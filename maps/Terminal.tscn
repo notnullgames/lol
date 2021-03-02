@@ -5,6 +5,8 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends CanvasLayer
 
+# eventiually, this will be set externally
+# and also allow read-only fields
 var code = [
 	[ops.NOP, 0x00, 0x00, 0x00],
 	[ops.NOP, 0x00, 0x00, 0x00],
@@ -49,7 +51,7 @@ var opmode = false
 var pos_locs = [36, 72, 96, 120, 196, 232, 256, 280]
 
 # known ops
-enum ops { NOP, JMP, SET, MOV, ADD, SUB, MUL, DIV, CMP }
+enum ops { NOP, JMP, SET, MOV, ADD, SUB, MUL, DIV, JEQ, JNE, JGT, JLT }
 var op_keys = ops.keys()
 
 # virtual machine registers
@@ -97,6 +99,7 @@ func drawUI():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	oldtext = $instructions.text
+	# eventiually, this will be set externally
 	registers = []
 	for i in range(256):
 		registers.append(0)
@@ -156,6 +159,7 @@ func _input(event):
 var tick:int = 0
 
 func _process(delta:float):
+	# run this every 10 frames
 	tick += 1
 	if tick % 10 == 0:
 		if running:
@@ -165,36 +169,54 @@ func _process(delta:float):
 			match code[line][0]:
 				ops.NOP:
 					pass
-				ops.JMP:
+				ops.JMP: # unconditional jump
 					line = a % 32
-				ops.CMP:
+				ops.JEQ: # conditional jump: ==
 					if registers[a] == registers[b]:
-						line = int(fposmod(line+1, 32))
+						line = c % 32
 					else:
-						line = int(fposmod(line+2, 32))
-				ops.SET:
+						line = int(fposmod(line+1, 32))
+				ops.JNE: # conditional jump: !=
+					if registers[a] != registers[b]:
+						line = c % 32
+					else:
+						line = int(fposmod(line+1, 32))
+				ops.JGT: # conditional jump: >
+					if registers[a] > registers[b]:
+						line = c % 32
+					else:
+						line = int(fposmod(line+1, 32))
+				ops.JLT: # conditional jump: <
+					if registers[a] > registers[b]:
+						line = c % 32
+					else:
+						line = int(fposmod(line+1, 32))
+				ops.SET: # set a register to a value
 					registers[a] = b
 					drawUI()
-				ops.MOV:
+				ops.MOV: # copy a register to another
 					registers[a] = registers[b]
 					drawUI()
-				ops.ADD:
+				ops.ADD: # add 2 registers
 					registers[a] = int(fposmod(registers[a] + b, 256))
 					drawUI()
-				ops.SUB:
+				ops.SUB: # subtract a register from another register
 					registers[a] = int(fposmod(registers[a] - b, 256))
 					drawUI()
-				ops.MUL:
+				ops.MUL: # multiply a register by another register
 					registers[a] = int(fposmod(registers[a] * b, 256))
 					drawUI()
-				ops.DIV:
+				ops.DIV: # divide a register by another register
 					registers[a] = int(fposmod(registers[a] / b, 256))
 					drawUI()
 				_:
 					print(\"unimplemented op: %s\" % op_keys[code[line][0]])
-			if code[line][0] != ops.JMP and code[line][0] != ops.CMP:
+			
+			# if it's not a jump, move on to next line
+			if code[line][0] != ops.JMP and code[line][0] != ops.JEQ and code[line][0] != ops.JNE and code[line][0] != ops.JGT and code[line][0] != ops.JLT:
 				line = int(fposmod(line+1, 32))
 			drawIndicators()
+
 "
 
 [node name="CanvasLayer" type="CanvasLayer"]
