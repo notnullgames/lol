@@ -1,6 +1,6 @@
 # Legend of [Luser](https://en.wikipedia.org/wiki/Luser)
 
-This is a game made in godot. It's an action adventure game, sort of like Zelda, but with a hacker theme.
+This is a game made in godot. It's an action-adventure game, sort of like Zelda, but with a hacker theme.
 
 > Internet slang prior to the popularization of the Internet in the late 1990s, defined a luser (sometimes expanded to local user; also luzer or luzzer) as a painfully annoying, stupid, or irritating computer user. The word is a blend of "loser" and "user". Among hackers, the word luser takes on a broad meaning, referring to any normal user (in other words, not a "guru"), with the implication the person is also a loser. The term is partially interchangeable with the hacker term lamer.
 
@@ -14,13 +14,6 @@ The fonts are a bit glitchy on the web, but look good on local build, so it's ju
 The language in the computer is a very simple assembly, that uses only ops and numbers. All ops are meant to fit on a single line (so no seperate `CMP` and conditional-jumps, like in TASM.)
 
 Things are in reverse-order (LSB first) so for example `jump to line 0x00 if register 0x01 > register 0x02` would be `JGT 00 02 01`.
-
-
-### jump to line
-
-```asm
-JMP 0 0 <LINE>
-```
 
 ### set a register
 
@@ -56,6 +49,12 @@ MUL 0 <REGISTER> <VALUE>
 
 ```asm
 DIV 0 <REGISTER> <VALUE>
+```
+
+### jump to line
+
+```asm
+JMP 0 0 <LINE>
 ```
 
 ### jump if equal
