@@ -13,6 +13,9 @@ The fonts are a bit glitchy on the web, but look good on local build, so it's ju
 
 The language in the computer is a very simple assembly, that uses only ops and numbers. All ops are meant to fit on a single line (so no seperate `CMP` and conditional-jumps, like in TASM.)
 
+Things are in reverse-order (LSB first) so for example `jump to line 0x00 if register 0x01 > register 0x02` would be `JGT 00 02 01`.
+
+
 ### jump to line
 
 ```asm
