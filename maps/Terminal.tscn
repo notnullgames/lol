@@ -29,7 +29,7 @@ var entering = false
 var line:int = 0
 var pos:int = 0
 
-# syn-hi: op = green, line = blue, number = white, register = yellow
+# syn-hi: op = green, line = lime, number = white, register = yellow
 
 # help-text for ops
 const ops_help = {
@@ -39,11 +39,11 @@ const ops_help = {
 	\"-\": \"[color=green]SUBtract[/color]: [color=yellow]%s[/color] - [color=yellow]%s[/color]\",
 	\"*\": \"[color=green]MULtiply[/color]: [color=yellow]%s[/color] * [color=yellow]%s[/color]\",
 	\"/\": \"[color=green]DIVide[/color]: [color=yellow]%s[/color] / [color=yellow]%s[/color]\",
-	\"J\": \"[color=green]JuMP[/color] to line [color=blue]%02X[/color]\",
-	\"=\": \"[color=green]Jump to line [color=blue]%02X[/color] if EQual[/color]: [color=yellow]%s[/color] == [color=yellow]%s[/color]\",
-	\"!\": \"[color=green]Jump to line [color=blue]%02X[/color] if Not Equal[/color]: [color=yellow]%s[/color] != [color=yellow]%s[/color]\",
-	\">\": \"[color=green]Jump to line [color=blue]%02X[/color] if Greater Than[/color]: [color=yellow]%s[/color] > [color=yellow]%s[/color]\",
-	\"<\": \"[color=green]Jump to line [color=blue]%02X[/color] if Less Than[/color]: [color=yellow]%s[/color] < [color=yellow]%s[/color]\",
+	\"J\": \"[color=green]JuMP[/color] to line [color=lime]%02X[/color]\",
+	\"=\": \"[color=green]Jump to line [color=lime]%02X[/color] if EQual[/color]: [color=yellow]%s[/color] == [color=yellow]%s[/color]\",
+	\"!\": \"[color=green]Jump to line [color=lime]%02X[/color] if Not Equal[/color]: [color=yellow]%s[/color] != [color=yellow]%s[/color]\",
+	\">\": \"[color=green]Jump to line [color=lime]%02X[/color] if Greater Than[/color]: [color=yellow]%s[/color] > [color=yellow]%s[/color]\",
+	\"<\": \"[color=green]Jump to line [color=lime]%02X[/color] if Less Than[/color]: [color=yellow]%s[/color] < [color=yellow]%s[/color]\",
 	\" \": \"[color=green]No OPeration[/color]: do nothing\"
 }
 
@@ -55,11 +55,11 @@ const format = {
 	\"-\": \"[color=yellow]%2s[/color] [color=yellow]%2s[/color]\",
 	\"*\": \"[color=yellow]%2s[/color] [color=yellow]%2s[/color]\",
 	\"/\": \"[color=yellow]%2s[/color] [color=yellow]%2s[/color]\",
-	\"J\": \"[color=blue]%02X[/color]\",
-	\"=\": \"[color=blue]%02X[/color] [color=yellow]%2s[/color] [color=yellow]%2s[/color]\",
-	\"!\": \"[color=blue]%02X[/color] [color=yellow]%2s[/color] [color=yellow]%2s[/color]\",
-	\">\": \"[color=blue]%02X[/color] [color=yellow]%2s[/color] [color=yellow]%2s[/color]\",
-	\"<\": \"[color=blue]%02X[/color] [color=yellow]%2s[/color] [color=yellow]%2s[/color]\",
+	\"J\": \"[color=lime]%02X[/color]\",
+	\"=\": \"[color=lime]%02X[/color] [color=yellow]%2s[/color] [color=yellow]%2s[/color]\",
+	\"!\": \"[color=lime]%02X[/color] [color=yellow]%2s[/color] [color=yellow]%2s[/color]\",
+	\">\": \"[color=lime]%02X[/color] [color=yellow]%2s[/color] [color=yellow]%2s[/color]\",
+	\"<\": \"[color=lime]%02X[/color] [color=yellow]%2s[/color] [color=yellow]%2s[/color]\",
 	\" \": \"\"
 }
 
@@ -73,7 +73,7 @@ func update_display():
 	$PlayIndicator.visible = running
 	$LineBar/PosBar.visible = not running
 	$LineBar/PosBar.set_position(Vector2(positions[pos], 0))
-	$LineIndicator.bbcode_text = \"[color=blue]%02X[/color]:%d\" % [line, pos]
+	$LineIndicator.bbcode_text = \"[color=lime]%02X[/color]:%d\" % [line, pos]
 	if entering:
 		$LineBar.color = Color('#46e50000')
 		$LineBar/PosBar.color = Color('#46e50000')
@@ -222,26 +222,7 @@ func get_default_params(op):
 # intial code text (so it can be set externally, easily)
 # no extra spaces or comments, use zero-padded hex for numbers (00 for 0)
 # eventually this will be set externally
-var code_text = \"\"\"S O 01   
-S P 02   
-S Q 03   
-S R 04   
-S T 01   
-! 0D O G
-! 0D P H
-! 0D Q I
-! 0D R J
-= 10 K T
-S M 00   
-S N 14   
-S M 01   
-S K 01   
-S L 01   
-J 05     
-S K 00   
-S L 00   
-J 05
-\"\"\"
+var code_text = \"\"
 
 # virtual machine registers
 # eventually this will be set externally
@@ -301,14 +282,14 @@ func _input(event):
 		if not entering:
 			if direction != 0:
 				line = int(fposmod(line + direction, line_count))
-			if event.is_action_pressed(\"ui_left\"):
+			elif event.is_action_pressed(\"ui_left\"):
 				pos = int(fposmod(pos - 1, 4))
 			elif event.is_action_pressed(\"ui_right\"):
 				pos = int(fposmod(pos + 1, 4))
 		else:
-			var op = ops.find(code[line][0])
 			if direction != 0:
 				if pos == 0:
+					var op = ops.find(code[line][0])
 					code[line][0] = ops[int(fposmod(op + direction, ops.size()))]
 					code[line][1] = get_default_params(code[line][0])
 				else:
@@ -332,8 +313,6 @@ func _input(event):
 						elif pos == 3:
 							code[line][1][2] = cycle_register(code[line][1][2], direction)
 
-				
-				
 		if event.is_action_pressed(\"ui_accept\"):
 			entering = true
 		elif event.is_action_released(\"ui_accept\"):
