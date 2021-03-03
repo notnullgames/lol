@@ -5,6 +5,16 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends CanvasLayer
 
+# whenever a register chnages, this terminal call this
+# alsom externally, it will set a register
+signal set_register(register, value)
+
+# use this externally to set code
+signal set_code(code)
+
+# use this to set the runnifg state
+signal set_running(running)
+
 # store the original text
 onready var original_text = $instructions.bbcode_text
 
@@ -149,22 +159,22 @@ func cpu_process():
 			\" \":
 				line += 1
 			\"S\":
-				registers[params[0]] = params[1]
+				emit_signal(\"set_register\", params[0], params[1])
 				line += 1
 			\"M\":
-				registers[params[0]] = registers[params[1]]
+				emit_signal(\"set_register\", params[0], registers[params[1]])
 				line += 1
 			\"+\":
-				registers[params[0]] += registers[params[1]]
+				emit_signal(\"set_register\", params[0], int(fposmod(registers[params[0]] + registers[params[1]], 256)))
 				line += 1
 			\"-\":
-				registers[params[0]] -= registers[params[1]]
+				emit_signal(\"set_register\", params[0], int(fposmod(registers[params[0]] - registers[params[1]], 256)))
 				line += 1
 			\"*\":
-				registers[params[0]] *= registers[params[1]]
+				emit_signal(\"set_register\", params[0], int(fposmod(registers[params[0]] * registers[params[1]], 256)))
 				line += 1
 			\"/\":
-				registers[params[0]] /= registers[params[1]]
+				emit_signal(\"set_register\", params[0], int(fposmod(registers[params[0]] / registers[params[1]], 256)))
 				line += 1
 			\"J\":
 				line = params[0]
@@ -219,11 +229,6 @@ func get_default_params(op):
 		\"<\":
 			return [0, 'G', 'G']
 
-# intial code text (so it can be set externally, easily)
-# no extra spaces or comments, use zero-padded hex for numbers (00 for 0)
-# eventually this will be set externally
-var code_text = \"\"
-
 # virtual machine registers
 # eventually this will be set externally
 var registers = {
@@ -248,10 +253,6 @@ var registers = {
 	\"Y\": 0x00,
 	\"Z\": 0x00
 }
-
-
-func _ready():
-	set_code(code_text)
 
 var tick:int = 0
 func _process(_delta):
@@ -318,12 +319,24 @@ func _input(event):
 		elif event.is_action_released(\"ui_accept\"):
 			entering = false
 	if event.is_action_pressed(\"ui_select\"):
-		running = not running
+		emit_signal(\"set_running\", not running)
 	update_display()
 		
+
+
+func _on_Terminal_set_code(code):
+	set_code(code)
+
+
+func _on_Terminal_set_register(register, value):
+	registers[register] = value
+
+
+func _on_Terminal_set_running(r):
+	running = r
 "
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="Terminal" type="CanvasLayer"]
 script = SubResource( 1 )
 
 [node name="BG" type="ColorRect" parent="."]
@@ -648,3 +661,6 @@ color = Color( 1, 1, 1, 0.196078 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="set_code" from="." to="." method="_on_Terminal_set_code"]
+[connection signal="set_register" from="." to="." method="_on_Terminal_set_register"]
+[connection signal="set_running" from="." to="." method="_on_Terminal_set_running"]
