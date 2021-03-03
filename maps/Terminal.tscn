@@ -278,7 +278,6 @@ func _input(event):
 		direction = -1
 	elif event.is_action_pressed(\"ui_down\"):
 		direction = 1
-	
 	if not running:
 		if not entering:
 			if direction != 0:
@@ -313,7 +312,6 @@ func _input(event):
 							code[line][1][1] = cycle_register(code[line][1][1], direction)
 						elif pos == 3:
 							code[line][1][2] = cycle_register(code[line][1][2], direction)
-
 		if event.is_action_pressed(\"ui_accept\"):
 			entering = true
 		elif event.is_action_released(\"ui_accept\"):
@@ -321,16 +319,12 @@ func _input(event):
 	if event.is_action_pressed(\"ui_select\"):
 		emit_signal(\"set_running\", not running)
 	update_display()
-		
-
 
 func _on_Terminal_set_code(code):
 	set_code(code)
 
-
 func _on_Terminal_set_register(register, value):
 	registers[register] = value
-
 
 func _on_Terminal_set_running(r):
 	running = r

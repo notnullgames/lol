@@ -1,24 +1,44 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://maps/Terminal.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tiles/images/cyber-Interior-Furniture.png" type="Texture" id=2]
+[ext_resource path="res://tiles/Terrain.tscn" type="PackedScene" id=3]
+[ext_resource path="res://entities/Cyborg.tscn" type="PackedScene" id=4]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
 
-# toggle G on/off
-const code = \"\"\"S G 01
-S G 00
-J 0
+const code = \"\"\"S L 00
+S L 01
+S G 01
+S T 5
+S R 01
+S T 1
+J 00
 \"\"\"
 
 # connect light to G
 func _on_Terminal_set_register(register, value):
-	if register == \"G\":
+	# L controls light
+	if register == \"L\":
 		if value:
-			$Terminal/Light.play(\"on\")
+			$Light.play(\"on\")
 		else:
-			$Terminal/Light.play(\"off\")
+			$Light.play(\"off\")
+	
+	# G is cyborg forward
+	if register == \"G\":
+		$Terminal/Cyborg.set_movement_vector(Vector2(0, value))
+	
+	# R is cyborg reverse
+	if register == \"R\":
+		$Terminal/Cyborg.set_movement_vector(Vector2(0, -1 * value))
+	
+	# T is a timeout
+	if register == \"T\":
+		$Terminal.emit_signal(\"set_running\", false)
+		yield(get_tree().create_timer(value), \"timeout\")
+		$Terminal.emit_signal(\"set_running\", true)
 
 func _ready():
 	# set initial code
@@ -26,6 +46,9 @@ func _ready():
 	
 	# start the computer
 	$Terminal.emit_signal(\"set_running\", true)
+	
+	# you could also set registers:
+	$Terminal.emit_signal(\"set_register\", \"M\", 0x66)
 "
 
 [sub_resource type="AtlasTexture" id=2]
@@ -53,10 +76,28 @@ animations = [ {
 script = SubResource( 1 )
 
 [node name="Terminal" parent="." instance=ExtResource( 1 )]
+scale = Vector2( 0.88, 0.88 )
+transform = Transform2D( 0.88, 0, 0, 0.88, 0, 0 )
+follow_viewport_enable = true
 
-[node name="Light" type="AnimatedSprite" parent="Terminal"]
-position = Vector2( 303.662, 166.097 )
+[node name="Cyborg" parent="Terminal" instance=ExtResource( 4 )]
+position = Vector2( 203.282, 176.074 )
+
+[node name="Terrain" parent="." instance=ExtResource( 3 )]
+tile_data = PoolIntArray( -1, 9, 131072, -65536, 9, 131073, -65535, 9, 131073, -65534, 9, 131073, -65533, 9, 131073, -65532, 9, 131073, -65531, 9, 131073, -65530, 9, 131073, -65529, 9, 131073, -65528, 9, 131073, -65527, 9, 131073, -65526, 9, 131074, 65535, 9, 196608, 0, 9, 327681, 1, 9, 327680, 2, 9, 327681, 3, 9, 327680, 4, 9, 327682, 5, 9, 327680, 6, 9, 327681, 7, 9, 327681, 8, 9, 327681, 9, 9, 327680, 10, 9, 196610, 131071, 9, 196608, 65536, 9, 196609, 65537, 9, 327681, 65538, 9, 327681, 65539, 9, 196609, 65540, 9, 196609, 65541, 9, 327682, 65542, 9, 327681, 65543, 9, 196609, 65544, 9, 196609, 65545, 9, 327682, 65546, 9, 196610, 196607, 9, 196608, 131072, 9, 327680, 131073, 9, 327682, 131074, 9, 196609, 131075, 9, 327682, 131076, 9, 327681, 131077, 9, 196609, 131078, 9, 327682, 131079, 9, 327682, 131080, 9, 196609, 131081, 9, 196609, 131082, 9, 196610, 262143, 9, 196608, 196608, 9, 327680, 196609, 9, 196609, 196610, 9, 327682, 196611, 9, 327681, 196612, 9, 327682, 196613, 9, 196609, 196614, 9, 327680, 196615, 9, 196609, 196616, 9, 327682, 196617, 9, 327681, 196618, 9, 196610, 327679, 9, 196608, 262144, 9, 327680, 262145, 9, 327682, 262146, 9, 327681, 262147, 9, 327681, 262148, 9, 327681, 262149, 9, 196609, 262150, 9, 327682, 262151, 9, 196609, 262152, 9, 327681, 262153, 9, 327681, 262154, 9, 196610, 393215, 9, 196608, 327680, 9, 327680, 327681, 9, 327682, 327682, 9, 327682, 327683, 9, 327682, 327684, 9, 327682, 327685, 9, 327682, 327686, 9, 327681, 327687, 9, 327680, 327688, 9, 327682, 327689, 9, 327680, 327690, 9, 196610, 458751, 9, 196608, 393216, 9, 196609, 393217, 9, 196609, 393218, 9, 327681, 393219, 9, 327680, 393220, 9, 327681, 393221, 9, 327682, 393222, 9, 196609, 393223, 9, 196609, 393224, 9, 327682, 393225, 9, 327680, 393226, 9, 196610, 524287, 9, 262144, 458752, 9, 262145, 458753, 9, 262145, 458754, 9, 262145, 458755, 9, 262145, 458756, 9, 262145, 458757, 9, 262145, 458758, 9, 262145, 458759, 9, 262145, 458760, 9, 262145, 458761, 9, 262145, 458762, 9, 262146 )
+
+[node name="Terrain2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 186.681, -7.71072 )
+tile_data = PoolIntArray( 3, 6, 65536 )
+
+[node name="Light" type="AnimatedSprite" parent="."]
+position = Vector2( 298.228, 18.2484 )
 frames = SubResource( 4 )
 animation = "off"
 playing = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PoolVector2Array( 0.797668, 237.453, 1.60933, 2.07335, 17.4366, 1.26169, 10.9434, 224.061, 297.863, 224.061, 301.516, 9.78407, 20.2774, 7.34911, 23.1182, -9.28981, 310.444, -4.41988, 307.197, 243.946 )
 [connection signal="set_register" from="Terminal" to="." method="_on_Terminal_set_register"]
