@@ -184,7 +184,7 @@ M - door-lock mechanism
 N - wait (in seconds)
 ```
 
-code would look like this:
+same code above would look like this:
 
 ```
 S  O 01   
@@ -240,5 +240,5 @@ SET O to 0x01
 G:00 K:00 O:00 S:00 W:00
 H:00 L:00 P:00 T:00 X:00
 I:00 M:00 Q:00 U:00 Y:00
-J:00 N:00 R:00 V:00 Z:00       (CURRENT_LINE)
+J:00 N:00 R:00 V:00 Z:00       0F (current line)
 ```

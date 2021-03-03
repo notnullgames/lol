@@ -262,7 +262,7 @@ dialog_id = "c7203fa0-7cf5-4c11-bc47-23abd830807d"
 code = "123"
 
 [node name="Portal" parent="." instance=ExtResource( 9 )]
-position = Vector2( -384, 464 )
+position = Vector2( -384, 440 )
 z_index = 1
 world = "Demo2"
 
@@ -277,7 +277,7 @@ __meta__ = {
 }
 
 [node name="Portal2" parent="." instance=ExtResource( 9 )]
-position = Vector2( -360, 704 )
+position = Vector2( -384, 584 )
 z_index = 1
 world = "DemoMaze"
 

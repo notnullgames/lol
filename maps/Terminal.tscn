@@ -5,218 +5,132 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends CanvasLayer
 
-# eventiually, this will be set externally
-# and also allow read-only fields
-var code = [
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-	[ops.NOP, 0x00, 0x00, 0x00],
-]
-
-var running = false
-var line:int = 0
-var pos:int = 0
-var opmode = false
-
-# locations of positions
-var pos_locs = [36, 72, 96, 120, 196, 232, 256, 280]
-
-# known ops
-enum ops { NOP, JMP, SET, MOV, ADD, SUB, MUL, DIV, JEQ, JNE, JGT, JLT }
-var op_keys = ops.keys()
+# eventually this will be set externally
+# no extra spaces or comments, use zero-padded hex for numbers (00 for 0)
+var code_text = \"\"\"S O 01   
+S P 02   
+S Q 03   
+S R 04   
+S T 01   
+! 0D O G
+! 0D P H
+! 0D Q I
+! 0D R J
+= 10 K T
+S M 00   
+S N 14   
+S M 01   
+S K 01   
+S L 01   
+J 05     
+S K 00   
+S L 00   
+J 05\"\"\"
 
 # virtual machine registers
-var registers = []
+# eventually this will be set externally
+var registers = {
+	\"G\": 0x00,
+	\"H\": 0x00,
+	\"I\": 0x00,
+	\"J\": 0x00,
+	\"K\": 0x00,
+	\"L\": 0x00,
+	\"M\": 0x00,
+	\"N\": 0x00,
+	\"O\": 0x00,
+	\"P\": 0x00,
+	\"Q\": 0x00,
+	\"R\": 0x00,
+	\"S\": 0x00,
+	\"T\": 0x00,
+	\"U\": 0x00,
+	\"V\": 0x00,
+	\"W\": 0x00,
+	\"X\": 0x00,
+	\"Y\": 0x00,
+	\"Z\": 0x00
+}
 
-var oldtext = \"\"
+var needs_help = false
 
-# show position of cursor
-func drawIndicators():
-	if opmode:
-		$iLine.color = Color('#46e50000')
-		$iPos.color = Color('#46e50000')
-	else:
-		$iLine.color = Color('#4652e500')
-		$iPos.color = Color('#4652e500')
-	var l = line % 16
-	var p = pos 
-	if line > 15:
-		p = pos + 4
-	var y = 5 + (l * 9)
-	var x = 5
-	if p > 3:
-		x = 165
-	$iLine.set_position(Vector2(x, y))
-	$iPos.set_position(Vector2(pos_locs[p] , y))
-	$PlayIndicator.visible = running
+# is it running?
+var running = false
 
-func drawUI():
-	var out = \"\"
-	for i in range(16):
-		out += \"[color=blue]%02X[/color] [color=green]%s[/color]  [color=yellow]%02X %02X %02X[/color]\\n\" % [i, op_keys[code[i][0]], code[i][1], code[i][2], code[i][3]]
-	$InterfaceText1.bbcode_text = out
-	out = \"\"
-	for j in range(16):
-		var i = j+16
-		out += \"[color=blue]%02X[/color] [color=green]%s[/color]  [color=yellow]%02X %02X %02X[/color]\\n\" % [i, op_keys[code[i][0]], code[i][1], code[i][2], code[i][3]]
-	$InterfaceText2.bbcode_text = out
-	$instructions.text = \"\"
-	if running:
-		for n in registers:
-			$instructions.text += \"%02X \" % n
-	else:
-		$instructions.text = oldtext
+# entering an op?
+var opmode = false
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	oldtext = $instructions.text
-	# eventiually, this will be set externally
-	registers = []
-	for i in range(256):
-		registers.append(0)
-	drawUI()
-	drawIndicators()
+# current line/position
+var line:int = 0
+var pos:int = 0
 
-func _input(event):
-	var do_update = false
-	if not running:
-		if opmode:
-			var limit = 256
-			if pos == 0:
-				limit = len(op_keys)
-			if event.is_action_pressed(\"ui_up\"):
-				code[line][pos] = int(fposmod(code[line][pos]-1, limit))
-				drawUI()
-			if event.is_action_pressed(\"ui_down\"):
-				code[line][pos] = int(fposmod(code[line][pos]+1, limit))
-				drawUI()
+# ops, with their help-text
+const ops = {
+	\"S\": \"SET: %s = %02X\",
+	\"M\": \"MOVe: %s -> %s\",
+	\"+\": \"ADD: %s + %s\",
+	\"-\": \"SUBtract: %s - %s\",
+	\"*\": \"MULtiply: %s * %s\",
+	\"/\": \"DIVide: %s / %s\",
+	\"J\": \"JuMP to line %02X\",
+	\"=\": \"Jump to line %02X if EQual: %s == %s\",
+	\"!\": \"Jump to line %02X if Not Equal: %s != %s\",
+	\">\": \"Jump to line %02X if Greater Than: %s > %s\",
+	\"<\": \"Jump to line %02X if Less Than: %s < %s\",
+	null: \"No OPeration: do nothing\"
+}
+
+# track param-types, 0=number, 1=register
+const params = {
+	\"S\": [1, 0],
+	\"M\": [1, 1],
+	\"+\": [1, 1],
+	\"-\": [1, 1],
+	\"*\": [1, 1],
+	\"/\": [1, 1],
+	\"J\": [0],
+	\"=\": [0, 1, 1],
+	\"!\": [0, 1, 1],
+	\">\": [0, 1, 1],
+	\"<\": [0, 1, 1],
+	null: []
+}
+
+# display textual code
+func display_code(c:String):
+	$LineIndicator.text = \"%02X : %d\" % [line, pos]
+	var code = []
+	code.resize(64)
+	var l = -1
+	for line in c.split(\"\\n\"):
+		l += 1
+		var d = line.split(\" \")
+		var op = d[0]
+		code[l] = op
+		var p = 0
+		for param in params[op]:
+			p += 1
+			code[l] += \" %2s\" % d[p]
+	var out = []
+	for i in range(64):
+		if code[i] == null:
+			if i < 16:
+				out.append(\"          \")
+			else:
+				out[i % 16] = out[i % 16] + \" \" + \"          \"
 		else:
-			if event.is_action_pressed(\"ui_left\"):
-				pos -= 1
-				if pos < 0:
-					pos = 3
-					line = int(fposmod(line + 16, 32))
-				do_update = true
-			if event.is_action_pressed(\"ui_right\"):
-				pos += 1
-				if pos > 3:
-					pos = 0
-					line = int(fposmod(line + 16, 32))
-				do_update = true
-			if event.is_action_pressed(\"ui_up\"):
-				line = int(fposmod(line-1, 32))
-				do_update = true
-			if event.is_action_pressed(\"ui_down\"):
-				line = int(fposmod(line+1, 32))
-				do_update = true
-			if event.is_action_pressed(\"ui_select\"):
-				running = true
-				do_update = true
+			if i < 16:
+				out.append(\"%-10s\" % code[i])
+			else:
+				out[i % 16] = out[i % 16] + \" \" + \"%-10s\" % code[i]
+	$Code.bbcode_text = \"\"
+	for i in out:
+		$Code.bbcode_text += i + \"\\n\"
 		
-		if event.is_action_pressed(\"ui_accept\"):
-			opmode = true
-			do_update = true
-		if event.is_action_released(\"ui_accept\"):
-			opmode = false
-			do_update = true
-	else:
-		if event.is_action_pressed(\"ui_select\"):
-			running = false
-			do_update = true
-	if do_update:
-		drawUI()
-		drawIndicators()
 
-var tick:int = 0
-
-func _process(delta:float):
-	# run this every 10 frames
-	tick += 1
-	if tick % 10 == 0:
-		if running:
-			var a = code[line][3]
-			var b = code[line][2]
-			var c = code[line][1]
-			match code[line][0]:
-				ops.NOP:
-					pass
-				ops.JMP: # unconditional jump
-					line = a % 32
-				ops.JEQ: # conditional jump: ==
-					if registers[a] == registers[b]:
-						line = c % 32
-					else:
-						line = int(fposmod(line+1, 32))
-				ops.JNE: # conditional jump: !=
-					if registers[a] != registers[b]:
-						line = c % 32
-					else:
-						line = int(fposmod(line+1, 32))
-				ops.JGT: # conditional jump: >
-					if registers[a] > registers[b]:
-						line = c % 32
-					else:
-						line = int(fposmod(line+1, 32))
-				ops.JLT: # conditional jump: <
-					if registers[a] > registers[b]:
-						line = c % 32
-					else:
-						line = int(fposmod(line+1, 32))
-				ops.SET: # set a register to a value
-					registers[a] = b
-					drawUI()
-				ops.MOV: # copy a register to another
-					registers[a] = registers[b]
-					drawUI()
-				ops.ADD: # add 2 registers
-					registers[a] = int(fposmod(registers[a] + b, 256))
-					drawUI()
-				ops.SUB: # subtract a register from another register
-					registers[a] = int(fposmod(registers[a] - b, 256))
-					drawUI()
-				ops.MUL: # multiply a register by another register
-					registers[a] = int(fposmod(registers[a] * b, 256))
-					drawUI()
-				ops.DIV: # divide a register by another register
-					registers[a] = int(fposmod(registers[a] / b, 256))
-					drawUI()
-				_:
-					print(\"unimplemented op: %s\" % op_keys[code[line][0]])
-			
-			# if it's not a jump, move on to next line
-			if code[line][0] != ops.JMP and code[line][0] != ops.JEQ and code[line][0] != ops.JNE and code[line][0] != ops.JGT and code[line][0] != ops.JLT:
-				line = int(fposmod(line+1, 32))
-			drawIndicators()
-
+func _ready():
+	display_code(code_text)
+	
 "
 
 [node name="CanvasLayer" type="CanvasLayer"]
@@ -234,84 +148,67 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="InterfaceText1" type="RichTextLabel" parent="."]
+[node name="Code" type="RichTextLabel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 13.0
-margin_top = 6.0
-margin_right = -164.0
-margin_bottom = -86.0
+margin_left = 8.0
+margin_top = 2.0
+margin_right = 10.0
+margin_bottom = -104.0
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
+bbcode_text = "O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00"
+text = "O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
+O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00"
 scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="InterfaceText2" type="RichTextLabel" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 173.168
-margin_top = 5.7937
-margin_right = -3.83157
-margin_bottom = -86.2063
-custom_fonts/normal_font = ExtResource( 1 )
-bbcode_enabled = true
-scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="div-center" type="ColorRect" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -3.0
-margin_right = 3.0
-margin_bottom = 162.0
-color = Color( 0.968627, 0.968627, 0.968627, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="div-bottom" type="ColorRect" parent="."]
-margin_left = -0.412598
-margin_top = 160.365
-margin_right = 319.587
-margin_bottom = 172.365
+margin_left = -1.0
+margin_top = 132.0
+margin_right = 319.0
+margin_bottom = 142.0
 color = Color( 0.968627, 0.968627, 0.968627, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="iLine" type="ColorRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 165.0
-margin_top = 5.0
-margin_right = -5.0
-margin_bottom = -225.0
-color = Color( 0.321569, 0.898039, 0, 0.27451 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="iPos" type="ColorRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 280.0
-margin_top = 5.0
-margin_right = -15.0
-margin_bottom = -226.0
-color = Color( 0.898039, 0, 0, 0.27451 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="brand" type="RichTextLabel" parent="."]
+[node name="Brand" type="RichTextLabel" parent="."]
 margin_left = 2.15047
-margin_top = 162.498
+margin_top = 134.335
 margin_right = 75.1505
-margin_bottom = 171.498
+margin_bottom = 143.335
 rect_clip_content = false
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
@@ -325,10 +222,10 @@ __meta__ = {
 }
 
 [node name="instructions" type="RichTextLabel" parent="."]
-margin_left = 4.0
-margin_top = 179.0
-margin_right = 316.0
-margin_bottom = 235.0
+margin_left = 3.0
+margin_top = 145.0
+margin_right = 315.0
+margin_bottom = 238.0
 rect_clip_content = false
 custom_fonts/normal_font = ExtResource( 1 )
 text = "Use directionals to select position.
@@ -344,11 +241,47 @@ __meta__ = {
 
 [node name="PlayIndicator" type="Label" parent="."]
 margin_left = 310.0
-margin_top = 162.0
+margin_top = 133.621
 margin_right = 318.0
-margin_bottom = 170.0
+margin_bottom = 141.621
 custom_fonts/font = ExtResource( 1 )
 text = ">"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 80.0
+margin_right = 82.0
+margin_bottom = 139.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_left = 157.298
+margin_top = -1.78381
+margin_right = 159.298
+margin_bottom = 137.216
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+margin_left = 234.002
+margin_right = 236.002
+margin_bottom = 139.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineIndicator" type="Label" parent="."]
+margin_left = 274.973
+margin_top = 230.189
+margin_right = 317.973
+margin_bottom = 239.189
+custom_fonts/font = ExtResource( 1 )
+text = "XX : X"
 __meta__ = {
 "_edit_use_anchors_": false
 }
