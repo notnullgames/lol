@@ -5,52 +5,11 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends CanvasLayer
 
-# eventually this will be set externally
-# no extra spaces or comments, use zero-padded hex for numbers (00 for 0)
-var code_text = \"\"\"S O 01   
-S P 02   
-S Q 03   
-S R 04   
-S T 01   
-! 0D O G
-! 0D P H
-! 0D Q I
-! 0D R J
-= 10 K T
-S M 00   
-S N 14   
-S M 01   
-S K 01   
-S L 01   
-J 05     
-S K 00   
-S L 00   
-J 05\"\"\"
+# the current code, parsed
+var code = []
 
-# virtual machine registers
-# eventually this will be set externally
-var registers = {
-	\"G\": 0x00,
-	\"H\": 0x00,
-	\"I\": 0x00,
-	\"J\": 0x00,
-	\"K\": 0x00,
-	\"L\": 0x00,
-	\"M\": 0x00,
-	\"N\": 0x00,
-	\"O\": 0x00,
-	\"P\": 0x00,
-	\"Q\": 0x00,
-	\"R\": 0x00,
-	\"S\": 0x00,
-	\"T\": 0x00,
-	\"U\": 0x00,
-	\"V\": 0x00,
-	\"W\": 0x00,
-	\"X\": 0x00,
-	\"Y\": 0x00,
-	\"Z\": 0x00
-}
+# number of lines in code
+const line_count = 64
 
 var needs_help = false
 
@@ -77,59 +36,108 @@ const ops = {
 	\"!\": \"Jump to line %02X if Not Equal: %s != %s\",
 	\">\": \"Jump to line %02X if Greater Than: %s > %s\",
 	\"<\": \"Jump to line %02X if Less Than: %s < %s\",
-	null: \"No OPeration: do nothing\"
+	\"\": \"No OPeration: do nothing\"
 }
 
-# track param-types, 0=number, 1=register
-const params = {
-	\"S\": [1, 0],
-	\"M\": [1, 1],
-	\"+\": [1, 1],
-	\"-\": [1, 1],
-	\"*\": [1, 1],
-	\"/\": [1, 1],
-	\"J\": [0],
-	\"=\": [0, 1, 1],
-	\"!\": [0, 1, 1],
-	\">\": [0, 1, 1],
-	\"<\": [0, 1, 1],
-	null: []
-}
+# display the code array on screen
+func display_code():
+	var buckets = [$Code, $Code2, $Code3, $Code4]
+	for b in buckets:
+		b.bbcode_text = \"\"
+	# split code into 4 buckets, color-code, and pad
+	for linenum in range(line_count):
+		var out = buckets[0]
+		if linenum > 15 and linenum < 32:
+			out = buckets[1]
+		if linenum > 31 and linenum < 48:
+			out = buckets[2]
+		if linenum > 47:
+			out = buckets[3]
+			
+		var line = code[linenum]
+		# color code - op = green, line = blue, number = white, register = teal
+		if line[0] == \" \":
+			out.bbcode_text = \"\\n\"
+		if line[0] == \"S\":
+			out.bbcode_text = \"[color=green]%s[/color] [color=blue]%s[/color] [color=white]%s[/color]%s\\n\" % line
+		if line[0] == \"+\" or  line[0] == \"-\" or line[0] == \"*\" or line[0] == \"/\":
+			out.bbcode_text = \"[color=green]%s[/color] [color=teal]%s[/color] [color=teal]%s[/color]%s\\n\" % line
 
-# display textual code
-func display_code(c:String):
-	$LineIndicator.text = \"%02X : %d\" % [line, pos]
-	var code = []
-	code.resize(64)
-	var l = -1
-	for line in c.split(\"\\n\"):
-		l += 1
-		var d = line.split(\" \")
-		var op = d[0]
-		code[l] = op
-		var p = 0
-		for param in params[op]:
-			p += 1
-			code[l] += \" %2s\" % d[p]
-	var out = []
-	for i in range(64):
-		if code[i] == null:
-			if i < 16:
-				out.append(\"          \")
-			else:
-				out[i % 16] = out[i % 16] + \" \" + \"          \"
+# turn string code into an array that is easy to manage and put in code var
+# after this every element of code is a 4-length array with space-padded data in it
+func set_code(code_text:String):
+	code.clear()
+	code.resize(line_count)
+	var lines = code_text.split(\"\\n\")
+	for linenum in range(line_count):
+		if linenum < lines.size():
+			var p = lines[linenum].strip_edges().split(\" \")
+			var op = p[0]
+			if not op:
+				op = \" \"
+			code[linenum] = [op]
+			for pi in range(1,4):
+				if pi < p.size():
+					code[linenum].append(\"%2s\" % p[pi])
+				else:
+					code[linenum].append(\"  \")
 		else:
-			if i < 16:
-				out.append(\"%-10s\" % code[i])
-			else:
-				out[i % 16] = out[i % 16] + \" \" + \"%-10s\" % code[i]
-	$Code.bbcode_text = \"\"
-	for i in out:
-		$Code.bbcode_text += i + \"\\n\"
-		
+			code[linenum] = []
+		if code[linenum].size() == 0:
+			code[linenum] = [\" \",\"  \",\"  \",\"  \"] # nop
+	display_code()
+
+# intial code text (so it can be set externally, easily)
+# no extra spaces or comments, use zero-padded hex for numbers (00 for 0)
+# eventually this will be set externally
+var code_text = \"\"\"S O 01   
+S P 02   
+S Q 03   
+S R 04   
+S T 01   
+! 0D O G
+! 0D P H
+! 0D Q I
+! 0D R J
+= 10 K T
+S M 00   
+S N 14   
+S M 01   
+S K 01   
+S L 01   
+J 05     
+S K 00   
+S L 00   
+J 05
+\"\"\"
+
+# virtual machine registers
+# eventually this will be set externally
+var registers = {
+	\"G\": 0x00,
+	\"H\": 0x00,
+	\"I\": 0x00,
+	\"J\": 0x00,
+	\"K\": 0x00,
+	\"L\": 0x00,
+	\"M\": 0x00,
+	\"N\": 0x00,
+	\"O\": 0x00,
+	\"P\": 0x00,
+	\"Q\": 0x00,
+	\"R\": 0x00,
+	\"S\": 0x00,
+	\"T\": 0x00,
+	\"U\": 0x00,
+	\"V\": 0x00,
+	\"W\": 0x00,
+	\"X\": 0x00,
+	\"Y\": 0x00,
+	\"Z\": 0x00
+}
 
 func _ready():
-	display_code(code_text)
+	set_code(code_text)
 	
 "
 
@@ -151,44 +159,182 @@ __meta__ = {
 [node name="Code" type="RichTextLabel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 8.0
-margin_top = 2.0
-margin_right = 10.0
-margin_bottom = -104.0
+margin_left = 6.0
+margin_top = 3.0
+margin_right = -236.0
+margin_bottom = -102.0
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
-bbcode_text = "O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00"
-text = "O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00
-O 00 00 00 O 00 00 00 O 00 00 00 O 00 00 00"
+bbcode_text = "O 00 00 00
+O 00 00 00 
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00"
+text = "O 00 00 00
+O 00 00 00 
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Code2" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 85.0
+margin_top = 3.0
+margin_right = -156.0
+margin_bottom = -102.0
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "O 00 00 00
+O 00 00 00 
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00"
+text = "O 00 00 00
+O 00 00 00 
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Code3" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 164.0
+margin_top = 2.0
+margin_right = -75.0
+margin_bottom = -103.0
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "O 00 00 00
+O 00 00 00 
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00"
+text = "O 00 00 00
+O 00 00 00 
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Code4" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 243.0
+margin_top = 2.0
+margin_right = 5.0
+margin_bottom = -103.0
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "O 00 00 00
+O 00 00 00 
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00"
+text = "O 00 00 00
+O 00 00 00 
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00
+O 00 00 00"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -268,8 +414,8 @@ __meta__ = {
 }
 
 [node name="ColorRect3" type="ColorRect" parent="."]
-margin_left = 234.002
-margin_right = 236.002
+margin_left = 236.975
+margin_right = 238.975
 margin_bottom = 139.0
 __meta__ = {
 "_edit_use_anchors_": false
