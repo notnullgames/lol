@@ -1,11 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/mazegen/maze.gd" type="Script" id=1]
 [ext_resource path="res://entities/Emily.tscn" type="PackedScene" id=2]
 [ext_resource path="res://tiles/maze-roads.tres" type="TileSet" id=3]
 [ext_resource path="res://entities/Portal.tscn" type="PackedScene" id=4]
 
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+func _ready():
+	VisualServer.set_default_clear_color(Color(\"#92B535\"))
+"
+
 [node name="Node2D" type="Node2D"]
+script = SubResource( 1 )
 
 [node name="Maze" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
