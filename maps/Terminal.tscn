@@ -258,6 +258,9 @@ var registers = {
 	\"Z\": 0x00
 }
 
+func _ready():
+	GameState.set_player_move(false)
+
 var tick:int = 0
 func _process(_delta):
 	tick += 1
@@ -322,6 +325,9 @@ func _input(event):
 			entering = false
 	if event.is_action_pressed(\"ui_select\"):
 		emit_signal(\"set_running\", not running)
+	if event.is_action_pressed(\"ui_cancel\"):
+		# switch scene here
+		pass
 	update_display()
 
 func _on_Terminal_set_code(code):

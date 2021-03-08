@@ -12,7 +12,8 @@ var player_move = true
 
 func set_player_move(p):
 	player_move = p
-	if not p:
+	var wr = weakref(player)
+	if not p and wr.get_ref():
 		player.set_movement_vector(Vector2.ZERO)
 
 # switch scenes
@@ -46,7 +47,8 @@ func _ready():
 	
 
 func _input(event):
-	if player and player_move:
+	var wr = weakref(player)
+	if player_move and wr.get_ref():
 		var movement_vector = player.get_movement_vector()
 		movement_vector = Vector2.ZERO
 		movement_vector.x = Input.get_action_strength('ui_right') - Input.get_action_strength('ui_left')
