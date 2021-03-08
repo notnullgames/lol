@@ -638,6 +638,7 @@ margin_left = 0.889618
 margin_top = 231.669
 margin_right = 59.8896
 margin_bottom = 240.669
+rect_clip_content = false
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
 bbcode_text = "XX : X"
