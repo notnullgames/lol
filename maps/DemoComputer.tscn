@@ -9,11 +9,14 @@ script/source = "extends Node2D
 
 const code = \"\"\"
 S L 01
-S G 02
-S T 5
-S R 02
+S N 02
 S T 1
+S W 02
+S T 1
+S S 02
 S L 00
+S T 1
+S G 02
 J 00
 \"\"\"
 
@@ -26,15 +29,23 @@ func _on_Terminal_set_register(register, value):
 		else:
 			$Light.play(\"off\")
 	
-	# it would be best if 2 movements used timeout to set register to 0 when done.
+	# I need to figure out a way to set a timer for when it finishes to set movement registers back to 0
 	
-	# G is cyborg forward
-	if register == \"G\":
-		$Cyborg.set_movement_vector(Vector2(0, value))
-	
-	# R is cyborg reverse
-	if register == \"R\":
+	# N is cyborg north
+	if register == \"N\":
 		$Cyborg.set_movement_vector(Vector2(0, -1 * value))
+	
+	# S is cyborg south
+	if register == \"S\":
+		$Cyborg.set_movement_vector(Vector2(0, value))
+		
+	# G is cyborg east
+	if register == \"G\":
+		$Cyborg.set_movement_vector(Vector2(value, 0))
+	
+	# W is cyborg west
+	if register == \"W\":
+		$Cyborg.set_movement_vector(Vector2(-1 * value, 0))
 	
 	# T is a timeout
 	if register == \"T\":
@@ -125,10 +136,9 @@ animation = "off"
 playing = true
 
 [node name="Cyborg" parent="." instance=ExtResource( 4 )]
-position = Vector2( 176, 64 )
+position = Vector2( 176, 160 )
 
 [node name="Terminal" parent="." instance=ExtResource( 1 )]
-visible = false
 modulate = Color( 1, 1, 1, 0.521569 )
 z_index = 20
 [connection signal="set_register" from="Terminal" to="." method="_on_Terminal_set_register"]
