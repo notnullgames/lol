@@ -8,7 +8,7 @@ extends Node
 var current = {
 	"quests": [],
 	"current_scene": "",
-	"position": Vector2.ZERO,
+	"position": [0, 0],
 	"inventory": {},
 	"switches": {} # todo: expose this to current scene for dialogs
 }
@@ -18,7 +18,8 @@ func save(dialog):
 	var save_game = File.new()
 	save_game.open("user://savegame.save", File.WRITE)
 	current.current_scene = current_scene.name
-	current.position = player.get_position()
+	var p = player.get_position()
+	current.position = [p.x, p.y]
 	save_game.store_line(to_json(current))
 	save_game.close()
 	print(current)
@@ -30,7 +31,9 @@ func load():
 	if not save_game.file_exists("user://savegame.save"):
 		return false
 	save_game.open("user://savegame.save", File.READ)
-	return parse_json(save_game.get_line())
+	var o =  parse_json(save_game.get_line())
+	o.position = Vector2(o.position[0], o.position[1])
+	return o
 	
 
 # track what object is the  player
@@ -49,7 +52,7 @@ func set_player_move(p):
 # switch scenes
 var current_scene = null
 func goto_scene(path, position=Vector2.ZERO):
-	call_deferred("_deferred_goto_scene", path)
+	call_deferred("_deferred_goto_scene", path, position)
 func _deferred_goto_scene(path, position=Vector2.ZERO):
 	current_scene.free()
 	var s = ResourceLoader.load(path)
