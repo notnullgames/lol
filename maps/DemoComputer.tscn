@@ -1,0 +1,102 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://entities/Terminal.tscn" type="PackedScene" id=1]
+[ext_resource path="res://tiles/images/cyber-Interior-Furniture.png" type="Texture" id=2]
+[ext_resource path="res://tiles/Terrain.tscn" type="PackedScene" id=3]
+[ext_resource path="res://entities/Cyborg.tscn" type="PackedScene" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+const code = \"\"\"
+S L 01
+S G 02
+S T 5
+S R 02
+S T 1
+S L 00
+J 00
+\"\"\"
+
+# connect light to G
+func _on_Terminal_set_register(register, value):
+	# L controls light
+	if register == \"L\":
+		if value:
+			$Light.play(\"on\")
+		else:
+			$Light.play(\"off\")
+	
+	# G is cyborg forward
+	if register == \"G\":
+		$Cyborg.set_movement_vector(Vector2(0, value))
+	
+	# R is cyborg reverse
+	if register == \"R\":
+		$Cyborg.set_movement_vector(Vector2(0, -1 * value))
+	
+	# T is a timeout
+	if register == \"T\":
+		$Node2D/Terminal.emit_signal(\"set_running\", false)
+		yield(get_tree().create_timer(value), \"timeout\")
+		$Node2D/Terminal.emit_signal(\"set_running\", true)
+
+func _ready():
+	# set background color for ocean
+	VisualServer.set_default_clear_color(Color(\"#156C99\"))
+	
+	# don't show instructions when it's stopped
+	$Node2D/Terminal.always_show_registers = true
+	# set initial code
+	$Node2D/Terminal.emit_signal(\"set_code\", code)
+	
+	# start the computer
+	$Node2D/Terminal.emit_signal(\"set_running\", true)
+	
+	# you could also set registers:
+	$Node2D/Terminal.emit_signal(\"set_register\", \"M\", 0x66)
+"
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 352, 320, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 352, 288, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "on",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "off",
+"speed": 5.0
+} ]
+
+[node name="ComputerDemo" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Terrain2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 186.681, -7.71072 )
+tile_data = PoolIntArray( 3, 6, 65536, 131071, 0, 131075, 65536, 0, 131076, 65537, 0, 131077, 196607, 0, 196611, 131072, 0, 327680, 131073, 0, 196613, 262143, 0, 196611, 196608, 0, 327681, 196609, 0, 196613, 327679, 0, 196611, 262144, 0, 327682, 262145, 0, 196613, 393215, 0, 196611, 327680, 0, 327682, 327681, 0, 196613, 458750, 0, 131075, 458751, 0, 65541, 393216, 0, 196612, 393217, 0, 65540, 393218, 0, 131077, 524286, 0, 262147, 524287, 0, 262148, 458752, 0, 262148, 458753, 0, 262148, 458754, 0, 262149 )
+
+[node name="Light" type="AnimatedSprite" parent="."]
+position = Vector2( 298.228, 18.2484 )
+frames = SubResource( 4 )
+animation = "off"
+playing = true
+
+[node name="Cyborg" parent="." instance=ExtResource( 4 )]
+position = Vector2( 200, 128 )
+
+[node name="Node2D" type="Node2D" parent="."]
+modulate = Color( 1, 1, 1, 0.768627 )
+z_index = 20
+
+[node name="Terminal" parent="Node2D" instance=ExtResource( 1 )]
+[connection signal="set_register" from="Node2D/Terminal" to="." method="_on_Terminal_set_register"]
