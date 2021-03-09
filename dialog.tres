@@ -38,6 +38,14 @@ lines = {
 "next_node_id": "67a57f67-1e4e-478a-a459-6976191ef95f",
 "type": "dialogue"
 },
+"374e087c-e200-4641-8068-a8941a00faac": {
+"id": "374e087c-e200-4641-8068-a8941a00faac",
+"responses": [ {
+"next_node_id": "",
+"prompt": "OK"
+} ],
+"type": "responses"
+},
 "38638c2f-3ef2-43b0-9a9b-38c4a30256ab": {
 "id": "38638c2f-3ef2-43b0-9a9b-38c4a30256ab",
 "responses": [ {
@@ -187,6 +195,14 @@ lines = {
 "mutation": "looking_for_code=true",
 "next_node_id": "ae5c0945-d4dd-4306-ba9b-2f859b708f20",
 "type": "mutation"
+},
+"d0ef38b0-8dec-4b25-aa0e-e94e36976341": {
+"character": "Emily",
+"dialogue": "Cool, I saved my game.",
+"go_to_node_id": "",
+"id": "d0ef38b0-8dec-4b25-aa0e-e94e36976341",
+"next_node_id": "374e087c-e200-4641-8068-a8941a00faac",
+"type": "dialogue"
 },
 "ea599000-48fa-4604-9d09-8954d4c43975": {
 "character": "Tom",

@@ -4,10 +4,40 @@ extends Node
 # (things that can be messed with in dialogs and other game-mechanics)
 # if it is specific to a map, put it in the map's script, instead.
 
+# this is the data that is saved and makes up a game
+var current = {
+	"quests": [],
+	"current_scene": "",
+	"position": Vector2.ZERO,
+	"inventory": {},
+	"switches": {} # todo: expose this to current scene for dialogs
+}
+
+# save game
+func save(dialog):
+	var save_game = File.new()
+	save_game.open("user://savegame.save", File.WRITE)
+	current.current_scene = current_scene.name
+	current.position = player.get_position()
+	save_game.store_line(to_json(current))
+	save_game.close()
+	print(current)
+	show_dialog(dialog)
+
+# load game
+func load():
+	var save_game = File.new()
+	if not save_game.file_exists("user://savegame.save"):
+		return false
+	save_game.open("user://savegame.save", File.READ)
+	return parse_json(save_game.get_line())
+	
+
 # track what object is the  player
 var player:KinematicBody2D
 var camera:Camera2D
 
+# can the player move?
 var player_move = true
 
 func set_player_move(p):
@@ -18,14 +48,16 @@ func set_player_move(p):
 
 # switch scenes
 var current_scene = null
-func goto_scene(path):
+func goto_scene(path, position=Vector2.ZERO):
 	call_deferred("_deferred_goto_scene", path)
-func _deferred_goto_scene(path):
+func _deferred_goto_scene(path, position=Vector2.ZERO):
 	current_scene.free()
 	var s = ResourceLoader.load(path)
 	current_scene = s.instance()
 	get_tree().get_root().add_child(current_scene)
 	get_tree().set_current_scene(current_scene)
+	if position != Vector2.ZERO:
+		player.set_position(position)
 
 # show a SayWhat dialog
 func show_dialog(id: String) -> void:

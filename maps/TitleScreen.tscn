@@ -1,24 +1,56 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://basicfont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+
+var current_option = 1
+
+var save_game
+
+func _ready():
+	$Indicator.set_position(Vector2(64, 117 + (current_option * 10)))
+	save_game = GameState.load()
+	if save_game:
+		$Continue.visible = true
+	else:
+		$Continue.visible = false
+
+func _input(event):
+	var count = 2
+	if save_game:
+		count = 3
+	if event.is_action_pressed('ui_accept'):
+		if current_option == 0:
+			 GameState.goto_scene('res://maps/%s.tscn' % save_game.current_scene, save_game.position)
+		if current_option == 1:
+			 GameState.goto_scene('res://maps/Demo.tscn')
+		if current_option == 2:
+			get_tree().quit(-1)
+	
+	if event.is_action_pressed('ui_up'):
+		current_option = fposmod(current_option - 1, count)
+		$Indicator.set_position(Vector2(64, 117 + (current_option * 10)))
+	if event.is_action_pressed('ui_down'):
+		current_option = fposmod(current_option + 1, count)
+		$Indicator.set_position(Vector2(64, 117 + (current_option * 10)))
+
+"
+
 [node name="TitleScreen" type="Node2D"]
+script = SubResource( 1 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_top = 0.0529785
+margin_top = -0.973969
 margin_right = 322.0
-margin_bottom = 241.053
+margin_bottom = 240.026
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="ColorRect" type="ColorRect" parent="ColorRect"]
-margin_left = 64.5035
-margin_top = 127.299
-margin_right = 67.5035
-margin_bottom = 130.299
 
 [node name="Face" type="Sprite" parent="."]
 position = Vector2( 248.683, 74.2616 )
@@ -54,6 +86,15 @@ margin_right = 127.462
 margin_bottom = 122.199
 custom_fonts/font = ExtResource( 1 )
 text = "CONTINUE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Indicator" type="ColorRect" parent="."]
+margin_left = 64.5035
+margin_top = 137.352
+margin_right = 67.5035
+margin_bottom = 140.352
 __meta__ = {
 "_edit_use_anchors_": false
 }

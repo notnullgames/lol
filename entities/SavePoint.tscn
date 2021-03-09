@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://tiles/images/obj_misk_atlas.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends StaticBody2D
+
+export (String) var dialog = \"d0ef38b0-8dec-4b25-aa0e-e94e36976341\"
+
+# called when the player is touching
+func on_touch():
+	GameState.save(dialog)
+"
+
+[sub_resource type="CircleShape2D" id=2]
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 736, 672, 32, 96 )
+
+[node name="SavePoint" type="StaticBody2D"]
+script = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -40 )
+texture = SubResource( 3 )
