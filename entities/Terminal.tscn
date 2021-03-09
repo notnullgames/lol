@@ -330,10 +330,12 @@ func _on_Terminal_set_running(r):
 	running = r
 "
 
-[node name="Terminal" type="CanvasLayer"]
+[node name="Terminal" type="CanvasModulate"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = SubResource( 1 )
 
-[node name="BG" type="ColorRect" parent="."]
+[node name="BG" type="ColorRect" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -0.396851
@@ -345,13 +347,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Code" type="RichTextLabel" parent="."]
+[node name="Code" type="RichTextLabel" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 6.0
 margin_top = 3.0
 margin_right = -236.0
 margin_bottom = -102.0
+rect_clip_content = false
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
 bbcode_text = "O 00 00 00
@@ -391,13 +394,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Code2" type="RichTextLabel" parent="."]
+[node name="Code2" type="RichTextLabel" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 85.0
 margin_top = 3.0
 margin_right = -156.0
 margin_bottom = -102.0
+rect_clip_content = false
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
 bbcode_text = "O 00 00 00
@@ -437,13 +441,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Code3" type="RichTextLabel" parent="."]
+[node name="Code3" type="RichTextLabel" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 164.0
 margin_top = 2.0
 margin_right = -75.0
 margin_bottom = -103.0
+rect_clip_content = false
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
 bbcode_text = "O 00 00 00
@@ -483,13 +488,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Code4" type="RichTextLabel" parent="."]
+[node name="Code4" type="RichTextLabel" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 243.0
 margin_top = 2.0
 margin_right = 5.0
 margin_bottom = -103.0
+rect_clip_content = false
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
 bbcode_text = "O 00 00 00
@@ -529,7 +535,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="instructions" type="RichTextLabel" parent="."]
+[node name="instructions" type="RichTextLabel" parent="CanvasLayer"]
 margin_left = 3.0
 margin_top = 145.0
 margin_right = 315.0
@@ -561,7 +567,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 margin_left = 79.0
 margin_right = 81.0
 margin_bottom = 139.0
@@ -569,7 +575,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
 margin_left = 157.298
 margin_top = -0.271546
 margin_right = 159.298
@@ -578,7 +584,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect3" type="ColorRect" parent="."]
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer"]
 margin_left = 236.975
 margin_right = 238.975
 margin_bottom = 139.0
@@ -586,7 +592,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect4" type="ColorRect" parent="."]
+[node name="ColorRect4" type="ColorRect" parent="CanvasLayer"]
 margin_left = -1.0
 margin_top = 132.0
 margin_right = 319.0
@@ -596,7 +602,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Brand" type="RichTextLabel" parent="."]
+[node name="Brand" type="RichTextLabel" parent="CanvasLayer"]
 margin_left = 2.15047
 margin_top = 134.335
 margin_right = 75.1505
@@ -613,7 +619,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayIndicator" type="Label" parent="."]
+[node name="PlayIndicator" type="Label" parent="CanvasLayer"]
 margin_left = 310.0
 margin_top = 133.621
 margin_right = 318.0
@@ -624,7 +630,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LineIndicator" type="RichTextLabel" parent="."]
+[node name="LineIndicator" type="RichTextLabel" parent="CanvasLayer"]
 margin_left = 0.889618
 margin_top = 231.669
 margin_right = 59.8896
@@ -638,7 +644,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LineBar" type="ColorRect" parent="."]
+[node name="LineBar" type="ColorRect" parent="CanvasLayer"]
 margin_top = 2.0
 margin_right = 80.0
 margin_bottom = 10.0
@@ -647,7 +653,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PosBar" type="ColorRect" parent="LineBar"]
+[node name="PosBar" type="ColorRect" parent="CanvasLayer/LineBar"]
 margin_left = 62.0
 margin_right = 76.0
 margin_bottom = 8.0
@@ -655,6 +661,6 @@ color = Color( 1, 1, 1, 0.196078 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="set_code" from="." to="." method="_on_Terminal_set_code"]
-[connection signal="set_register" from="." to="." method="_on_Terminal_set_register"]
-[connection signal="set_running" from="." to="." method="_on_Terminal_set_running"]
+[connection signal="set_code" from="CanvasLayer" to="CanvasLayer" method="_on_Terminal_set_code"]
+[connection signal="set_register" from="CanvasLayer" to="CanvasLayer" method="_on_Terminal_set_register"]
+[connection signal="set_running" from="CanvasLayer" to="CanvasLayer" method="_on_Terminal_set_running"]

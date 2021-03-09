@@ -1,9 +1,70 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://entities/BasePerson.tscn" type="PackedScene" id=1]
 [ext_resource path="res://people/cyborg/walk.png" type="Texture" id=2]
 
+[sub_resource type="GDScript" id=1]
+script/source = "extends KinematicBody2D
+
+onready var character = name.to_lower()
+onready var animationState = $AnimationTree.get('parameters/playback')
+
+const TILE_SIZE = 32
+
+var movement_vector: Vector2 = Vector2.ZERO
+
+func set_movement_vector(value):
+	movement_vector = value
+
+func get_movement_vector():
+	return movement_vector
+
+
+# Speed of movement
+var _pixels_per_second: float = 2 * TILE_SIZE
+var _step_size: float = 1 / _pixels_per_second 
+
+# Accumulator of deltas, aka fractions of seconds, to time movement.
+var _step: float = 0 
+
+# Count movement progress in distinct integer steps
+var _pixels_moved: int = 0
+
+func is_moving() -> bool:
+	return movement_vector.x != 0 or movement_vector.y != 0
+
+func _physics_process(delta: float) -> void:
+	if is_moving():
+		$AnimationTree.set('parameters/Idle/blend_position', movement_vector)
+		$AnimationTree.set('parameters/Walk/blend_position', movement_vector)
+		animationState.travel('Walk')
+		# delta is measured in fractions of seconds, so for a speed of
+		# 4 pixels_per_second, we need to accumulate deltas until we
+		# reach 1 / 4 = 0.25
+		_step += delta
+		if _step < _step_size: return
+
+		# Move a pixel
+		_step -= _step_size
+		_pixels_moved += 1
+		move_and_collide(movement_vector)
+
+		# Complete movement
+		if _pixels_moved >= TILE_SIZE:
+			movement_vector = Vector2.ZERO
+			_pixels_moved = 0
+			_step = 0
+	else:
+		animationState.travel('Idle')
+"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=2]
+
 [node name="Cyborg" instance=ExtResource( 1 )]
+script = SubResource( 1 )
 
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource( 2 )
+
+[node name="AnimationTree" parent="." index="3"]
+parameters/playback = SubResource( 2 )

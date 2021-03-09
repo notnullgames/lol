@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://basicfont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+
+[node name="TitleScreen" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_top = 0.0529785
+margin_right = 322.0
+margin_bottom = 241.053
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect"]
+margin_left = 64.5035
+margin_top = 127.299
+margin_right = 67.5035
+margin_bottom = 130.299
+
+[node name="Face" type="Sprite" parent="."]
+position = Vector2( 248.683, 74.2616 )
+texture = ExtResource( 2 )
+
+[node name="LOL" type="Label" parent="."]
+margin_left = 225.403
+margin_top = 87.0472
+margin_right = 246.403
+margin_bottom = 94.0472
+custom_fonts/font = ExtResource( 1 )
+text = "LOL"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewExit" type="Label" parent="."]
+margin_left = 71.9833
+margin_top = 124.897
+margin_right = 99.9833
+margin_bottom = 141.897
+custom_fonts/font = ExtResource( 1 )
+text = "NEW
+EXIT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Continue" type="Label" parent="."]
+margin_left = 71.4623
+margin_top = 115.199
+margin_right = 127.462
+margin_bottom = 122.199
+custom_fonts/font = ExtResource( 1 )
+text = "CONTINUE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
