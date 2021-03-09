@@ -21,8 +21,8 @@ func get_movement_vector():
 
 
 # Speed of movement
-var _pixels_per_second: float = 2 * TILE_SIZE
-var _step_size: float = 1 / _pixels_per_second 
+var pixels_per_second: float = 2 * TILE_SIZE
+var step_size: float = 1 / pixels_per_second 
 
 # Accumulator of deltas, aka fractions of seconds, to time movement.
 var _step: float = 0 
@@ -30,6 +30,7 @@ var _step: float = 0
 # Count movement progress in distinct integer steps
 var _pixels_moved: int = 0
 
+#  movement_vector != Vector2.ZERO might be better?
 func is_moving() -> bool:
 	return movement_vector.x != 0 or movement_vector.y != 0
 
@@ -42,10 +43,10 @@ func _physics_process(delta: float) -> void:
 		# 4 pixels_per_second, we need to accumulate deltas until we
 		# reach 1 / 4 = 0.25
 		_step += delta
-		if _step < _step_size: return
+		if _step < step_size: return
 
 		# Move a pixel
-		_step -= _step_size
+		_step -= step_size
 		_pixels_moved += 1
 		move_and_collide(movement_vector)
 

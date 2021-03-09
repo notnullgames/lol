@@ -27,6 +27,8 @@ func _on_Terminal_set_register(register, value):
 		else:
 			$Light.play(\"off\")
 	
+	# it would be best if 2 movements used timeout to set register to 0 when done.
+	
 	# G is cyborg forward
 	if register == \"G\":
 		$Cyborg.set_movement_vector(Vector2(0, value))
@@ -37,24 +39,24 @@ func _on_Terminal_set_register(register, value):
 	
 	# T is a timeout
 	if register == \"T\":
-		$Node2D/Terminal.emit_signal(\"set_running\", false)
+		$Terminal.emit_signal(\"set_running\", false)
 		yield(get_tree().create_timer(value), \"timeout\")
-		$Node2D/Terminal.emit_signal(\"set_running\", true)
+		$Terminal.emit_signal(\"set_running\", true)
 
 func _ready():
 	# set background color for ocean
 	VisualServer.set_default_clear_color(Color(\"#156C99\"))
 	
 	# don't show instructions when it's stopped
-	$Node2D/Terminal.always_show_registers = true
+	$Terminal.always_show_registers = true
 	# set initial code
-	$Node2D/Terminal.emit_signal(\"set_code\", code)
+	$Terminal.emit_signal(\"set_code\", code)
 	
 	# start the computer
-	$Node2D/Terminal.emit_signal(\"set_running\", true)
+	$Terminal.emit_signal(\"set_running\", true)
 	
 	# you could also set registers:
-	$Node2D/Terminal.emit_signal(\"set_register\", \"M\", 0x66)
+	$Terminal.emit_signal(\"set_register\", \"M\", 0x66)
 "
 
 [sub_resource type="AtlasTexture" id=2]
@@ -94,9 +96,7 @@ playing = true
 [node name="Cyborg" parent="." instance=ExtResource( 4 )]
 position = Vector2( 200, 128 )
 
-[node name="Node2D" type="Node2D" parent="."]
-modulate = Color( 1, 1, 1, 0.768627 )
+[node name="Terminal" parent="." instance=ExtResource( 1 )]
+modulate = Color( 1, 1, 1, 0.521569 )
 z_index = 20
-
-[node name="Terminal" parent="Node2D" instance=ExtResource( 1 )]
-[connection signal="set_register" from="Node2D/Terminal" to="." method="_on_Terminal_set_register"]
+[connection signal="set_register" from="Terminal" to="." method="_on_Terminal_set_register"]

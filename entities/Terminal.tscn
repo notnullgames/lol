@@ -167,11 +167,9 @@ func cpu_process():
 			\"S\":
 				emit_signal(\"set_register\", params[0], params[1])
 				line += 1
-				update_display()
 			\"M\":
 				emit_signal(\"set_register\", params[0], registers[params[1]])
 				line += 1
-				update_display()
 			\"+\":
 				emit_signal(\"set_register\", params[0], int(fposmod(registers[params[0]] + registers[params[1]], 256)))
 				line += 1
@@ -575,9 +573,9 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_left = 79.0
-margin_right = 81.0
-margin_bottom = 139.0
+margin_left = 78.0
+margin_right = 80.0
+margin_bottom = 132.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -586,7 +584,7 @@ __meta__ = {
 margin_left = 157.298
 margin_top = -0.271546
 margin_right = 159.298
-margin_bottom = 138.728
+margin_bottom = 131.728
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -594,7 +592,7 @@ __meta__ = {
 [node name="ColorRect3" type="ColorRect" parent="."]
 margin_left = 236.975
 margin_right = 238.975
-margin_bottom = 139.0
+margin_bottom = 132.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
