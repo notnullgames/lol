@@ -28,7 +28,7 @@ var looking_for_code = false
 ## DIALOG METHODS
 
 func enter_code(args):
-	 GameState.goto_scene('res://maps/Terminal.tscn')
+	 GameState.goto_scene('res://maps/ComputerDemo.tscn')
 
 
 func _ready():
@@ -303,7 +303,7 @@ dialog_id = "f320337f-b850-4aa4-8fa2-6a1ef2643580"
 MAX_SPEED = 100
 
 [node name="Emily" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 185, 267 )
+position = Vector2( 644.542, -107.399 )
 
 [node name="The Dude" parent="YSort" instance=ExtResource( 8 )]
 position = Vector2( 1065, 635 )
