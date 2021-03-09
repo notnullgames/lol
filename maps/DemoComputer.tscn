@@ -10,17 +10,18 @@ script/source = "extends Node2D
 const code = \"\"\"
 S L 01
 S N 02
-S T 1
+S T 02
 S W 02
-S T 1
+S T 2
 S S 02
 S L 00
-S T 1
+S T 02
 S G 02
 J 00
 \"\"\"
 
-# connect light to G
+# chere is where I respond to registers
+# I use lots of timeouts to set things back when they are \"done\"
 func _on_Terminal_set_register(register, value):
 	# L controls light
 	if register == \"L\":
@@ -29,36 +30,50 @@ func _on_Terminal_set_register(register, value):
 		else:
 			$Light.play(\"off\")
 	
-	# I need to figure out a way to set a timer for when it finishes to set movement registers back to 0
-	
 	# N is cyborg north
 	if register == \"N\":
 		$Cyborg.set_movement_vector(Vector2(0, -1 * value))
+		if value != 0:
+			yield(get_tree().create_timer((32.0*value) / $Cyborg.pixels_per_second), \"timeout\")
+			$Terminal.emit_signal(\"set_register\", \"N\", 0)
+		
 	
 	# S is cyborg south
 	if register == \"S\":
 		$Cyborg.set_movement_vector(Vector2(0, value))
+		if value != 0:
+			yield(get_tree().create_timer((32.0*value) / $Cyborg.pixels_per_second), \"timeout\")
+			$Terminal.emit_signal(\"set_register\", \"S\", 0)
 		
 	# G is cyborg east
 	if register == \"G\":
 		$Cyborg.set_movement_vector(Vector2(value, 0))
+		if value != 0:
+			yield(get_tree().create_timer((32.0*value) / $Cyborg.pixels_per_second), \"timeout\")
+			$Terminal.emit_signal(\"set_register\", \"G\", 0)
 	
 	# W is cyborg west
 	if register == \"W\":
 		$Cyborg.set_movement_vector(Vector2(-1 * value, 0))
+		if value != 0:
+			yield(get_tree().create_timer((32.0*value) / $Cyborg.pixels_per_second), \"timeout\")
+			$Terminal.emit_signal(\"set_register\", \"W\", 0)
 	
 	# T is a timeout
 	if register == \"T\":
-		$Terminal.emit_signal(\"set_running\", false)
-		yield(get_tree().create_timer(value), \"timeout\")
-		$Terminal.emit_signal(\"set_running\", true)
+		if value != 0:
+			$Terminal.emit_signal(\"set_running\", false)
+			yield(get_tree().create_timer(value), \"timeout\")
+			$Terminal.emit_signal(\"set_register\", \"T\", 0)
+			$Terminal.emit_signal(\"set_running\", true)
 
 func _ready():
 	# set background color for ocean
 	VisualServer.set_default_clear_color(Color(\"#156C99\"))
 	
-	# don't show instructions when it's stopped
+	# don't show instructions when it's stopped, to make timeout nicer
 	$Terminal.always_show_registers = true
+	
 	# set initial code
 	$Terminal.emit_signal(\"set_code\", code)
 	

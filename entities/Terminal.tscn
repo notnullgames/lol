@@ -337,6 +337,7 @@ func _on_Terminal_set_code(code):
 
 func _on_Terminal_set_register(register, value):
 	registers[register] = value
+	call_deferred(\"update_display\")
 
 func _on_Terminal_set_running(r):
 	running = r
