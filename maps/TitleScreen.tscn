@@ -12,7 +12,6 @@ var current_option = 0
 var save_game
 
 func _ready():
-	$Indicator.set_position(Vector2(64, 117 + (current_option * 10)))
 	save_game = GameState.load()
 	if save_game:
 		$Continue.visible = true
