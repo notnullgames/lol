@@ -1,0 +1,312 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://maps/Controller/controller.png" type="Texture" id=1]
+[ext_resource path="res://maps/Controller/circle_button.png" type="Texture" id=2]
+[ext_resource path="res://maps/Controller/L.png" type="Texture" id=3]
+[ext_resource path="res://maps/Controller/R.png" type="Texture" id=4]
+[ext_resource path="res://basicfont.tres" type="DynamicFont" id=5]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+# TODO: I could probly detect xbox/switch/ps4 and disable keyboard help
+
+onready var map = {
+	\"ui_accept\": $A,
+	\"ui_cancel\": $B,
+	\"ui_x\": $X,
+	\"ui_y\": $Y,
+	\"ui_start\": $start,
+	\"ui_select\": $select,
+	\"ui_up\": $up,
+	\"ui_down\": $down,
+	\"ui_left\": $left,
+	\"ui_right\": $right,
+	\"ui_page_down\": $R,
+	\"ui_page_up\": $L
+}
+
+func _input(event):
+	for key in map.keys():
+		if event.is_action_pressed(key):
+			map[key].visible = true
+		if event.is_action_released(key):
+			map[key].visible = false
+"
+
+[node name="Controller" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="bg" type="ColorRect" parent="."]
+margin_left = 0.277069
+margin_top = -0.0511246
+margin_right = 321.277
+margin_bottom = 241.949
+color = Color( 0.494118, 0.494118, 0.494118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="controller" type="Sprite" parent="."]
+position = Vector2( 161.058, 169.81 )
+texture = ExtResource( 1 )
+
+[node name="B" type="Sprite" parent="."]
+visible = false
+position = Vector2( 252.929, 198.461 )
+scale = Vector2( 1.15794, 1.15794 )
+texture = ExtResource( 2 )
+
+[node name="A" type="Sprite" parent="."]
+visible = false
+position = Vector2( 277.9, 173.746 )
+scale = Vector2( 1.21463, 1.21463 )
+texture = ExtResource( 2 )
+
+[node name="Y" type="Sprite" parent="."]
+visible = false
+position = Vector2( 223.998, 171.312 )
+scale = Vector2( 1.18629, 1.18629 )
+texture = ExtResource( 2 )
+
+[node name="X" type="Sprite" parent="."]
+visible = false
+position = Vector2( 248.358, 146.639 )
+scale = Vector2( 1.17009, 1.17009 )
+texture = ExtResource( 2 )
+
+[node name="L" type="Sprite" parent="."]
+visible = false
+position = Vector2( 68.1522, 116.784 )
+texture = ExtResource( 3 )
+
+[node name="R" type="Sprite" parent="."]
+visible = false
+position = Vector2( 252.482, 115.318 )
+scale = Vector2( 1, 0.930217 )
+texture = ExtResource( 4 )
+
+[node name="up" type="ColorRect" parent="."]
+visible = false
+margin_left = 60.0
+margin_top = 145.0
+margin_right = 79.0
+margin_bottom = 165.0
+color = Color( 0.992157, 0.105882, 0.0156863, 0.52549 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="down" type="ColorRect" parent="."]
+visible = false
+margin_left = 60.257
+margin_top = 180.598
+margin_right = 79.257
+margin_bottom = 200.598
+color = Color( 0.992157, 0.105882, 0.0156863, 0.52549 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="left" type="ColorRect" parent="."]
+visible = false
+margin_left = 42.0
+margin_top = 164.0
+margin_right = 61.0
+margin_bottom = 182.0
+color = Color( 0.992157, 0.105882, 0.0156863, 0.52549 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="right" type="ColorRect" parent="."]
+visible = false
+margin_left = 78.3689
+margin_top = 164.257
+margin_right = 97.3689
+margin_bottom = 182.257
+color = Color( 0.992157, 0.105882, 0.0156863, 0.52549 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="select" type="ColorRect" parent="."]
+visible = false
+margin_left = 127.0
+margin_top = 190.0
+margin_right = 152.0
+margin_bottom = 198.0
+rect_rotation = -45.0
+color = Color( 0.992157, 0.105882, 0.0156863, 0.52549 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="start" type="ColorRect" parent="."]
+visible = false
+margin_left = 161.0
+margin_top = 190.0
+margin_right = 187.0
+margin_bottom = 198.0
+rect_rotation = -45.0
+color = Color( 0.992157, 0.105882, 0.0156863, 0.52549 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions" type="Label" parent="."]
+margin_left = 52.1454
+margin_top = 37.2574
+margin_right = 255.145
+margin_bottom = 54.2574
+custom_fonts/font = ExtResource( 5 )
+text = "Press keys to see them here.
+Press START + SELECT to stop."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions2" type="Label" parent="."]
+margin_left = 55.3085
+margin_top = 78.8294
+margin_right = 258.308
+margin_bottom = 95.8294
+custom_fonts/font = ExtResource( 5 )
+text = "A is generally \"ok\"
+B is generally \"cancel\""
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PCDirections" type="Node2D" parent="."]
+position = Vector2( 61.5664, 134.587 )
+
+[node name="directions2" type="Label" parent="PCDirections"]
+margin_right = 14.0
+margin_bottom = 7.0
+custom_fonts/font = ExtResource( 5 )
+text = "UP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions12" type="Label" parent="PCDirections"]
+margin_left = 224.805
+margin_top = -30.7271
+margin_right = 252.805
+margin_bottom = -23.7271
+custom_fonts/font = ExtResource( 5 )
+text = "PGDN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions13" type="Label" parent="PCDirections"]
+margin_left = -53.5466
+margin_top = -31.8568
+margin_right = -25.5466
+margin_bottom = -24.8568
+custom_fonts/font = ExtResource( 5 )
+text = "PGUP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions3" type="Label" parent="PCDirections"]
+margin_left = -2.79716
+margin_top = 70.4541
+margin_right = 25.2028
+margin_bottom = 77.4541
+custom_fonts/font = ExtResource( 5 )
+text = "DOWN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions4" type="Label" parent="PCDirections"]
+margin_left = -51.2234
+margin_top = 35.6641
+margin_right = -23.2234
+margin_bottom = 42.6641
+custom_fonts/font = ExtResource( 5 )
+text = "LEFT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions5" type="Label" parent="PCDirections"]
+margin_left = 39.6851
+margin_top = 34.2655
+margin_right = 74.6851
+margin_bottom = 41.2655
+custom_fonts/font = ExtResource( 5 )
+text = "RIGHT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions6" type="Label" parent="PCDirections"]
+margin_left = 55.2444
+margin_top = 74.8247
+margin_right = 90.2444
+margin_bottom = 81.8247
+custom_fonts/font = ExtResource( 5 )
+text = "SPACE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions7" type="Label" parent="PCDirections"]
+margin_left = 103.496
+margin_top = 74.6499
+margin_right = 138.496
+margin_bottom = 81.6499
+custom_fonts/font = ExtResource( 5 )
+text = "ENTER"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions8" type="Label" parent="PCDirections"]
+margin_left = 213.309
+margin_top = 36.4519
+margin_right = 220.309
+margin_bottom = 43.4519
+custom_fonts/font = ExtResource( 5 )
+text = "Z"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions10" type="Label" parent="PCDirections"]
+margin_left = 183.627
+margin_top = 9.12967
+margin_right = 190.627
+margin_bottom = 16.1297
+custom_fonts/font = ExtResource( 5 )
+text = "A"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions11" type="Label" parent="PCDirections"]
+margin_left = 159.226
+margin_top = 34.2084
+margin_right = 166.226
+margin_bottom = 41.2084
+custom_fonts/font = ExtResource( 5 )
+text = "S"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="directions9" type="Label" parent="PCDirections"]
+margin_left = 187.949
+margin_top = 61.774
+margin_right = 194.949
+margin_bottom = 68.774
+custom_fonts/font = ExtResource( 5 )
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
