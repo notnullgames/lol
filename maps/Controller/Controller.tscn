@@ -155,22 +155,21 @@ __meta__ = {
 }
 
 [node name="directions" type="Label" parent="."]
-margin_left = 52.1454
-margin_top = 37.2574
-margin_right = 255.145
-margin_bottom = 54.2574
+margin_left = 52.0
+margin_top = 37.0
+margin_right = 255.0
+margin_bottom = 44.0
 custom_fonts/font = ExtResource( 5 )
-text = "Press keys to see them here.
-Press START + SELECT to stop."
+text = "Press keys to see them here."
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="directions2" type="Label" parent="."]
-margin_left = 55.3085
-margin_top = 78.8294
-margin_right = 258.308
-margin_bottom = 95.8294
+margin_left = 51.0157
+margin_top = 60.5287
+margin_right = 254.016
+margin_bottom = 77.5287
 custom_fonts/font = ExtResource( 5 )
 text = "A is generally \"ok\"
 B is generally \"cancel\""
