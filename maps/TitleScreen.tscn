@@ -15,10 +15,10 @@ func _ready():
 	save_game = GameState.load()
 	if save_game:
 		$Continue.visible = true
-		current_option = 0 # continue
 	else:
 		$Continue.visible = false
-		current_option = 1 # new
+		var p = $NewExit.get_position()
+		$NewExit.set_position(Vector2(p.x, p.y - 10))
 	$Indicator.set_position(Vector2(64, 117 + (current_option * 10)))
 
 func _input(event):
@@ -26,6 +26,8 @@ func _input(event):
 	if save_game:
 		count = 3
 	if event.is_action_pressed('ui_accept'):
+		if not save_game:
+			current_option += 1
 		if current_option == 0:
 			 GameState.goto_scene('res://maps/%s.tscn' % save_game.current_scene, save_game.position)
 		if current_option == 1:
