@@ -6,11 +6,26 @@ extends Node
 
 # this is the data that is saved and makes up a game
 var current = {
-	"quests": [],
+	# quests that have been completed
+	"quests_completed": [],
+	
+	# quests currently in profgress or taken-onm
+	"quests_incommplete": [],
+	
+	# current scene the player is in
 	"current_scene": "",
+	
+	# position of player, in current_scene
 	"position": [0, 0],
+	
+	# size of inventory for consumable/dropable items
+	"bag_size": 5,
+	
+	# stuff limited by bag_size
 	"inventory": {},
-	"switches": {} # todo: expose this to current scene for dialogs
+	
+	# things that can be get/set in dialogs
+	"switches": {}
 }
 
 # save game
