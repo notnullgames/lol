@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://maps/Controller/controller.png" type="Texture" id=1]
-[ext_resource path="res://maps/Controller/circle_button.png" type="Texture" id=2]
-[ext_resource path="res://maps/Controller/L.png" type="Texture" id=3]
-[ext_resource path="res://maps/Controller/R.png" type="Texture" id=4]
-[ext_resource path="res://basicfont.tres" type="DynamicFont" id=5]
+[ext_resource path="res://maps/ControllerPC/controller.png" type="Texture" id=1]
+[ext_resource path="res://maps/ControllerPC/circle_button.png" type="Texture" id=2]
+[ext_resource path="res://basicfont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://maps/ControllerPC/R.png" type="Texture" id=4]
+[ext_resource path="res://maps/ControllerPC/L.png" type="Texture" id=5]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -34,13 +34,13 @@ func _input(event):
 			map[key].visible = false
 "
 
-[node name="Controller" type="Node2D"]
+[node name="ControllerPC" type="Node2D"]
 script = SubResource( 1 )
 
 [node name="bg" type="ColorRect" parent="."]
-margin_left = 0.277069
+margin_left = -0.274994
 margin_top = -0.0511246
-margin_right = 321.277
+margin_right = 320.725
 margin_bottom = 241.949
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
@@ -78,7 +78,7 @@ texture = ExtResource( 2 )
 [node name="L" type="Sprite" parent="."]
 visible = false
 position = Vector2( 68.1522, 116.784 )
-texture = ExtResource( 3 )
+texture = ExtResource( 5 )
 
 [node name="R" type="Sprite" parent="."]
 visible = false
@@ -155,23 +155,24 @@ __meta__ = {
 }
 
 [node name="directions" type="Label" parent="."]
-margin_left = 52.0
-margin_top = 37.0
-margin_right = 255.0
-margin_bottom = 44.0
-custom_fonts/font = ExtResource( 5 )
+margin_left = 61.5693
+margin_top = 83.3744
+margin_right = 264.569
+margin_bottom = 90.3744
+custom_fonts/font = ExtResource( 3 )
 text = "Press keys to see them here."
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="directions2" type="Label" parent="."]
-margin_left = 109.0
-margin_top = 63.0
-margin_right = 222.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 5 )
+margin_left = 103.663
+margin_top = 24.1706
+margin_right = 216.663
+margin_bottom = 71.1706
+custom_fonts/font = ExtResource( 3 )
 text = "In general:
+
 A is \"ok\"
 B is \"no\"
 START is \"pause\""
@@ -182,131 +183,131 @@ __meta__ = {
 [node name="PCDirections" type="Node2D" parent="."]
 position = Vector2( 61.5664, 134.587 )
 
-[node name="directions2" type="Label" parent="PCDirections"]
+[node name="up" type="Label" parent="PCDirections"]
 margin_right = 14.0
 margin_bottom = 7.0
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )
 text = "UP"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="directions12" type="Label" parent="PCDirections"]
+[node name="pgdn" type="Label" parent="PCDirections"]
 margin_left = 224.805
 margin_top = -30.7271
 margin_right = 252.805
 margin_bottom = -23.7271
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )
 text = "PGDN"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="directions13" type="Label" parent="PCDirections"]
+[node name="pgup" type="Label" parent="PCDirections"]
 margin_left = -53.5466
 margin_top = -31.8568
 margin_right = -25.5466
 margin_bottom = -24.8568
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )
 text = "PGUP"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="directions3" type="Label" parent="PCDirections"]
+[node name="down" type="Label" parent="PCDirections"]
 margin_left = -2.79716
 margin_top = 70.4541
 margin_right = 25.2028
 margin_bottom = 77.4541
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )
 text = "DOWN"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="directions4" type="Label" parent="PCDirections"]
+[node name="left" type="Label" parent="PCDirections"]
 margin_left = -51.2234
 margin_top = 35.6641
 margin_right = -23.2234
 margin_bottom = 42.6641
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )
 text = "LEFT"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="directions5" type="Label" parent="PCDirections"]
+[node name="right" type="Label" parent="PCDirections"]
 margin_left = 39.6851
 margin_top = 34.2655
 margin_right = 74.6851
 margin_bottom = 41.2655
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )
 text = "RIGHT"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="directions6" type="Label" parent="PCDirections"]
+[node name="space" type="Label" parent="PCDirections"]
 margin_left = 55.2444
 margin_top = 74.8247
 margin_right = 90.2444
 margin_bottom = 81.8247
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )
 text = "SPACE"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="directions7" type="Label" parent="PCDirections"]
+[node name="enter" type="Label" parent="PCDirections"]
 margin_left = 103.496
 margin_top = 74.6499
 margin_right = 138.496
 margin_bottom = 81.6499
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )
 text = "ENTER"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="directions8" type="Label" parent="PCDirections"]
+[node name="z" type="Label" parent="PCDirections"]
 margin_left = 213.309
 margin_top = 36.4519
 margin_right = 220.309
 margin_bottom = 43.4519
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )
 text = "Z"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="directions10" type="Label" parent="PCDirections"]
-margin_left = 183.627
-margin_top = 9.12967
-margin_right = 190.627
-margin_bottom = 16.1297
-custom_fonts/font = ExtResource( 5 )
+[node name="a" type="Label" parent="PCDirections"]
+margin_left = 183.821
+margin_top = 8.54854
+margin_right = 190.821
+margin_bottom = 15.5486
+custom_fonts/font = ExtResource( 3 )
 text = "A"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="directions11" type="Label" parent="PCDirections"]
-margin_left = 159.226
-margin_top = 34.2084
-margin_right = 166.226
-margin_bottom = 41.2084
-custom_fonts/font = ExtResource( 5 )
+[node name="s" type="Label" parent="PCDirections"]
+margin_left = 158.645
+margin_top = 34.4021
+margin_right = 165.645
+margin_bottom = 41.4021
+custom_fonts/font = ExtResource( 3 )
 text = "S"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="directions9" type="Label" parent="PCDirections"]
+[node name="x" type="Label" parent="PCDirections"]
 margin_left = 187.949
 margin_top = 61.774
 margin_right = 194.949
 margin_bottom = 68.774
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )
 text = "X"
 __meta__ = {
 "_edit_use_anchors_": false
