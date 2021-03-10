@@ -9,7 +9,7 @@ var current = {
 	# quests that have been completed
 	"quests_completed": [],
 	
-	# quests currently in profgress or taken-onm
+	# quests currently in profgress or taken-on
 	"quests_incommplete": [],
 	
 	# current scene the player is in
