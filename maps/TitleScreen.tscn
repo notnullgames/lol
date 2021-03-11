@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://basicfont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://sounds/MenuSounds.tscn" type="PackedScene" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -30,16 +31,24 @@ func _input(event):
 		if not save_game:
 			current_option += 1
 		if current_option == 0:
-			 GameState.goto_scene('res://maps/%s.tscn' % save_game.current_scene, save_game.position)
+			$MenuSounds/ok.play()
+			yield($MenuSounds/ok, \"finished\")
+			GameState.goto_scene('res://maps/%s.tscn' % save_game.current_scene, save_game.position)
 		if current_option == 1:
-			 GameState.goto_scene('res://maps/Demo.tscn')
+			$MenuSounds/ok.play()
+			yield($MenuSounds/ok, \"finished\")
+			GameState.goto_scene('res://maps/Demo.tscn')
 		if current_option == 2:
+			$MenuSounds/cancel.play()
+			yield($MenuSounds/cancel, \"finished\")
 			get_tree().quit()
 	
 	if event.is_action_pressed('ui_up'):
+		$MenuSounds/move.play()
 		current_option = fposmod(current_option - 1, count)
 		$Indicator.set_position(Vector2(64, 117 + (current_option * 10)))
 	if event.is_action_pressed('ui_down'):
+		$MenuSounds/move.play()
 		current_option = fposmod(current_option + 1, count)
 		$Indicator.set_position(Vector2(64, 117 + (current_option * 10)))
 
@@ -103,3 +112,5 @@ margin_bottom = 140.352
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="MenuSounds" parent="." instance=ExtResource( 3 )]
