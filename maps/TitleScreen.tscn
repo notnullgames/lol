@@ -12,6 +12,7 @@ var current_option = 0
 var save_game
 
 func _ready():
+	GameState.music_player.play_music(\"res://sounds/music/Be Higher.spc\", 0, true, 0, 0, 0)
 	save_game = GameState.load()
 	if save_game:
 		$Continue.visible = true

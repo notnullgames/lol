@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "DialogueResponse",
 "language": "GDScript",
 "path": "res://addons/saywhat_godot/dialogue_response.gd"
+}, {
+"base": "",
+"class": "FLMusicLib",
+"language": "NativeScript",
+"path": "res://FLMusicLib/FLMusic.gdns"
 } ]
 _global_script_class_icons={
 "DialogueLine": "",
 "DialogueResource": "",
-"DialogueResponse": ""
+"DialogueResponse": "",
+"FLMusicLib": ""
 }
 
 [application]

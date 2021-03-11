@@ -28,6 +28,8 @@ var current = {
 	"switches": {}
 }
 
+var music_player = FLMusicLib.new();
+
 # save game
 func save(dialog):
 	var save_game = File.new()
@@ -91,6 +93,8 @@ func show_dialog(id: String) -> void:
 		set_player_move(true)
 
 func _ready():
+	add_child(music_player);
+	music_player.set_gme_buffer_size(2048*5);
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 	DialogueManager.resource = preload("res://dialog.tres")

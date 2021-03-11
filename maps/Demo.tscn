@@ -35,6 +35,7 @@ func enter_code(args):
 func _ready():
 	# set background color for ocean
 	VisualServer.set_default_clear_color(Color(\"#156C99\"))
+	GameState.music_player.play_music(\"res://sounds/music/Rockboard.nsf\", 0,true,0,0,0)
 "
 
 [sub_resource type="TileSet" id=2]
