@@ -31,7 +31,7 @@ var current = {
 var music_player = FLMusicLib.new();
 
 # save game
-func save(dialog):
+func save(dialog="d0ef38b0-8dec-4b25-aa0e-e94e36976341"):
 	var save_game = File.new()
 	save_game.open("user://savegame.save", File.WRITE)
 	current.current_scene = current_scene.name
@@ -66,6 +66,7 @@ func set_player_move(p):
 	if not p and wr.get_ref():
 		player.set_movement_vector(Vector2.ZERO)
 
+
 # switch scenes
 var current_scene = null
 func goto_scene(path, position=Vector2.ZERO):
@@ -82,6 +83,7 @@ func _deferred_goto_scene(path, position=Vector2.ZERO):
 # show a SayWhat dialog
 func show_dialog(id: String) -> void:
 	DialogueManager.game_state = current_scene
+	
 	set_player_move(false)
 	var dialog = yield(DialogueManager.get_next_dialogue_line(id), "completed")
 	if dialog != null:

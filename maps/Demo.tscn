@@ -15,21 +15,41 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
 
-## DIALOG VARIABLES
+# dialog stuff
 
-# Have they met Tom?
-var met_tom = false
+var looking_for_code setget set_looking_for_code, get_looking_for_code
+var met_tom setget set_met_tom, get_met_tom
 
-# Have the read the gravestone?
-var has_read_gravestone = false
+func get_looking_for_code():
+	if \"looking_for_code\" in GameState.current.switches:
+		return GameState.current.switches.looking_for_code
+	else:
+		return false
 
-# Are they looking for the door code?
-var looking_for_code = false
+func set_looking_for_code(value):
+	GameState.current.switches.looking_for_code = value
 
-## DIALOG METHODS
+func get_met_tom():
+	if \"met_tom\" in GameState.current.switches:
+		return GameState.current.switches.met_tom
+	else:
+		return false
 
-func enter_code(args):
-	 GameState.goto_scene('res://maps/ComputerDemo.tscn')
+func set_met_tom(value):
+	print(\"set met_tom: %s\" % value)
+	GameState.current.switches.met_tom = value
+
+# load a map by name
+func load_map(map, position=Vector2.ZERO):
+	GameState.goto_scene(\"res://maps/\" + map + \".tscn\", position)
+	
+# check if inventory has an item
+func inventoryHas(item, count = 1):
+	return item in GameState.current.inventory and GameState.current.inventory[item].count > count
+
+# change the current music
+func play_music(file):
+	GameState.music_player.play_music(\"res://sounds/music/\" + file, 0,true,0,0,0)
 
 
 func _ready():
@@ -303,7 +323,7 @@ dialog_id = "f320337f-b850-4aa4-8fa2-6a1ef2643580"
 MAX_SPEED = 100
 
 [node name="Emily" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 244.984, 234.584 )
+position = Vector2( 275.161, 23.3425 )
 
 [node name="The Dude" parent="YSort" instance=ExtResource( 8 )]
 position = Vector2( 1065, 635 )
