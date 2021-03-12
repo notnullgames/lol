@@ -37,7 +37,9 @@ func save(dialog="d0ef38b0-8dec-4b25-aa0e-e94e36976341"):
 	current.current_scene = current_scene.name
 	var p = player.get_position()
 	current.position = [p.x, p.y]
-	save_game.store_line(to_json(current))
+	var j = to_json(current)
+	print("save ", j)
+	save_game.store_line(j)
 	save_game.close()
 	show_dialog(dialog)
 
@@ -47,7 +49,9 @@ func load():
 	if not save_game.file_exists("user://savegame.save"):
 		return false
 	save_game.open("user://savegame.save", File.READ)
-	var o =  parse_json(save_game.get_line())
+	var j = save_game.get_line()
+	print("load ", j)
+	var o =  parse_json(j)
 	o.position = Vector2(o.position[0], o.position[1])
 	return o
 	

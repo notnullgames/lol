@@ -22,8 +22,10 @@ var met_tom setget set_met_tom, get_met_tom
 
 func get_looking_for_code():
 	if \"looking_for_code\" in GameState.current.switches:
+		print(\"get looking_for_code: \", GameState.current.switches.looking_for_code)
 		return GameState.current.switches.looking_for_code
 	else:
+		print(\"get looking_for_code: \", false)
 		return false
 
 func set_looking_for_code(value):
@@ -31,8 +33,10 @@ func set_looking_for_code(value):
 
 func get_met_tom():
 	if \"met_tom\" in GameState.current.switches:
+		print(\"get met_tom: \", GameState.current.met_tom)
 		return GameState.current.switches.met_tom
 	else:
+		print(\"get met_tom: \", false)
 		return false
 
 func set_met_tom(value):

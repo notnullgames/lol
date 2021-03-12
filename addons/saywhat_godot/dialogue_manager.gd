@@ -122,8 +122,6 @@ func check(condition: String) -> bool:
 	
 	var current_scene = get_tree().current_scene
 	
-	print("check: %s" % [key])
-	
 	if is_method(current_scene, key):
 		var parts = Array(condition.split(" "))
 		var args = parts.slice(1, parts.size() - 1)
