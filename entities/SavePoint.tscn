@@ -2,13 +2,13 @@
 
 [ext_resource path="res://tiles/images/obj_misk_atlas.png" type="Texture" id=1]
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=1]
 script/source = "extends StaticBody2D
 
 export (String) var dialog = \"d0ef38b0-8dec-4b25-aa0e-e94e36976341\"
 
-# called when the player is touching
-func on_touch():
+# called when the player presses A while touching
+func on_activate():
 	GameState.save(dialog)
 "
 
@@ -19,7 +19,7 @@ atlas = ExtResource( 1 )
 region = Rect2( 736, 672, 32, 96 )
 
 [node name="SavePoint" type="StaticBody2D"]
-script = SubResource( 4 )
+script = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )

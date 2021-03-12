@@ -39,7 +39,6 @@ func save(dialog="d0ef38b0-8dec-4b25-aa0e-e94e36976341"):
 	current.position = [p.x, p.y]
 	save_game.store_line(to_json(current))
 	save_game.close()
-	print(current)
 	show_dialog(dialog)
 
 # load game
