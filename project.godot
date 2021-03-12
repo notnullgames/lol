@@ -23,17 +23,11 @@ _global_script_classes=[ {
 "class": "DialogueResponse",
 "language": "GDScript",
 "path": "res://addons/saywhat_godot/dialogue_response.gd"
-}, {
-"base": "",
-"class": "FLMusicLib",
-"language": "NativeScript",
-"path": "res://FLMusicLib/FLMusic.gdns"
 } ]
 _global_script_class_icons={
 "DialogueLine": "",
 "DialogueResource": "",
-"DialogueResponse": "",
-"FLMusicLib": ""
+"DialogueResponse": ""
 }
 
 [application]
@@ -182,4 +176,5 @@ ui_y={
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
 environment/default_clear_color=Color( 1, 0.0117647, 0.984314, 1 )
