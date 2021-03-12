@@ -33,7 +33,7 @@ func set_looking_for_code(value):
 
 func get_met_tom():
 	if \"met_tom\" in GameState.current.switches:
-		print(\"get met_tom: \", GameState.current.met_tom)
+		print(\"get met_tom: \", GameState.current.switches.met_tom)
 		return GameState.current.switches.met_tom
 	else:
 		print(\"get met_tom: \", false)

@@ -33,6 +33,7 @@ func _input(event):
 		if current_option == 0:
 			$MenuSounds/ok.play()
 			yield($MenuSounds/ok, \"finished\")
+			GameState.current = save_game
 			GameState.goto_scene('res://maps/%s.tscn' % save_game.current_scene, save_game.position)
 		if current_option == 1:
 			$MenuSounds/ok.play()
