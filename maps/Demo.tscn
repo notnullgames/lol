@@ -44,8 +44,8 @@ func set_met_tom(value):
 	GameState.current.switches.met_tom = value
 
 # load a map by name
-func load_map(map, position=Vector2.ZERO):
-	GameState.goto_scene(\"res://maps/\" + map + \".tscn\", position)
+func load_map(args):
+	GameState.goto_scene(\"res://maps/\" + args[0] + \".tscn\")
 	
 # check if inventory has an item
 func inventoryHas(item, count = 1):
@@ -286,6 +286,7 @@ code = "123"
 [node name="Portal" parent="." instance=ExtResource( 9 )]
 position = Vector2( -384, 440 )
 z_index = 1
+world = "Demo2"
 
 [node name="Label" type="Label" parent="Portal"]
 margin_left = 16.0
@@ -300,6 +301,7 @@ __meta__ = {
 [node name="Portal2" parent="." instance=ExtResource( 9 )]
 position = Vector2( -384, 584 )
 z_index = 1
+world = "DemoMaze2"
 
 [node name="Label" type="Label" parent="Portal2"]
 margin_right = 40.0

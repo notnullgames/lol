@@ -7,20 +7,11 @@ script = ExtResource( 1 )
 lines = {
 "01dbb68c-1952-4292-a33b-c422b6fd1226": {
 "character": "Tom",
-"condition": "!switch has_read_gravestone",
+"condition": "!has_read_gravestone",
 "dialogue": "I don't know the code. There was a guy looking for it a while ago. He died of old age, so I buried him on the south-end of the island.",
 "go_to_node_id": "",
 "id": "01dbb68c-1952-4292-a33b-c422b6fd1226",
-"next_node_id": "7a002abe-1230-4168-9ac4-84bbe8f33d4a",
-"type": "dialogue"
-},
-"07eca375-d970-4b0d-a4c0-7c5d248ac6c7": {
-"character": "Tom",
-"condition": "switch has_read_gravestone",
-"dialogue": "They are the same when accumulated as when totaled.",
-"go_to_node_id": "",
-"id": "07eca375-d970-4b0d-a4c0-7c5d248ac6c7",
-"next_node_id": "bfba2fd4-09e7-4595-bc84-507656097029",
+"next_node_id": "514652a0-b995-4418-bd91-5782db3ff6f6",
 "type": "dialogue"
 },
 "2696a974-ad8e-4cae-be67-55f3f844c01f": {
@@ -31,8 +22,16 @@ lines = {
 "next_node_id": "38638c2f-3ef2-43b0-9a9b-38c4a30256ab",
 "type": "dialogue"
 },
-"296e0e63-4468-4bf9-9f63-2a1036094453": {
-"id": "296e0e63-4468-4bf9-9f63-2a1036094453",
+"29c72df0-bccb-4e06-a1e9-9664af8c06c0": {
+"character": "David",
+"dialogue": "Hi, I'm a developer who worked on this game. I hope you have fun.",
+"go_to_node_id": "",
+"id": "29c72df0-bccb-4e06-a1e9-9664af8c06c0",
+"next_node_id": "67a57f67-1e4e-478a-a459-6976191ef95f",
+"type": "dialogue"
+},
+"3419f8ca-b0b5-42cb-bd7c-bb1536bcbda1": {
+"id": "3419f8ca-b0b5-42cb-bd7c-bb1536bcbda1",
 "responses": [ {
 "next_node_id": "",
 "prompt": "Nothing for now, thanks"
@@ -43,21 +42,13 @@ lines = {
 } ],
 "type": "responses"
 },
-"29c72df0-bccb-4e06-a1e9-9664af8c06c0": {
-"character": "David",
-"dialogue": "Hi, I'm a developer who worked on this game. I hope you have fun.",
+"34a9b206-5daa-4101-913a-ad276f8a0c86": {
+"character": "Tom",
+"condition": "met_tom",
+"dialogue": "Hi Emily. Nice to see you, again.",
 "go_to_node_id": "",
-"id": "29c72df0-bccb-4e06-a1e9-9664af8c06c0",
-"next_node_id": "67a57f67-1e4e-478a-a459-6976191ef95f",
-"type": "dialogue"
-},
-"2b52f5a6-48b3-4244-b72c-309e509942e3": {
-"character": "Emily",
-"condition": "!met_tom",
-"dialogue": "Hi, I'm Emily. Nice to meet you.",
-"go_to_node_id": "",
-"id": "2b52f5a6-48b3-4244-b72c-309e509942e3",
-"next_node_id": "aa1ba718-69a1-4521-8ca4-b4e5282ca32e",
+"id": "34a9b206-5daa-4101-913a-ad276f8a0c86",
+"next_node_id": "799cc85b-314d-4e19-8189-f0105fc591e8",
 "type": "dialogue"
 },
 "374e087c-e200-4641-8068-a8941a00faac": {
@@ -76,28 +67,30 @@ lines = {
 } ],
 "type": "responses"
 },
-"4a3fa87c-15fa-479a-ad80-852c77bc34fe": {
-"id": "4a3fa87c-15fa-479a-ad80-852c77bc34fe",
+"3c63271f-9d8f-460d-b772-e0990680a155": {
+"id": "3c63271f-9d8f-460d-b772-e0990680a155",
 "responses": [ {
 "next_node_id": "",
-"prompt": "Nevermind"
+"prompt": "OK"
 } ],
 "type": "responses"
 },
-"4b5e8154-9781-41c2-85ec-9a45aff7b2d9": {
-"character": "Gravestone",
-"dialogue": "Here lies Herman. I hardly knew him, but he seemed like a nice enough chap.",
+"514652a0-b995-4418-bd91-5782db3ff6f6": {
+"character": "Tom",
+"condition": "has_read_gravestone",
+"dialogue": "I don't know the code, but I did find a possibly-related riddle in Herman's pocket, before I buried him.",
 "go_to_node_id": "",
-"id": "4b5e8154-9781-41c2-85ec-9a45aff7b2d9",
-"next_node_id": "b894a197-3a0e-40f9-9ad7-6bf5d4d8a3d4",
+"id": "514652a0-b995-4418-bd91-5782db3ff6f6",
+"next_node_id": "5739446a-a784-4c81-8487-8ff7e1ec24e7",
 "type": "dialogue"
 },
-"51546340-0185-4c91-bec9-d15064034d4d": {
+"5739446a-a784-4c81-8487-8ff7e1ec24e7": {
 "character": "Tom",
-"dialogue": "What can I do for you?",
+"condition": "has_read_gravestone",
+"dialogue": "Three, whole & positive, in their order of intrinsic value,",
 "go_to_node_id": "",
-"id": "51546340-0185-4c91-bec9-d15064034d4d",
-"next_node_id": "296e0e63-4468-4bf9-9f63-2a1036094453",
+"id": "5739446a-a784-4c81-8487-8ff7e1ec24e7",
+"next_node_id": "70dce9c8-3f56-4d64-85e7-18a6cd619ecd",
 "type": "dialogue"
 },
 "67a57f67-1e4e-478a-a459-6976191ef95f": {
@@ -108,6 +101,23 @@ lines = {
 "next_node_id": "2696a974-ad8e-4cae-be67-55f3f844c01f",
 "type": "dialogue"
 },
+"6a9ab23d-17a6-4a07-9615-11a8831e1e28": {
+"id": "6a9ab23d-17a6-4a07-9615-11a8831e1e28",
+"responses": [ {
+"next_node_id": "",
+"prompt": "OK"
+} ],
+"type": "responses"
+},
+"70dce9c8-3f56-4d64-85e7-18a6cd619ecd": {
+"character": "Tom",
+"condition": "has_read_gravestone",
+"dialogue": "They are the same when accumulated as when totaled.",
+"go_to_node_id": "",
+"id": "70dce9c8-3f56-4d64-85e7-18a6cd619ecd",
+"next_node_id": "3c63271f-9d8f-460d-b772-e0990680a155",
+"type": "dialogue"
+},
 "73a27757-1da9-4041-b274-2237fb0ec41b": {
 "character": "The Dude",
 "dialogue": "Don't mind me, I'm just sun-bathing.",
@@ -116,22 +126,29 @@ lines = {
 "next_node_id": "a7229e1a-b695-4a83-8e58-880eaec4d3cf",
 "type": "dialogue"
 },
-"7a002abe-1230-4168-9ac4-84bbe8f33d4a": {
-"character": "Tom",
-"condition": "switch has_read_gravestone",
-"dialogue": "I don't know the code, but I did find a possibly-related riddle in Herman's pocket, before I buried him.",
+"799cc85b-314d-4e19-8189-f0105fc591e8": {
 "go_to_node_id": "",
-"id": "7a002abe-1230-4168-9ac4-84bbe8f33d4a",
-"next_node_id": "cc534e45-6c30-4676-b4a9-5967f4aa6c37",
+"id": "799cc85b-314d-4e19-8189-f0105fc591e8",
+"mutation": "met_tom=true",
+"next_node_id": "d0cc126e-b738-45c6-b19c-e1ae8d79c8f3",
+"type": "mutation"
+},
+"7f12d08d-6d2f-4709-8543-7c8a8bfd3fe1": {
+"character": "Emily",
+"condition": "!met_tom",
+"dialogue": "Hi, I'm Emily. Nice to meet you.",
+"go_to_node_id": "",
+"id": "7f12d08d-6d2f-4709-8543-7c8a8bfd3fe1",
+"next_node_id": "bd261a7f-866d-4a5d-93ed-7a82c5576ca8",
 "type": "dialogue"
 },
-"8d44cacc-2c50-495c-ab30-28de3f14bab8": {
-"character": "Panel",
-"dialogue": "Please enter the 3-digit passcode.",
-"go_to_node_id": "",
-"id": "8d44cacc-2c50-495c-ab30-28de3f14bab8",
-"next_node_id": "bbbac9eb-bc0f-4c2e-8b21-7269d1251854",
-"type": "dialogue"
+"9f5f1a8d-e87f-4c95-adc0-5b80e24d6232": {
+"id": "9f5f1a8d-e87f-4c95-adc0-5b80e24d6232",
+"responses": [ {
+"next_node_id": "",
+"prompt": "Nevermind"
+} ],
+"type": "responses"
 },
 "a7229e1a-b695-4a83-8e58-880eaec4d3cf": {
 "id": "a7229e1a-b695-4a83-8e58-880eaec4d3cf",
@@ -141,59 +158,43 @@ lines = {
 } ],
 "type": "responses"
 },
-"aa1ba718-69a1-4521-8ca4-b4e5282ca32e": {
+"b13d0942-89dc-473e-ab38-6bc68d52e1cb": {
+"go_to_node_id": "",
+"id": "b13d0942-89dc-473e-ab38-6bc68d52e1cb",
+"mutation": "load_map DemoComputer",
+"next_node_id": "9f5f1a8d-e87f-4c95-adc0-5b80e24d6232",
+"type": "mutation"
+},
+"bc865678-82eb-48dc-9ba5-8d813a8fb583": {
+"character": "Panel",
+"dialogue": "Please enter the 3-digit passcode.",
+"go_to_node_id": "",
+"id": "bc865678-82eb-48dc-9ba5-8d813a8fb583",
+"next_node_id": "b13d0942-89dc-473e-ab38-6bc68d52e1cb",
+"type": "dialogue"
+},
+"bd261a7f-866d-4a5d-93ed-7a82c5576ca8": {
 "character": "Tom",
 "condition": "!met_tom",
 "dialogue": "The pleasure is mine.",
 "go_to_node_id": "",
-"id": "aa1ba718-69a1-4521-8ca4-b4e5282ca32e",
-"next_node_id": "e74a232d-0de4-4340-9f04-d5dfea6ab545",
+"id": "bd261a7f-866d-4a5d-93ed-7a82c5576ca8",
+"next_node_id": "34a9b206-5daa-4101-913a-ad276f8a0c86",
 "type": "dialogue"
-},
-"b894a197-3a0e-40f9-9ad7-6bf5d4d8a3d4": {
-"id": "b894a197-3a0e-40f9-9ad7-6bf5d4d8a3d4",
-"responses": [ {
-"next_node_id": "",
-"prompt": "OK"
-} ],
-"type": "responses"
-},
-"ba3957f7-e5e2-4147-a3ad-c8bd4740aade": {
-"go_to_node_id": "",
-"id": "ba3957f7-e5e2-4147-a3ad-c8bd4740aade",
-"mutation": "met_tom=true",
-"next_node_id": "51546340-0185-4c91-bec9-d15064034d4d",
-"type": "mutation"
-},
-"bbbac9eb-bc0f-4c2e-8b21-7269d1251854": {
-"go_to_node_id": "",
-"id": "bbbac9eb-bc0f-4c2e-8b21-7269d1251854",
-"mutation": "load_map DemoComputer",
-"next_node_id": "4a3fa87c-15fa-479a-ad80-852c77bc34fe",
-"type": "mutation"
-},
-"bfba2fd4-09e7-4595-bc84-507656097029": {
-"id": "bfba2fd4-09e7-4595-bc84-507656097029",
-"responses": [ {
-"next_node_id": "",
-"prompt": "OK"
-} ],
-"type": "responses"
 },
 "c7203fa0-7cf5-4c11-bc47-23abd830807d": {
 "go_to_node_id": "",
 "id": "c7203fa0-7cf5-4c11-bc47-23abd830807d",
-"mutation": "set looking_for_code true",
-"next_node_id": "8d44cacc-2c50-495c-ab30-28de3f14bab8",
+"mutation": "looking_for_code=true",
+"next_node_id": "bc865678-82eb-48dc-9ba5-8d813a8fb583",
 "type": "mutation"
 },
-"cc534e45-6c30-4676-b4a9-5967f4aa6c37": {
+"d0cc126e-b738-45c6-b19c-e1ae8d79c8f3": {
 "character": "Tom",
-"condition": "switch has_read_gravestone",
-"dialogue": "Three, whole & positive, in their order of intrinsic value,",
+"dialogue": "What can I do for you?",
 "go_to_node_id": "",
-"id": "cc534e45-6c30-4676-b4a9-5967f4aa6c37",
-"next_node_id": "07eca375-d970-4b0d-a4c0-7c5d248ac6c7",
+"id": "d0cc126e-b738-45c6-b19c-e1ae8d79c8f3",
+"next_node_id": "3419f8ca-b0b5-42cb-bd7c-bb1536bcbda1",
 "type": "dialogue"
 },
 "d0ef38b0-8dec-4b25-aa0e-e94e36976341": {
@@ -204,29 +205,28 @@ lines = {
 "next_node_id": "374e087c-e200-4641-8068-a8941a00faac",
 "type": "dialogue"
 },
-"e74a232d-0de4-4340-9f04-d5dfea6ab545": {
-"character": "Tom",
-"condition": "met_tom",
-"dialogue": "Hi Emily. Nice to see you, again.",
+"dc2d04d7-f43c-4a3b-aea8-3307cf3aba65": {
+"character": "Gravestone",
+"dialogue": "Here lies Herman. I hardly knew him, but he seemed like a nice enough chap.",
 "go_to_node_id": "",
-"id": "e74a232d-0de4-4340-9f04-d5dfea6ab545",
-"next_node_id": "ba3957f7-e5e2-4147-a3ad-c8bd4740aade",
+"id": "dc2d04d7-f43c-4a3b-aea8-3307cf3aba65",
+"next_node_id": "6a9ab23d-17a6-4a07-9615-11a8831e1e28",
 "type": "dialogue"
 },
 "f320337f-b850-4aa4-8fa2-6a1ef2643580": {
 "character": "Tom",
-"condition": "!met_tom",
+"condition": "met_tom",
 "dialogue": "Hi, my name is Tom.",
 "go_to_node_id": "",
 "id": "f320337f-b850-4aa4-8fa2-6a1ef2643580",
-"next_node_id": "2b52f5a6-48b3-4244-b72c-309e509942e3",
+"next_node_id": "7f12d08d-6d2f-4709-8543-7c8a8bfd3fe1",
 "type": "dialogue"
 },
 "f680b9d4-9f5a-49d8-8ce0-2fd2e47e53ef": {
 "go_to_node_id": "",
 "id": "f680b9d4-9f5a-49d8-8ce0-2fd2e47e53ef",
-"mutation": "set has_read_gravestone true",
-"next_node_id": "4b5e8154-9781-41c2-85ec-9a45aff7b2d9",
+"mutation": "has_read_gravestone=true",
+"next_node_id": "dc2d04d7-f43c-4a3b-aea8-3307cf3aba65",
 "type": "mutation"
 }
 }

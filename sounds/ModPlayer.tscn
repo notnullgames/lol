@@ -14,11 +14,11 @@ func load(file):
 	module.playback_rate = self.stream.mix_rate
 	module.load_module(file)
 	self.stop()
-	buf.clear_buffer()
+#	buf.clear_buffer()
 
-func _process(delta):
+func _process(_delta):
 	if playing:
-		buf.push_buffer(module.fill_buffer(buf.get_frames_available()))
+		var _o = buf.push_buffer(module.fill_buffer(buf.get_frames_available()))
 
 # this used to be a autoloaded singleton, put it all here instead
 class Global:
@@ -274,14 +274,11 @@ class Sample:
 
 	#Requires 30 byte array
 	func init_header(bytes : PoolByteArray):
-		var i = 0
-		
 		#Get name.
 		name = \"\"
 		for j in range(22):
 			if bytes[j] == 0:  break
 			name += char(bytes[j])
-		i = 21
 		
 		#Get sample length.  First byte overwritten by tracker. 
 		length = (bytes[22] << 8) | bytes[23]
@@ -573,7 +570,7 @@ class Module:
 	
 		#Read 30 samples here (1..31).  TODO: Detect if 15-sample mod only somehow..
 		sampleBank.clear()
-		for i in range(31):
+		for _i in range(31):
 			var samp = Sample.new()
 			samp.init_header(f.get_buffer(30))
 			sampleBank.append(samp)
@@ -607,12 +604,12 @@ class Module:
 		#Read pattern data.
 		patterns.clear()
 #		print(unique_patterns)
-		for i in range(unique_patterns):
+		for _i in range(unique_patterns):
 			#Un-lazy storage method.  1kb data total per pattern
 			var pattern = []  #64 rows
-			for row in range(64):
+			for _row in range(64):
 				var rowdata = []  #4 channels!
-				for chn in range(4):
+				for _chn in range(4):
 					#32-bits of data here per note chunk.
 					#Due to the way an extra 15 instruments were hacked in,
 					#The instrument's 8-bit value is spread over 2 separate nybbles.
@@ -672,7 +669,7 @@ class Module:
 	#Fills an audio buffer with the number of frames requested.
 	func fill_buffer(nFrames):
 		#Determine how many secs have elapsed in buffer time.
-		var elapsed_time = nFrames / playback_rate
+#		var elapsed_time = nFrames / playback_rate
 
 		if frames == 0:  #First tick.  Make sure there's data here
 			process_tick(0)
@@ -727,7 +724,7 @@ class Module:
 
 		#A previous row performed a position jump or pattern break.  Process it.
 		if break_to_position and tick ==0:
-			var position_changed = (position == break_to_position.position)
+#			var position_changed = (position == break_to_position.position)
 
 			position = break_to_position.position
 			row = break_to_position.row
@@ -758,11 +755,11 @@ class Module:
 				#This sets up the working volumes and effect memory.
 				channels[i].new_note(note)
 
-			process_tick_fx(i, tick)  #Happens every tick.
+			process_tick_fx(i)  #Happens every tick.
 
 
 	#Called during a tick process, this updates a channel's working data.
-	func process_tick_fx(channel, tick=0):
+	func process_tick_fx(channel):
 		var ch = channels[channel]
 		var note = ch.note
 		
@@ -802,15 +799,15 @@ class Module:
 			\"1\":  #Portamento up
 				var param = note.parameter
 				if param == 0:  param = ch.effect_memory[note.effect.hex_to_int()]
-				var x = param >> 4
-				var y = param & 0xF
+#				var x = param >> 4
+#				var y = param & 0xF
 				#TODO:  Change period values here
 
 			\"2\":  #Portamento down
 				var param = note.parameter
 				if param == 0:  param = ch.effect_memory[note.effect.hex_to_int()]
-				var x = param >> 4
-				var y = param & 0xF
+#				var x = param >> 4
+#				var y = param & 0xF
 				#TODO:  Change period values here
 
 			\"3\":  #Tone Portamento
