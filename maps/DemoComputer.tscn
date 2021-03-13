@@ -84,6 +84,10 @@ func _ready():
 	
 	# you could also set registers:
 	$Terminal.emit_signal(\"set_register\", \"M\", 0x66)
+
+
+func _on_Terminal_pressed_cancel():
+	GameState.goto_scene(\"res://maps/Demo.tscn\", GameState.lastplace)
 "
 
 [sub_resource type="TileSet" id=2]
@@ -158,4 +162,5 @@ position = Vector2( 176, 160 )
 [node name="Terminal" parent="." instance=ExtResource( 1 )]
 modulate = Color( 1, 1, 1, 0.521569 )
 z_index = 20
+[connection signal="pressed_cancel" from="Terminal" to="." method="_on_Terminal_pressed_cancel"]
 [connection signal="set_register" from="Terminal" to="." method="_on_Terminal_set_register"]

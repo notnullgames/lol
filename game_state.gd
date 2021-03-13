@@ -58,6 +58,9 @@ func load():
 var player:KinematicBody2D
 var camera:Camera2D
 
+# this holds the last place before a scene-switch
+var lastplace = Vector2.ZERO
+
 onready var music = preload("res://sounds/ModPlayer.tscn").instance()
 
 # can the player move?
@@ -73,7 +76,12 @@ func set_player_move(p):
 # switch scenes
 var current_scene = null
 func goto_scene(path, position=Vector2.ZERO):
+	var p = weakref(player)
 	print("load map: %s" % path)
+	if !p.get_ref():
+		lastplace = Vector2.ZERO
+	else:
+		lastplace = player.get_position()
 	call_deferred("_deferred_goto_scene", path, position)
 func _deferred_goto_scene(path, position=Vector2.ZERO):
 	current_scene.free()

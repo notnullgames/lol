@@ -18,7 +18,9 @@ script/source = "extends Node2D
 # dialog stuff
 
 var looking_for_code setget set_looking_for_code, get_looking_for_code
-var met_tom setget set_met_tom, get_met_tom
+
+func set_looking_for_code(value):
+	GameState.current.switches.looking_for_code = value
 
 func get_looking_for_code():
 	if \"looking_for_code\" in GameState.current.switches:
@@ -28,8 +30,11 @@ func get_looking_for_code():
 		print(\"get looking_for_code: \", false)
 		return false
 
-func set_looking_for_code(value):
-	GameState.current.switches.looking_for_code = value
+var met_tom setget set_met_tom, get_met_tom
+
+func set_met_tom(value):
+	print(\"set met_tom: %s\" % value)
+	GameState.current.switches.met_tom = value
 
 func get_met_tom():
 	if \"met_tom\" in GameState.current.switches:
@@ -39,9 +44,20 @@ func get_met_tom():
 		print(\"get met_tom: \", false)
 		return false
 
-func set_met_tom(value):
-	print(\"set met_tom: %s\" % value)
-	GameState.current.switches.met_tom = value
+var has_read_gravestone setget set_has_read_gravestone, get_has_read_gravestone
+
+func set_has_read_gravestone(value):
+	GameState.current.switches.looking_for_code = value
+
+func get_has_read_gravestone():
+	if \"has_read_gravestone\" in GameState.current.switches:
+		print(\"set has_read_gravestone: \", GameState.current.switches.has_read_gravestone)
+		return GameState.current.switches.has_read_gravestone
+	else:
+		print(\"get has_read_gravestone: \", false)
+		return false
+
+
 
 # load a map by name
 func load_map(args):
