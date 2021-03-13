@@ -182,4 +182,4 @@ ui_quicksave={
 [rendering]
 
 quality/driver/driver_name="GLES2"
-environment/default_clear_color=Color( 1, 0.0117647, 0.984314, 1 )
+environment/default_clear_color=Color( 0.611765, 0.611765, 0.611765, 1 )
