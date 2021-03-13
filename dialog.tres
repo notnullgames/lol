@@ -14,6 +14,27 @@ lines = {
 "next_node_id": "514652a0-b995-4418-bd91-5782db3ff6f6",
 "type": "dialogue"
 },
+"04d4daba-208d-4eba-a0d4-9ed27aa95bc9": {
+"id": "04d4daba-208d-4eba-a0d4-9ed27aa95bc9",
+"responses": [ {
+"next_node_id": "",
+"prompt": "Nothing for now, thanks"
+}, {
+"condition": "looking_for_code",
+"next_node_id": "01dbb68c-1952-4292-a33b-c422b6fd1226",
+"prompt": "Do you know the panel-code?"
+} ],
+"type": "responses"
+},
+"0c03de02-487e-4f4e-92bc-8c155efae339": {
+"character": "Emily",
+"condition": "!met_tom",
+"dialogue": "Hi, I'm Emily. Nice to meet you.",
+"go_to_node_id": "",
+"id": "0c03de02-487e-4f4e-92bc-8c155efae339",
+"next_node_id": "993be4c2-4e2d-4fce-9bcc-3b1ae980e2c9",
+"type": "dialogue"
+},
 "2696a974-ad8e-4cae-be67-55f3f844c01f": {
 "character": "David",
 "dialogue": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sagittis vitae et leo duis ut diam. Cras pulvinar mattis nunc sed blandit. Commodo viverra maecenas accumsan lacus vel facilisis volutpat. Velit dignissim sodales ut eu. Consectetur a erat nam at lectus urna duis convallis convallis. Sit amet est placerat in egestas erat. Accumsan tortor posuere ac ut consequat semper viverra. Enim eu turpis egestas pretium aenean pharetra. Egestas integer eget aliquet nibh praesent tristique magna. Lacus vestibulum sed arcu non odio euismod lacinia. Egestas diam in arcu cursus euismod quis viverra nibh. Lacus luctus accumsan tortor posuere ac ut. Purus viverra accumsan in nisl nisi scelerisque eu ultrices.",
@@ -30,25 +51,12 @@ lines = {
 "next_node_id": "67a57f67-1e4e-478a-a459-6976191ef95f",
 "type": "dialogue"
 },
-"3419f8ca-b0b5-42cb-bd7c-bb1536bcbda1": {
-"id": "3419f8ca-b0b5-42cb-bd7c-bb1536bcbda1",
-"responses": [ {
-"next_node_id": "",
-"prompt": "Nothing for now, thanks"
-}, {
-"condition": "looking_for_code",
-"next_node_id": "01dbb68c-1952-4292-a33b-c422b6fd1226",
-"prompt": "Do you know the panel-code?"
-} ],
-"type": "responses"
-},
-"34a9b206-5daa-4101-913a-ad276f8a0c86": {
+"2cdf5f6c-28ec-4ab7-af63-fde1e2605997": {
 "character": "Tom",
-"condition": "met_tom",
-"dialogue": "Hi Emily. Nice to see you, again.",
+"dialogue": "What can I do for you?",
 "go_to_node_id": "",
-"id": "34a9b206-5daa-4101-913a-ad276f8a0c86",
-"next_node_id": "799cc85b-314d-4e19-8189-f0105fc591e8",
+"id": "2cdf5f6c-28ec-4ab7-af63-fde1e2605997",
+"next_node_id": "04d4daba-208d-4eba-a0d4-9ed27aa95bc9",
 "type": "dialogue"
 },
 "374e087c-e200-4641-8068-a8941a00faac": {
@@ -74,6 +82,14 @@ lines = {
 "prompt": "OK"
 } ],
 "type": "responses"
+},
+"438851b5-7f0b-43cb-b2e7-1fa422286a66": {
+"character": "Panel",
+"dialogue": "Please enter the 3-digit passcode.",
+"go_to_node_id": "",
+"id": "438851b5-7f0b-43cb-b2e7-1fa422286a66",
+"next_node_id": "9bdeec8e-03b7-4185-9589-187dd97d3a90",
+"type": "dialogue"
 },
 "514652a0-b995-4418-bd91-5782db3ff6f6": {
 "character": "Tom",
@@ -126,24 +142,31 @@ lines = {
 "next_node_id": "a7229e1a-b695-4a83-8e58-880eaec4d3cf",
 "type": "dialogue"
 },
-"799cc85b-314d-4e19-8189-f0105fc591e8": {
-"go_to_node_id": "",
-"id": "799cc85b-314d-4e19-8189-f0105fc591e8",
-"mutation": "met_tom=true",
-"next_node_id": "d0cc126e-b738-45c6-b19c-e1ae8d79c8f3",
-"type": "mutation"
-},
-"7f12d08d-6d2f-4709-8543-7c8a8bfd3fe1": {
-"character": "Emily",
+"993be4c2-4e2d-4fce-9bcc-3b1ae980e2c9": {
+"character": "Tom",
 "condition": "!met_tom",
-"dialogue": "Hi, I'm Emily. Nice to meet you.",
+"dialogue": "The pleasure is mine.",
 "go_to_node_id": "",
-"id": "7f12d08d-6d2f-4709-8543-7c8a8bfd3fe1",
-"next_node_id": "bd261a7f-866d-4a5d-93ed-7a82c5576ca8",
+"id": "993be4c2-4e2d-4fce-9bcc-3b1ae980e2c9",
+"next_node_id": "e9f5da66-f504-47bb-9039-5f75ea672eed",
 "type": "dialogue"
 },
-"9f5f1a8d-e87f-4c95-adc0-5b80e24d6232": {
-"id": "9f5f1a8d-e87f-4c95-adc0-5b80e24d6232",
+"99624426-9516-440e-bcd1-a8783cf70027": {
+"go_to_node_id": "",
+"id": "99624426-9516-440e-bcd1-a8783cf70027",
+"mutation": "met_tom=true",
+"next_node_id": "2cdf5f6c-28ec-4ab7-af63-fde1e2605997",
+"type": "mutation"
+},
+"9bdeec8e-03b7-4185-9589-187dd97d3a90": {
+"go_to_node_id": "",
+"id": "9bdeec8e-03b7-4185-9589-187dd97d3a90",
+"mutation": "load_map \"DemoComputer\"",
+"next_node_id": "a3dc03b9-520a-4c9d-a833-38c3720be281",
+"type": "mutation"
+},
+"a3dc03b9-520a-4c9d-a833-38c3720be281": {
+"id": "a3dc03b9-520a-4c9d-a833-38c3720be281",
 "responses": [ {
 "next_node_id": "",
 "prompt": "Nevermind"
@@ -158,44 +181,12 @@ lines = {
 } ],
 "type": "responses"
 },
-"b13d0942-89dc-473e-ab38-6bc68d52e1cb": {
-"go_to_node_id": "",
-"id": "b13d0942-89dc-473e-ab38-6bc68d52e1cb",
-"mutation": "load_map DemoComputer",
-"next_node_id": "9f5f1a8d-e87f-4c95-adc0-5b80e24d6232",
-"type": "mutation"
-},
-"bc865678-82eb-48dc-9ba5-8d813a8fb583": {
-"character": "Panel",
-"dialogue": "Please enter the 3-digit passcode.",
-"go_to_node_id": "",
-"id": "bc865678-82eb-48dc-9ba5-8d813a8fb583",
-"next_node_id": "b13d0942-89dc-473e-ab38-6bc68d52e1cb",
-"type": "dialogue"
-},
-"bd261a7f-866d-4a5d-93ed-7a82c5576ca8": {
-"character": "Tom",
-"condition": "!met_tom",
-"dialogue": "The pleasure is mine.",
-"go_to_node_id": "",
-"id": "bd261a7f-866d-4a5d-93ed-7a82c5576ca8",
-"next_node_id": "34a9b206-5daa-4101-913a-ad276f8a0c86",
-"type": "dialogue"
-},
 "c7203fa0-7cf5-4c11-bc47-23abd830807d": {
 "go_to_node_id": "",
 "id": "c7203fa0-7cf5-4c11-bc47-23abd830807d",
 "mutation": "looking_for_code=true",
-"next_node_id": "bc865678-82eb-48dc-9ba5-8d813a8fb583",
+"next_node_id": "438851b5-7f0b-43cb-b2e7-1fa422286a66",
 "type": "mutation"
-},
-"d0cc126e-b738-45c6-b19c-e1ae8d79c8f3": {
-"character": "Tom",
-"dialogue": "What can I do for you?",
-"go_to_node_id": "",
-"id": "d0cc126e-b738-45c6-b19c-e1ae8d79c8f3",
-"next_node_id": "3419f8ca-b0b5-42cb-bd7c-bb1536bcbda1",
-"type": "dialogue"
 },
 "d0ef38b0-8dec-4b25-aa0e-e94e36976341": {
 "character": "Emily",
@@ -213,13 +204,22 @@ lines = {
 "next_node_id": "6a9ab23d-17a6-4a07-9615-11a8831e1e28",
 "type": "dialogue"
 },
-"f320337f-b850-4aa4-8fa2-6a1ef2643580": {
+"e9f5da66-f504-47bb-9039-5f75ea672eed": {
 "character": "Tom",
 "condition": "met_tom",
+"dialogue": "Hi Emily. Nice to see you, again.",
+"go_to_node_id": "",
+"id": "e9f5da66-f504-47bb-9039-5f75ea672eed",
+"next_node_id": "99624426-9516-440e-bcd1-a8783cf70027",
+"type": "dialogue"
+},
+"f320337f-b850-4aa4-8fa2-6a1ef2643580": {
+"character": "Tom",
+"condition": "!met_tom",
 "dialogue": "Hi, my name is Tom.",
 "go_to_node_id": "",
 "id": "f320337f-b850-4aa4-8fa2-6a1ef2643580",
-"next_node_id": "7f12d08d-6d2f-4709-8543-7c8a8bfd3fe1",
+"next_node_id": "0c03de02-487e-4f4e-92bc-8c155efae339",
 "type": "dialogue"
 },
 "f680b9d4-9f5a-49d8-8ce0-2fd2e47e53ef": {

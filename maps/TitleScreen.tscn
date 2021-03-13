@@ -45,7 +45,7 @@ func _input(event):
 			yield($MenuSounds/cancel, \"finished\")
 			get_tree().quit()
 	
-	if event.is_action_pressed('ui_up'):
+	if event.is_action_pressed('ui_up'):	
 		$MenuSounds/move.play()
 		current_option = fposmod(current_option - 1, count)
 		$Indicator.set_position(Vector2(64, 117 + (current_option * 10)))
@@ -60,9 +60,9 @@ func _input(event):
 script = SubResource( 1 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_top = -0.973969
-margin_right = 322.0
-margin_bottom = 240.026
+margin_top = -1.0
+margin_right = 320.0
+margin_bottom = 240.0
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
