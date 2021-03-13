@@ -58,6 +58,8 @@ func load():
 var player:KinematicBody2D
 var camera:Camera2D
 
+onready var music = preload("res://sounds/ModPlayer.tscn").instance()
+
 # can the player move?
 var player_move = true
 
@@ -99,6 +101,7 @@ func _ready():
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 	DialogueManager.resource = preload("res://dialog.tres")
+	add_child(music)
 	
 
 func _input(event):

@@ -54,6 +54,8 @@ func inventoryHas(item, count = 1):
 func _ready():
 	# set background color for ocean
 	VisualServer.set_default_clear_color(Color(\"#156C99\"))
+	GameState.music.load(\"res://sounds/music/trance_chip.mod\")
+	GameState.music.play()
 "
 
 [sub_resource type="TileSet" id=2]

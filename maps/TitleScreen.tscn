@@ -21,6 +21,8 @@ func _ready():
 		var p = $NewExit.get_position()
 		$NewExit.set_position(Vector2(p.x, p.y - 10))
 	$Indicator.set_position(Vector2(64, 117 + (current_option * 10)))
+	GameState.music.load(\"res://sounds/music/megaman_3.mod\")
+	GameState.music.play()
 
 func _input(event):
 	var count = 2
