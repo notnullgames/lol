@@ -58,8 +58,8 @@ func get_has_read_gravestone():
 		return false
 
 # show a panel to the user
-func show_panel(code, map_success):
-	GameState.show_panel(code, map_success)
+func show_panel(code):
+	GameState.show_panel(code, \"Demo2\")
 
 # load a map by name
 func load_map(args):

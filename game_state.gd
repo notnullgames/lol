@@ -116,6 +116,7 @@ func show_panel(code, map_success):
 	goto_scene("res://maps/PanelEntry.tscn")
 	call_deferred("_deferred_show_panel", code, map_success, map_back, position_back)
 func _deferred_show_panel(code, map_success, map_back, position_back):
+	music.volume = 0.5
 	current_scene.code = code
 	current_scene.map_success = map_success
 	current_scene.map_success = map_back
