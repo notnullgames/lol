@@ -95,7 +95,6 @@ func _deferred_goto_scene(path, position=Vector2.ZERO):
 # show a SayWhat dialog
 func show_dialog(id: String) -> void:
 	DialogueManager.game_state = current_scene
-	
 	set_player_move(false)
 	var dialog = yield(DialogueManager.get_next_dialogue_line(id), "completed")
 	if dialog != null:
@@ -116,10 +115,9 @@ func show_panel(code, map_success):
 	goto_scene("res://maps/PanelEntry.tscn")
 	call_deferred("_deferred_show_panel", code, map_success, map_back, position_back)
 func _deferred_show_panel(code, map_success, map_back, position_back):
-	music.volume = 0.5
 	current_scene.code = code
 	current_scene.map_success = map_success
-	current_scene.map_success = map_back
+	current_scene.map_back = map_back
 	position_back = position_back
 	
 
