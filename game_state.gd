@@ -106,6 +106,22 @@ func show_dialog(id: String) -> void:
 	else:
 		set_player_move(true)
 
+# show a panel to the user
+func show_panel(code, map_success):
+	var map_back = current_scene.name
+	var position_back = Vector2.ZERO
+	var p = weakref(player)
+	if not p.get_ref():
+		position_back = player.get_position()
+	goto_scene("res://maps/PanelEntry.tscn")
+	call_deferred("_deferred_show_panel", code, map_success, map_back, position_back)
+func _deferred_show_panel(code, map_success, map_back, position_back):
+	current_scene.code = code
+	current_scene.map_success = map_success
+	current_scene.map_success = map_back
+	position_back = position_back
+	
+
 func _ready():
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)

@@ -1,0 +1,414 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://basicfont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://basicfont_big.tres" type="DynamicFont" id=2]
+[ext_resource path="res://sounds/no.wav" type="AudioStream" id=3]
+[ext_resource path="res://sounds/MenuSounds.tscn" type="PackedScene" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+# current position selected
+var pos:int = 0
+
+# current code
+var entered_code = []
+
+# these are set externally
+export var code = \"666\"              # code that we are lookign for
+export var map_success = \"Demo\"   # map to go to on success
+export var map_back = \"Demo\"      # map to go to on B
+var position_back = Vector2.ZERO  # position to go to on B
+
+func update_display():
+	$CODE.bbcode_text = \"[center]\"
+	for n in entered_code:
+		$CODE.bbcode_text += String(n)
+	$CODE.bbcode_text += \"[/center]\"
+	$Indicator.set_position((Vector2(pos % 3, ceil(pos / 3)) * Vector2(32, 32)) + Vector2(117, 72))
+
+func check_code():
+	if len(entered_code) != len(code):
+		return false
+	for n in range(len(code)):
+		if int(code[n]) != entered_code[n]:
+			return false
+	return true
+
+func _process(_delta):
+	update_display()
+
+func _input(event):
+	if event.is_action_pressed('ui_cancel'):
+		GameState.goto_scene(\"res://maps/%s.tscn\" % [map_back], position_back)
+	if event.is_action_pressed('ui_accept'):
+		if pos < 9:
+			$MenuSounds/ok.play()
+			if len(entered_code) < 20:
+				entered_code.push_back(pos + 1)
+		elif pos == 10:
+			$MenuSounds/ok.play()
+			entered_code.push_back(0)
+		elif pos == 9: # back
+			$MenuSounds/cancel.play()
+			entered_code.pop_back()
+		elif pos == 11: # OK
+			if check_code():
+				GameState.goto_scene(\"res://maps/%s.tscn\" % [map_success])
+			else:
+				$SoundError.play()
+	if event.is_action_pressed('ui_left'):
+		pos = fposmod(pos - 1, 12)
+	if event.is_action_pressed('ui_right'):
+		pos = fposmod(pos + 1, 12)
+	if event.is_action_pressed('ui_up'):
+		pos = fposmod(pos - 3, 12)
+	if event.is_action_pressed('ui_down'):
+		pos = fposmod(pos + 3, 12)
+"
+
+[node name="Node2D" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="BG" type="ColorRect" parent="."]
+margin_right = 320.0
+margin_bottom = 239.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Button Labels" type="Node2D" parent="."]
+position = Vector2( 117, 73 )
+z_index = 1
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="1" type="Label" parent="Button Labels"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 16.0
+margin_bottom = 15.0
+custom_fonts/font = ExtResource( 1 )
+text = "1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="2" type="Label" parent="Button Labels"]
+margin_left = 40.0
+margin_top = 8.0
+margin_right = 48.0
+margin_bottom = 15.0
+custom_fonts/font = ExtResource( 1 )
+text = "2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3" type="Label" parent="Button Labels"]
+margin_left = 72.0
+margin_top = 8.0
+margin_right = 80.0
+margin_bottom = 15.0
+custom_fonts/font = ExtResource( 1 )
+text = "3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4" type="Label" parent="Button Labels"]
+margin_left = 8.0
+margin_top = 40.0
+margin_right = 16.0
+margin_bottom = 47.0
+custom_fonts/font = ExtResource( 1 )
+text = "4"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="5" type="Label" parent="Button Labels"]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 48.0
+margin_bottom = 47.0
+custom_fonts/font = ExtResource( 1 )
+text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="6" type="Label" parent="Button Labels"]
+margin_left = 72.0
+margin_top = 40.0
+margin_right = 80.0
+margin_bottom = 47.0
+custom_fonts/font = ExtResource( 1 )
+text = "6"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="7" type="Label" parent="Button Labels"]
+margin_left = 8.0
+margin_top = 72.0
+margin_right = 16.0
+margin_bottom = 79.0
+custom_fonts/font = ExtResource( 1 )
+text = "7"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="8" type="Label" parent="Button Labels"]
+margin_left = 40.0
+margin_top = 72.0
+margin_right = 48.0
+margin_bottom = 79.0
+custom_fonts/font = ExtResource( 1 )
+text = "8"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="9" type="Label" parent="Button Labels"]
+margin_left = 72.0
+margin_top = 72.0
+margin_right = 80.0
+margin_bottom = 79.0
+custom_fonts/font = ExtResource( 1 )
+text = "9"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="0" type="Label" parent="Button Labels"]
+margin_left = 40.0
+margin_top = 104.0
+margin_right = 48.0
+margin_bottom = 111.0
+custom_fonts/font = ExtResource( 1 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" type="Label" parent="Button Labels"]
+margin_left = 5.37735
+margin_top = 104.0
+margin_right = 19.3773
+margin_bottom = 111.0
+custom_fonts/font = ExtResource( 1 )
+text = "<-"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OK" type="Label" parent="Button Labels"]
+margin_left = 70.0
+margin_top = 105.0
+margin_right = 84.0
+margin_bottom = 112.0
+custom_fonts/font = ExtResource( 1 )
+text = "OK"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button BG" type="Node2D" parent="."]
+position = Vector2( 117, 72 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect2" type="ColorRect" parent="Button BG"]
+margin_right = 24.0
+margin_bottom = 24.0
+color = Color( 0.298039, 0.294118, 0.294118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect3" type="ColorRect" parent="Button BG"]
+margin_left = 32.0
+margin_right = 56.0
+margin_bottom = 24.0
+color = Color( 0.298039, 0.294118, 0.294118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect4" type="ColorRect" parent="Button BG"]
+margin_left = 64.0
+margin_right = 88.0
+margin_bottom = 24.0
+color = Color( 0.298039, 0.294118, 0.294118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect5" type="ColorRect" parent="Button BG"]
+margin_top = 32.0
+margin_right = 24.0
+margin_bottom = 56.0
+color = Color( 0.298039, 0.294118, 0.294118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect6" type="ColorRect" parent="Button BG"]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 56.0
+margin_bottom = 56.0
+color = Color( 0.298039, 0.294118, 0.294118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect7" type="ColorRect" parent="Button BG"]
+margin_left = 64.0
+margin_top = 32.0
+margin_right = 88.0
+margin_bottom = 56.0
+color = Color( 0.298039, 0.294118, 0.294118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect10" type="ColorRect" parent="Button BG"]
+margin_top = 64.0
+margin_right = 24.0
+margin_bottom = 88.0
+color = Color( 0.298039, 0.294118, 0.294118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect9" type="ColorRect" parent="Button BG"]
+margin_left = 32.0
+margin_top = 64.0
+margin_right = 56.0
+margin_bottom = 88.0
+color = Color( 0.298039, 0.294118, 0.294118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect8" type="ColorRect" parent="Button BG"]
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 88.0
+margin_bottom = 88.0
+color = Color( 0.298039, 0.294118, 0.294118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect13" type="ColorRect" parent="Button BG"]
+margin_top = 96.0
+margin_right = 24.0
+margin_bottom = 120.0
+color = Color( 0.298039, 0.294118, 0.294118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect12" type="ColorRect" parent="Button BG"]
+margin_left = 32.0
+margin_top = 96.0
+margin_right = 56.0
+margin_bottom = 120.0
+color = Color( 0.298039, 0.294118, 0.294118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect11" type="ColorRect" parent="Button BG"]
+margin_left = 64.0
+margin_top = 96.0
+margin_right = 88.0
+margin_bottom = 120.0
+color = Color( 0.298039, 0.294118, 0.294118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Indicator" type="Node2D" parent="."]
+position = Vector2( 117, 72 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="Indicator"]
+margin_left = -2.0
+margin_top = -2.0
+margin_bottom = 26.0
+color = Color( 0.380392, 0.223529, 0.223529, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="Indicator"]
+margin_left = 24.2485
+margin_top = -1.63374
+margin_right = 26.2485
+margin_bottom = 26.3663
+color = Color( 0.380392, 0.223529, 0.223529, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect3" type="ColorRect" parent="Indicator"]
+margin_left = 24.0
+margin_top = -2.0
+margin_right = 26.0
+margin_bottom = 22.0
+rect_rotation = 90.0
+color = Color( 0.380392, 0.223529, 0.223529, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect4" type="ColorRect" parent="Indicator"]
+margin_left = 23.5117
+margin_top = 24.1264
+margin_right = 25.5117
+margin_bottom = 48.1264
+rect_rotation = 90.0
+color = Color( 0.380392, 0.223529, 0.223529, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CODE" type="RichTextLabel" parent="."]
+margin_top = 48.0
+margin_right = 320.0
+margin_bottom = 64.0
+custom_fonts/normal_font = ExtResource( 2 )
+bbcode_enabled = true
+bbcode_text = "[center]0000[/center]"
+text = "0000"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 112.0
+margin_top = 200.0
+margin_right = 245.0
+margin_bottom = 207.0
+custom_fonts/font = ExtResource( 1 )
+text = "Press B to go back."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundError" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="MenuSounds" parent="." instance=ExtResource( 4 )]

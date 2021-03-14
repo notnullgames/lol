@@ -101,14 +101,6 @@ lines = {
 "next_node_id": "70dce9c8-3f56-4d64-85e7-18a6cd619ecd",
 "type": "dialogue"
 },
-"611fbe2c-b2b0-4f1d-bc5f-61b99cfa2cab": {
-"id": "611fbe2c-b2b0-4f1d-bc5f-61b99cfa2cab",
-"responses": [ {
-"next_node_id": "",
-"prompt": "OK"
-} ],
-"type": "responses"
-},
 "67a57f67-1e4e-478a-a459-6976191ef95f": {
 "character": "David",
 "dialogue": "Also, here is some tester-text, that will break things:",
@@ -150,6 +142,14 @@ lines = {
 "next_node_id": "a7229e1a-b695-4a83-8e58-880eaec4d3cf",
 "type": "dialogue"
 },
+"76f9de09-e6fa-44f9-9b19-ca8c0a99c2dd": {
+"id": "76f9de09-e6fa-44f9-9b19-ca8c0a99c2dd",
+"responses": [ {
+"next_node_id": "",
+"prompt": "OK"
+} ],
+"type": "responses"
+},
 "993be4c2-4e2d-4fce-9bcc-3b1ae980e2c9": {
 "character": "Tom",
 "condition": "!met_tom",
@@ -169,8 +169,8 @@ lines = {
 "9a550d94-75c5-4813-95b0-19a1b1858d58": {
 "go_to_node_id": "",
 "id": "9a550d94-75c5-4813-95b0-19a1b1858d58",
-"mutation": "load_map DemoPanel",
-"next_node_id": "611fbe2c-b2b0-4f1d-bc5f-61b99cfa2cab",
+"mutation": "show_panel 123 Demo2",
+"next_node_id": "76f9de09-e6fa-44f9-9b19-ca8c0a99c2dd",
 "type": "mutation"
 },
 "a7229e1a-b695-4a83-8e58-880eaec4d3cf": {
