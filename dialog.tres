@@ -26,6 +26,14 @@ lines = {
 } ],
 "type": "responses"
 },
+"0be20d2a-c6b6-4cfb-9ea3-60e64ddd12c3": {
+"id": "0be20d2a-c6b6-4cfb-9ea3-60e64ddd12c3",
+"responses": [ {
+"next_node_id": "",
+"prompt": "Cool."
+} ],
+"type": "responses"
+},
 "0c03de02-487e-4f4e-92bc-8c155efae339": {
 "character": "Emily",
 "condition": "!met_tom",
@@ -34,6 +42,13 @@ lines = {
 "id": "0c03de02-487e-4f4e-92bc-8c155efae339",
 "next_node_id": "993be4c2-4e2d-4fce-9bcc-3b1ae980e2c9",
 "type": "dialogue"
+},
+"1d1ad769-cad4-4c14-8394-36857eefce3b": {
+"go_to_node_id": "",
+"id": "1d1ad769-cad4-4c14-8394-36857eefce3b",
+"mutation": "get_playername",
+"next_node_id": "0be20d2a-c6b6-4cfb-9ea3-60e64ddd12c3",
+"type": "mutation"
 },
 "2696a974-ad8e-4cae-be67-55f3f844c01f": {
 "character": "David",
@@ -139,7 +154,7 @@ lines = {
 "dialogue": "Don't mind me, I'm just sun-bathing.",
 "go_to_node_id": "",
 "id": "73a27757-1da9-4041-b274-2237fb0ec41b",
-"next_node_id": "a7229e1a-b695-4a83-8e58-880eaec4d3cf",
+"next_node_id": "7f20b95f-6bc4-4c3d-ad85-026e936e1409",
 "type": "dialogue"
 },
 "76f9de09-e6fa-44f9-9b19-ca8c0a99c2dd": {
@@ -149,6 +164,14 @@ lines = {
 "prompt": "OK"
 } ],
 "type": "responses"
+},
+"7f20b95f-6bc4-4c3d-ad85-026e936e1409": {
+"character": "The Dude",
+"dialogue": "Hey, what's yer name?",
+"go_to_node_id": "",
+"id": "7f20b95f-6bc4-4c3d-ad85-026e936e1409",
+"next_node_id": "1d1ad769-cad4-4c14-8394-36857eefce3b",
+"type": "dialogue"
 },
 "993be4c2-4e2d-4fce-9bcc-3b1ae980e2c9": {
 "character": "Tom",
@@ -172,14 +195,6 @@ lines = {
 "mutation": "show_panel 123 Demo2",
 "next_node_id": "76f9de09-e6fa-44f9-9b19-ca8c0a99c2dd",
 "type": "mutation"
-},
-"a7229e1a-b695-4a83-8e58-880eaec4d3cf": {
-"id": "a7229e1a-b695-4a83-8e58-880eaec4d3cf",
-"responses": [ {
-"next_node_id": "",
-"prompt": "Cool."
-} ],
-"type": "responses"
 },
 "b7d6a447-0088-4cc9-a9b9-762e352843ce": {
 "go_to_node_id": "",

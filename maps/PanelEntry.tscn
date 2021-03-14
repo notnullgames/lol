@@ -20,12 +20,6 @@ export var map_success = \"Demo\"   # map to go to on success
 export var map_back = \"Demo\"      # map to go to on B
 var position_back = Vector2.ZERO  # position to go to on B
 
-func update_display():
-	$CODE.bbcode_text = \"[center]\"
-	for n in entered_code:
-		$CODE.bbcode_text += String(n)
-	$CODE.bbcode_text += \"[/center]\"
-	$Indicator.set_position((Vector2(pos % 3, ceil(pos / 3)) * Vector2(32, 32)) + Vector2(117, 72))
 
 func check_code():
 	if len(entered_code) != len(code):
@@ -36,7 +30,12 @@ func check_code():
 	return true
 
 func _process(_delta):
-	update_display()
+	$CODE.bbcode_text = \"[center]\"
+	for n in entered_code:
+		$CODE.bbcode_text += String(n)
+	$CODE.bbcode_text += \"[/center]\"
+	$Indicator.set_position((Vector2(pos % 3, ceil(pos / 3)) * Vector2(32, 32)) + Vector2(117, 72))
+
 
 func _input(event):
 	if event.is_action_pressed('ui_cancel'):

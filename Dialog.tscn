@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://tiles/images/dialog.9.png" type="Texture" id=1]
+[ext_resource path="res://entities/DialogBg.tscn" type="PackedScene" id=1]
 [ext_resource path="res://people/emily/portrait.png" type="Texture" id=2]
 [ext_resource path="res://basicfont.tres" type="DynamicFont" id=3]
 [ext_resource path="res://sounds/MenuSounds.tscn" type="PackedScene" id=4]
@@ -30,8 +30,8 @@ func handle(d):
 	dialog = d
 #	print(dialog.character, \": \", dialog.dialogue)
 	GameState.camera.zoom = Vector2(1, 1)
-	$NinePatchRect/Name.bbcode_text = dialog.character
-	$NinePatchRect/portrait.texture = load('res://people/%s/portrait.png' % dialog.character.to_lower())
+	$Name.bbcode_text = dialog.character
+	$portrait.texture = load('res://people/%s/portrait.png' % dialog.character.to_lower())
 	drawText()
 	if dialog.next_node_id:
 		$MoreIndicator.play(\"more\")
@@ -86,38 +86,11 @@ tracks/0/keys = {
 [node name="Dialog" type="CanvasLayer"]
 script = SubResource( 1 )
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-margin_left = 8.0
-margin_top = 168.0
-margin_right = 310.0
-margin_bottom = 232.0
-texture = ExtResource( 1 )
-patch_margin_left = 6
-patch_margin_top = 7
-patch_margin_right = 7
-patch_margin_bottom = 7
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="portrait" type="Sprite" parent="NinePatchRect"]
-position = Vector2( 246.165, -44.9654 )
-texture = ExtResource( 2 )
-
-[node name="Name" type="RichTextLabel" parent="NinePatchRect"]
-margin_left = 8.0
-margin_top = -13.0
-margin_right = 209.0
-margin_bottom = -3.0
-rect_clip_content = false
-custom_fonts/normal_font = ExtResource( 3 )
-bbcode_enabled = true
-bbcode_text = "Emily"
-text = "Emily"
-scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="DialogBg" parent="." instance=ExtResource( 1 )]
+margin_left = -152.0
+margin_top = 168.035
+margin_right = 150.0
+margin_bottom = 232.035
 
 [node name="Text" type="RichTextLabel" parent="."]
 margin_left = 15.0
@@ -171,3 +144,22 @@ __meta__ = {
 }
 
 [node name="MenuSounds" parent="." instance=ExtResource( 4 )]
+
+[node name="portrait" type="Sprite" parent="."]
+position = Vector2( 254.165, 123.035 )
+texture = ExtResource( 2 )
+
+[node name="Name" type="RichTextLabel" parent="."]
+margin_left = 16.0
+margin_top = 155.0
+margin_right = 217.0
+margin_bottom = 165.0
+rect_clip_content = false
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "Emily"
+text = "Emily"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}

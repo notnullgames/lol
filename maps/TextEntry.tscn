@@ -1,0 +1,156 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://entities/DialogBg.tscn" type="PackedScene" id=1]
+[ext_resource path="res://people/tom/portrait.png" type="Texture" id=2]
+[ext_resource path="res://basicfont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://basicfont_big.tres" type="DynamicFont" id=4]
+[ext_resource path="res://tiles/images/pointer.png" type="Texture" id=5]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+signal complete(value)
+
+export var value = \"Answer\"
+export var talking = \"tom\"
+export var question = \"What is your question?\"
+
+var letters = \"ABCDEabcdeFGHIJfghijKLMNOklmnoPQRSTpqrstUVWXYuvwxyZ!?/:z\\\"'-.0123456789\"
+var pos:int = 0
+
+func _ready():
+	$portrait.texture = load('res://people/%s/portrait.png' % talking)
+	$Question.text = question
+
+func _process(_delta):
+	$Answer.text = value
+	var p = Vector2(pos % 10,  ceil(pos/10))
+	if p.x > 4:
+		p.x += 0.5
+	$pointer.set_position((p * Vector2(28, 17)) + Vector2(10, 103))
+
+func _input(event):
+	if event.is_action_pressed('ui_accept'):
+		value += letters[pos]
+	if event.is_action_pressed('ui_cancel'):
+		value = value.substr(0, len(value)-1)
+	if event.is_action_pressed('ui_start'):
+		emit_signal(\"complete\", value)
+	if event.is_action_pressed('ui_left'):
+		pos = fposmod(pos - 1, 70)
+	if event.is_action_pressed('ui_right'):
+		pos = fposmod(pos + 1, 70)
+	if event.is_action_pressed('ui_up'):
+		pos = fposmod(pos - 10, 70)
+	if event.is_action_pressed('ui_down'):
+		pos = fposmod(pos + 10, 70)
+"
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://PressStart2P-vaV7.ttf"
+
+[sub_resource type="DynamicFont" id=3]
+size = 14
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+font_data = SubResource( 2 )
+
+[node name="TextEntry" type="Node2D"]
+z_index = 10
+script = SubResource( 1 )
+
+[node name="BG" type="ColorRect" parent="."]
+margin_right = 321.0
+margin_bottom = 241.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DialogBg" parent="." instance=ExtResource( 1 )]
+margin_left = 60.9836
+margin_top = 4.74589
+margin_right = 314.984
+margin_bottom = 80.7459
+
+[node name="DialogBg2" parent="." instance=ExtResource( 1 )]
+margin_left = 4.0
+margin_top = 85.0
+margin_right = 317.0
+margin_bottom = 221.0
+
+[node name="portrait" type="Sprite" parent="."]
+position = Vector2( 33.9267, 56.2752 )
+scale = Vector2( 0.666828, 0.666828 )
+texture = ExtResource( 2 )
+
+[node name="Question" type="Label" parent="."]
+margin_left = 71.0
+margin_top = 16.2457
+margin_right = 309.0
+margin_bottom = 53.2457
+rect_clip_content = true
+custom_fonts/font = ExtResource( 3 )
+text = "What is your question?"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Help" type="Label" parent="."]
+margin_left = 30.8867
+margin_top = 227.008
+margin_right = 289.887
+margin_bottom = 234.008
+rect_clip_content = true
+custom_fonts/font = ExtResource( 3 )
+text = "Press B to backspace. START to accept."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Labels" type="Label" parent="."]
+margin_left = 19.0
+margin_top = 93.9218
+margin_right = 302.0
+margin_bottom = 209.922
+rect_clip_content = true
+custom_fonts/font = SubResource( 3 )
+text = "A B C D E  a b c d e
+F G H I J  f g h i j
+K L M N O  k l m n o
+P Q R S T  p q r s t
+U V W X Y  u v w x y
+Z ! ? / :  z \" ' - .
+0 1 2 3 4  5 6 7 8 9"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Answer" type="Label" parent="."]
+margin_left = 67.4918
+margin_top = 51.6801
+margin_right = 307.492
+margin_bottom = 67.6801
+custom_fonts/font = ExtResource( 4 )
+text = "Answer"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Underline" type="Label" parent="."]
+margin_left = 67.9835
+margin_top = 57.2212
+margin_right = 307.984
+margin_bottom = 73.2212
+custom_fonts/font = ExtResource( 4 )
+text = "_______________"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pointer" type="Sprite" parent="."]
+position = Vector2( 10.6255, 103.062 )
+texture = ExtResource( 5 )
