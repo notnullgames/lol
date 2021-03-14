@@ -78,7 +78,7 @@ var current_scene = null
 func goto_scene(path, position=Vector2.ZERO):
 	var p = weakref(player)
 	print("load map: %s" % path)
-	if !p.get_ref():
+	if not p.get_ref():
 		lastplace = Vector2.ZERO
 	else:
 		lastplace = player.get_position()
@@ -108,17 +108,13 @@ func show_dialog(id: String) -> void:
 # show a panel to the user
 func show_panel(code, map_success):
 	var map_back = current_scene.name
-	var position_back = Vector2.ZERO
-	var p = weakref(player)
-	if not p.get_ref():
-		position_back = player.get_position()
 	goto_scene("res://maps/PanelEntry.tscn")
-	call_deferred("_deferred_show_panel", code, map_success, map_back, position_back)
-func _deferred_show_panel(code, map_success, map_back, position_back):
+	call_deferred("_deferred_show_panel", code, map_success, map_back)
+func _deferred_show_panel(code, map_success, map_back):
 	current_scene.code = code
 	current_scene.map_success = map_success
 	current_scene.map_back = map_back
-	position_back = position_back
+	current_scene.position_back = lastplace
 	
 
 func _ready():
