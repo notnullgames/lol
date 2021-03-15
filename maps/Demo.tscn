@@ -63,9 +63,16 @@ func inventoryHas(args):
 	return args[0] in GameState.current.inventory and GameState.current.inventory[args[0]].count > (args[1] or 1)
 
 # get the player's name
-func get_playername(_args):# not working...
-	GameState.current.name = GameState.ask_question(\"What is your name?\", \"Emily\", \"thedude\").resume()
-	print(GameState.current.name )
+func get_playername(_args):
+	GameState.player_move = false
+	var textentry = ResourceLoader.load(\"res://maps/TextEntry.tscn\").instance()
+	textentry.question = \"What is your name?\"
+	textentry.talking = \"thedude\"
+	textentry.value = \"Emily\"
+	add_child(textentry)
+	GameState.current.name = yield(textentry, \"complete\")
+	textentry.queue_free()
+	GameState.player_move = true
 
 func _ready():
 	# set background color for ocean

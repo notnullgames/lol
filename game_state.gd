@@ -105,18 +105,6 @@ func show_dialog(id: String) -> void:
 	else:
 		set_player_move(true)
 
-func ask_question(question, value="", talking="emily"):
-	player_move = false
-	var textentry = ResourceLoader.load("res://maps/TextEntry.tscn").instance()
-	textentry.question = question
-	textentry.talking = talking
-	textentry.value = value
-	add_child(textentry)
-	var answer = yield(textentry, "complete")
-	textentry.queue_free()
-	player_move = true
-	return answer
-
 # show a panel to the user
 func show_panel(code, map_success):
 	var map_back = current_scene.name
