@@ -15,7 +15,10 @@ var current_choice = 0
 
 # this draws the current text of the dialog
 func drawText():
-	$Text.bbcode_text = dialog.dialogue
+	if GameState.current.name:
+		$Text.bbcode_text = dialog.dialogue.replace(\"Emily\", GameState.current.name)
+	else:
+		$Text.bbcode_text = dialog.dialogue
 	if dialog.responses.size():
 		$Text.bbcode_text += '\\n'
 		# TODO: make a better indicator, with the assumption that each choice is 1 line 
@@ -30,7 +33,10 @@ func handle(d):
 	dialog = d
 #	print(dialog.character, \": \", dialog.dialogue)
 	GameState.camera.zoom = Vector2(1, 1)
-	$Name.bbcode_text = dialog.character
+	if GameState.current.name:
+		$Name.bbcode_text = dialog.character.replace(\"Emily\", GameState.current.name)
+	else:
+		$Name.bbcode_text = dialog.character
 	$portrait.texture = load('res://people/%s/portrait.png' % dialog.character.to_lower())
 	drawText()
 	if dialog.next_node_id:
