@@ -68,7 +68,10 @@ func get_playername(_args):
 	var textentry = ResourceLoader.load(\"res://maps/TextEntry.tscn\").instance()
 	textentry.question = \"What is your name?\"
 	textentry.talking = \"thedude\"
-	textentry.value = \"Emily\"
+	if \"name\" in GameState.current:
+		textentry.value = GameState.current.name
+	else:
+		textentry.value = \"Emily\"
 	add_child(textentry)
 	GameState.current.name = yield(textentry, \"complete\")
 	textentry.queue_free()
