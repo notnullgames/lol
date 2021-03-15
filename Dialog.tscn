@@ -15,7 +15,7 @@ var current_choice = 0
 
 # this draws the current text of the dialog
 func drawText():
-	if GameState.current.name:
+	if \"name\" in GameState.current:
 		$Text.bbcode_text = dialog.dialogue.replace(\"Emily\", GameState.current.name)
 	else:
 		$Text.bbcode_text = dialog.dialogue
@@ -33,7 +33,7 @@ func handle(d):
 	dialog = d
 #	print(dialog.character, \": \", dialog.dialogue)
 	GameState.camera.zoom = Vector2(1, 1)
-	if GameState.current.name:
+	if \"name\" in GameState.current:
 		$Name.bbcode_text = dialog.character.replace(\"Emily\", GameState.current.name)
 	else:
 		$Name.bbcode_text = dialog.character
